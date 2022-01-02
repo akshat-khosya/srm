@@ -55,6 +55,6 @@ if (process.env.NODE_ENV === 'production') {
         res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
     })
 }
-app.listen("5000", () => {
+app.listen(process.env.PORT, () => {
   console.log("Server started at port 5000");
 });
