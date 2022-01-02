@@ -23,6 +23,7 @@
     "web-vitals": "^2.1.2"
   },
   "scripts": {
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm run build",
     "start": "nodemon server.js",
     "react": "react-scripts start",
     "build": "react-scripts build",
