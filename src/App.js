@@ -8,7 +8,7 @@ import axios from "axios";
 import Profile from "./pages/profile/Profile";
 function App() {
 	const axiosInstance = axios.create({
-		baseURL: "https://srmportal.herokuapp.com/",
+		baseURL: "",
 	});
 	const { user, dispatch, isFetching } = useContext(Context);
 	const loadData = async () => {
