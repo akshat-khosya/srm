@@ -49,12 +49,12 @@ app.use("/api/post/", post);
 //     res.sendFile(path.join(publicPath, "index.html"));
 //   });
 // }
-if (process.env.NODE_ENV === 'production') {
+
     app.use(express.static(path.join(__dirname,'build')));
-    app.get('*', (req, res) => {
-        res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
+    app.use(express.static(path.join(__dirname,'public')));
+    app.use((req, res) => {
+        res.sendFile(path.join(__dirname, 'build', 'index.html'));
     })
-}
-app.listen(process.env.PORT, () => {
-  console.log("Server started at port 5000");
-});
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server started at port ${PORT}`))
