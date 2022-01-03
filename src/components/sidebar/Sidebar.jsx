@@ -4,7 +4,7 @@ import dashboard from "../../Images/dashboard_white_24dp.svg";
 import { useContext, useState } from "react";
 import { Context } from "../../context/Context";
 import { Link } from "react-router-dom";
-function Sidebar() {
+function Sidebar({axiosInstance}) {
     const {user,dispatch}=useContext(Context);
   const [icon, setIcon] = useState("fas fa-caret-down");
   const [dropdown, setDropdown] = useState("dropdown");
@@ -40,7 +40,7 @@ function Sidebar() {
               >
                 <div className="Sidebar-profile Col-lg-20">
                   <img
-                    src={"http://localhost:5000/images/"+user.photo}
+                    src={axiosInstance.defaults.baseURL+"images/"+user.photo}
                     alt=""
                   />
                 </div>
@@ -48,7 +48,7 @@ function Sidebar() {
                   {user.name}
                 </div>
                 <div className="Sidebar-icon Col-lg-10">
-                  <i class={icon}></i>
+                  <i className={icon}></i>
                 </div>
               </div>
             </li>
@@ -57,7 +57,7 @@ function Sidebar() {
               <li className="dropdownItem Row">
                  
                 <div className="dropdown-icon Col-lg-20">
-                  <i class="far fa-user"></i>
+                  <i className="far fa-user"></i>
                 </div>
                 <div className="dropdown-Content Col-lg-70">Profile</div>
                 
@@ -66,7 +66,7 @@ function Sidebar() {
               <Link className="link" to="/profile">
               <li className="dropdownItem Row">
                 <div className="dropdown-icon Col-lg-20">
-                <i class="fas fa-cog"></i>
+                <i className="fas fa-cog"></i>
                 </div>
                 <div className="dropdown-Content Col-lg-70">Settings</div>
               </li>
@@ -74,7 +74,7 @@ function Sidebar() {
               <Link onClick={()=>{ dispatch({ type: "LOGIN_FAILURE" });}} className="link" to="/">
               <li className="dropdownItem Row">
                 <div className="dropdown-icon Col-lg-20">
-                  <i class="fas fa-sign-out-alt"></i>
+                  <i className="fas fa-sign-out-alt"></i>
                 </div>
                 <div className="dropdown-Content Col-lg-70">Logout</div>
               </li>
@@ -95,7 +95,7 @@ function Sidebar() {
           <li className='Sidebar-li '>
                    <div  className="profile-group Row">
                        <div className="Sidebar-profile Col-lg-20">
-                       <i class="fas fa-user-friends"></i>
+                       <i className="fas fa-user-friends"></i>
                             </div>
                             <div className="Sidebar-profile-content Col-lg-70">
                                 Connections
@@ -108,7 +108,7 @@ function Sidebar() {
           <li className='Sidebar-li '>
                    <div  className="profile-group Row">
                        <div className="Sidebar-profile Col-lg-20">
-                       <i class="fas fa-users"></i>
+                       <i className="fas fa-users"></i>
                             </div>
                             <div className="Sidebar-profile-content Col-lg-70">
                                 Groups/Club
@@ -121,7 +121,7 @@ function Sidebar() {
           <li className='Sidebar-li '>
                    <div  className="profile-group Row">
                        <div className="Sidebar-profile Col-lg-20">
-                       <i class="fas fa-people-arrows"></i>
+                       <i className="fas fa-people-arrows"></i>
                             </div>
                             <div className="Sidebar-profile-content Col-lg-70">
                                 Mentoring
@@ -134,7 +134,7 @@ function Sidebar() {
           <li className='Sidebar-li '>
                    <div  className="profile-group Row">
                        <div className="Sidebar-profile Col-lg-20">
-                       <i class="fas fa-building"></i>
+                       <i className="fas fa-building"></i>
                             </div>
                             <div className="Sidebar-profile-content Col-lg-70">
                                 Opportunity
@@ -147,7 +147,7 @@ function Sidebar() {
           <li className='Sidebar-li '>
                    <div  className="profile-group Row">
                        <div className="Sidebar-profile Col-lg-20">
-                       <i class="far fa-sticky-note"></i>
+                       <i className="far fa-sticky-note"></i>
                             </div>
                             <div className="Sidebar-profile-content Col-lg-70">
                                 Resources
@@ -160,7 +160,7 @@ function Sidebar() {
           <li className='Sidebar-li '>
                    <div  className="profile-group Row">
                        <div className="Sidebar-profile Col-lg-20">
-                       <i class="fas fa-code"></i>
+                       <i className="fas fa-code"></i>
                             </div>
                             <div className="Sidebar-profile-content Col-lg-70">
                                 Let's Code
@@ -173,7 +173,7 @@ function Sidebar() {
           <li className='Sidebar-li '>
                    <div  className="profile-group Row">
                        <div className="Sidebar-profile Col-lg-20">
-                       <i class="fas fa-graduation-cap"></i>
+                       <i className="fas fa-graduation-cap"></i>
                             </div>
                             <div className="Sidebar-profile-content Col-lg-70">
                                 Scholarships
@@ -186,7 +186,7 @@ function Sidebar() {
           <li className='Sidebar-li '>
                    <div  className="profile-group Row">
                        <div className="Sidebar-profile Col-lg-20">
-                       <i class="fas fa-calendar-week"></i>
+                       <i className="fas fa-calendar-week"></i>
                             </div>
                             <div className="Sidebar-profile-content Col-lg-70">
                                 Events
