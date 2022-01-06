@@ -42,13 +42,13 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
 });
 app.use("/api/auth/", authRoute);
 app.use("/api/post/", post);
-if (process.env.NODE_ENV === "production") {
+
 	app.use(express.static(path.join(__dirname, "build")));
 	app.get("*", (req, res) => {
 		res.sendFile(path.resolve(__dirname, "build", "index.html"));
 	});
-}
-const PORT= process.env.PORT;
+
+const PORT= 4000;
 app.listen(PORT, () => {
 	console.log(`Server started at port ${PORT}`);
 });
