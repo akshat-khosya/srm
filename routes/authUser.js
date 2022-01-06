@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Auth = require("../models/auth");
 const User = require("../models/user");
+const UserData = require("../models/userData");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
@@ -88,7 +89,7 @@ router.get("/verifytoken", (req, res) => {
       console.log(err);
     } else {
       console.log(user);
-      Auth.findOne({ _id: user }, (err, foundUser) => {
+      UserData.findOne({ email: user }, (err, foundUser) => {
         if (err) {
           console.log(err);
         } else {

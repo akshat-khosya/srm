@@ -3,7 +3,7 @@ import { Context } from '../../context/Context'
 import './post.css'
 
 import like from '../../Images/like.png'
-function Post({post,axiosInstance}) {
+function Post({post}) {
     const {user}=useContext(Context);
     return (
         <div className='Post'>
@@ -11,7 +11,7 @@ function Post({post,axiosInstance}) {
                 <div className="postUser">
                 <div className="postUser-details">
                 <div className="postProfilePhoto">
-                    <img src={axiosInstance.defaults.baseURL+"images/"+post.email} alt="" />
+                    <img src={"http://localhost:5000/images/"+post.email} alt="" />
                 </div>
                 <div className="postUserName">
                     <h4>{post.author}</h4>
@@ -29,7 +29,7 @@ function Post({post,axiosInstance}) {
                 )}
                 {post.media && (
                     <div className="postMedia">
-                    <img src={axiosInstance.defaults.baseURL+"images/"+post.media} alt="" />
+                    <img src={"http://localhost:5000/images/"+post.media} alt="" />
                     </div>
                 )}
                 

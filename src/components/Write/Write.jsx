@@ -3,7 +3,7 @@ import { Context } from '../../context/Context'
 import './write.css'
 import photo from '../../Images/photo.png'
 import axios from 'axios'
-function Write({load,axiosInstance}) {
+function Write({load}) {
     const [file,setFile]=useState(null);
     const [desc,setDesc]=useState("");
     const {user} = useContext(Context);
@@ -22,7 +22,7 @@ function Write({load,axiosInstance}) {
                 postInfo.media=filename;
                 
                 try {
-                  const res=await axiosInstance.post("/api/upload",image);
+                  const res=await axios.post("http://localhost:5000/api/upload",image);
                   console.log(res);
                 } catch (err) {
                   console.log(err);
@@ -30,7 +30,7 @@ function Write({load,axiosInstance}) {
             }
             if(desc===""){
                 try {
-                    const res=await axiosInstance.post("/api/post",postInfo);
+                    const res=await axios.post("http://localhost:5000/api/post",postInfo);
                     console.log(res);
                   } catch (err) {
                     console.log(err);
@@ -40,7 +40,7 @@ function Write({load,axiosInstance}) {
                 postInfo.desc=desc;
                 console.log(postInfo);
                 try {
-                    const res=await axiosInstance.post("/api/post",postInfo);
+                    const res=await axios.post("http://localhost:5000/api/post",postInfo);
                     console.log(res);
                   } catch (err) {
                     console.log(err);
@@ -61,7 +61,7 @@ function Write({load,axiosInstance}) {
                     <h3 className="writeheading">Create Post</h3>
                     </div>
                     <div className="write-desc">
-                        <label htmlFor="desc"><img src={axiosInstance.defaults.baseURL+"images/"+user.photo} alt="" />{user.name}</label>
+                        <label htmlFor="desc"><img src={"http://localhost:5000/images/"+user.photo} alt="" />{user.name}</label>
                         <textarea value={desc} onChange={(e)=>{setDesc(e.target.value)}} placeholder='Write somethings here' name="desc" id="desc" ></textarea>
                     </div>
                     {file && (<div className='media-show'>

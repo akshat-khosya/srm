@@ -26,6 +26,18 @@
     left: 50%;
     border-radius: 25px;
     transform: translate(-50%,-50%);
+    
+  }
+  .container-regis{
+    position: absolute;
+    width: 80%;
+    height: auto;
+    margin: auto;
+    margin-top: 50px;
+    top: 50%;
+    left: 50%;
+    border-radius: 25px;
+    transform: translate(-50%,-50%);
   }
   
   .myLeftCtn{
@@ -88,7 +100,7 @@
   }
   
   .myRightCtn .myInput{
-    width: 230px;
+    width: 90%;
     border-radius: 25px;
     padding: 10px;
     padding-left: 50px;
@@ -101,7 +113,9 @@
   .myRightCtn .myInput:focus{
     outline:none;
   }
-  
+  .red{
+    color: red;
+  }
   .myForm{
     position: relative;
     margin-top: 50px;
@@ -136,7 +150,10 @@
     position: relative;
     left:45px; 
   }
-  
+  .myRightCtn .far{
+    position: relative;
+    left:36px;
+  }
   .butt_out{
     background: transparent;
     color: white;
