@@ -13,6 +13,7 @@ router.post("/", async (req, res) => {
 
   router.get("/", async (req, res) => {
     try {
+        console.log("get");
       const posts=await Post.find()
      
       res.send(posts);
