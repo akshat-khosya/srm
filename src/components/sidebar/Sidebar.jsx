@@ -71,7 +71,7 @@ function Sidebar() {
                 <div className="dropdown-Content Col-lg-70">Settings</div>
               </li>
               </Link>
-              <Link onClick={()=>{ dispatch({ type: "LOGIN_FAILURE" });}} className="link" to="/">
+              <Link onClick={()=>{ dispatch({ type: "LOGIN_FAILURE" }); localStorage.removeItem('token')}} className="link" to="/">
               <li className="dropdownItem Row">
                 <div className="dropdown-icon Col-lg-20">
                   <i class="fas fa-sign-out-alt"></i>
