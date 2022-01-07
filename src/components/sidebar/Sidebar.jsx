@@ -17,6 +17,10 @@ function Sidebar() {
       setDropdown("dropdown");
     }
   };
+  const logout=()=>{
+    dispatch({ type: "LOGIN_FAILURE" }); 
+    localStorage.removeItem('token')}
+  }
   return (
     <div className="Sidebar Col-lg-16">
       <div className="Sidebar-container">
@@ -40,7 +44,7 @@ function Sidebar() {
               >
                 <div className="Sidebar-profile Col-lg-20">
                   <img
-                    src={"http://localhost:5000/images/"+user.photo}
+                    src={"/images/"+user.photo}
                     alt=""
                   />
                 </div>
@@ -71,7 +75,7 @@ function Sidebar() {
                 <div className="dropdown-Content Col-lg-70">Settings</div>
               </li>
               </Link>
-              <Link onClick={()=>{ dispatch({ type: "LOGIN_FAILURE" }); localStorage.removeItem('token')}} className="link" to="/">
+              <Link onClick={logout } className="link" to="/">
               <li className="dropdownItem Row">
                 <div className="dropdown-icon Col-lg-20">
                   <i class="fas fa-sign-out-alt"></i>
