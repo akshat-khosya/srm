@@ -37,7 +37,7 @@ function Profile() {
     
     try {
       dispatch({ type: "Login_START" });
-      const data=await axios.get("http://localhost:5000/api/verifytoken",{ headers: {"token" : localStorage.getItem('token')}})
+      const data=await axios.get("/api/verifytoken",{ headers: {"token" : localStorage.getItem('token')}})
       console.log(data);
       dispatch({ type: "LOGIN_SUCCESS", payload: data.data.user });
     } catch (err) {
@@ -73,7 +73,7 @@ function Profile() {
       allPersonal.photo = filename;
       console.log(allPersonal);
       try {
-        const res = await axios.post("http://localhost:5000/api/upload", image);
+        const res = await axios.post("/api/upload", image);
         console.log(res);
         loadData();
       } catch (err) {
@@ -83,7 +83,7 @@ function Profile() {
 
     try {
       const res = await axios.patch(
-        "http://localhost:5000/api/profile",
+        "/api/profile",
         allPersonal
       );
       if (res.data.status) {
@@ -128,7 +128,7 @@ function Profile() {
                       <label className="Imglabel" htmlFor="file">
                         <img
                           className="regisImg"
-                          src={"http://localhost:5000/images/" + user.photo}
+                          src={"/images/" + user.photo}
                           alt=""
                         />
                       </label>
@@ -344,7 +344,7 @@ function Profile() {
                           src={
                             file
                               ? URL.createObjectURL(file)
-                              : "http://localhost:5000/images/" + user.photo
+                              : "/images/" + user.photo
                           }
                           alt=""
                         />

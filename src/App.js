@@ -15,7 +15,7 @@ function App() {
     
     try {
       dispatch({ type: "Login_START" });
-      const data=await axios.get("http://localhost:5000/api/verifytoken",{ headers: {"token" : localStorage.getItem('token')}})
+      const data=await axios.get("/api/verifytoken",{ headers: {"token" : localStorage.getItem('token')}})
       console.log(data);
       dispatch({ type: "LOGIN_SUCCESS", payload: data.data.user });
     } catch (err) {
