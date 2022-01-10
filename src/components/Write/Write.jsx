@@ -22,7 +22,7 @@ function Write({load}) {
                 postInfo.media=filename;
                 
                 try {
-                  const res=await axios.post("/api/upload",image);
+                  const res=await axios.post("http://54.167.139.48:4000/api/upload",image);
                   console.log(res);
                 } catch (err) {
                   console.log(err);
@@ -30,7 +30,7 @@ function Write({load}) {
             }
             if(desc===""){
                 try {
-                    const res=await axios.post("/api/post",postInfo);
+                    const res=await axios.post("http://54.167.139.48:4000/api/post",postInfo);
                     console.log(res);
                   } catch (err) {
                     console.log(err);
@@ -40,7 +40,7 @@ function Write({load}) {
                 postInfo.desc=desc;
                 console.log(postInfo);
                 try {
-                    const res=await axios.post("/api/post",postInfo);
+                    const res=await axios.post("http://54.167.139.48:4000/api/post",postInfo);
                     console.log(res);
                   } catch (err) {
                     console.log(err);

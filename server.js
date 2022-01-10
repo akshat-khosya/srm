@@ -39,6 +39,6 @@ app.post("/api/upload", upload.single("file"),(req,res)=>{
 // app.use("/api/users",userRoute);
 // app.use("/api/posts",postRoute);
 // app.use("/api/categories",categoryRoute);
-app.listen("5000",()=>{
+app.listen("4000",()=>{
     console.log("Server started at port 5000");
 })

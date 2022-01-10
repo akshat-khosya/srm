@@ -29,7 +29,7 @@ function Post({post}) {
                 )}
                 {post.media && (
                     <div className="postMedia">
-                    <img src={"/images/"+post.media} alt="" />
+                    <img src={"http://54.167.139.48:4000/images/"+post.media} alt="" />
                     </div>
                 )}
                 

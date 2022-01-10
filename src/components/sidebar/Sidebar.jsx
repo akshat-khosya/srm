@@ -40,7 +40,7 @@ function Sidebar() {
               >
                 <div className="Sidebar-profile Col-lg-20">
                   <img
-                    src={"/images/" + user.photo}
+                    src={"http://54.167.139.48:4000/images/" + user.photo}
                     alt=""
                   />
                 </div>
