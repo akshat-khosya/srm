@@ -40,7 +40,7 @@ function Sidebar() {
               >
                 <div className="Sidebar-profile Col-lg-20">
                   <img
-                    src={"http://localhost:5000/images/" + user.photo}
+                    src={"/images/" + user.photo}
                     alt=""
                   />
                 </div>

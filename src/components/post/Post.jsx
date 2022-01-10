@@ -11,7 +11,7 @@ function Post({post}) {
                 <div className="postUser">
                 <div className="postUser-details">
                 <div className="postProfilePhoto">
-                    <img src={"http://localhost:5000/images/"+post.email} alt="" />
+                    <img src={"/images/"+post.email} alt="" />
                 </div>
                 <div className="postUserName">
                     <h4>{post.author}</h4>
@@ -29,7 +29,7 @@ function Post({post}) {
                 )}
                 {post.media && (
                     <div className="postMedia">
-                    <img src={"http://localhost:5000/images/"+post.media} alt="" />
+                    <img src={"/images/"+post.media} alt="" />
                     </div>
                 )}
                 

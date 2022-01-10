@@ -50,12 +50,12 @@ function Registration() {
       allPersonal.photo = filename;
       console.log(allPersonal);
       try {
-        const res = await axios.post("http://localhost:5000/api/upload", image);
+        const res = await axios.post("/api/upload", image);
         console.log(res);
       } catch (err) {}
       try {
         const res = await axios.patch(
-          "http://localhost:5000/api/newregister",
+          "/api/newregister",
           allPersonal
         );
         if (res.data.status) {
