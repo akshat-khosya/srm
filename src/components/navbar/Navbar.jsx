@@ -21,7 +21,7 @@ function Navbar() {
           </div>
           <div className="navigation-group">
             <div className="naviagtion-humburger">
-            <i class="fas fa-bars"></i>
+            <i className="fas fa-bars"></i>
             </div>
           </div>
         </div>
@@ -34,10 +34,10 @@ function Navbar() {
                 
             </form>
             <div className="navbar-user__icons">
-            <i class="far fa-envelope"></i>
+            <i className="far fa-envelope"></i>
             </div>
             <div className="navbar-user__icons">
-            <i class="far fa-bell"></i>
+            <i className="far fa-bell"></i>
             </div>
             
             

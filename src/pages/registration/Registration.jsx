@@ -24,6 +24,7 @@ function Registration() {
     program: "",
     batch: "",
     bio: "",
+    pyear:"2020"
   });
   const handelChange = (e) => {
     const { name, value } = e.target;
@@ -38,7 +39,6 @@ function Registration() {
   const handelSubmit = async (e) => {
     e.preventDefault();
     if (file) {
-      
       const allPersonal = {
         email: user.email,
         ...personal,
@@ -50,18 +50,15 @@ function Registration() {
       allPersonal.photo = filename;
       console.log(allPersonal);
       try {
-        const res=await axios.post("http://localhost:5000/api/upload",image);
+        const res = await axios.post("http://localhost:5000/api/upload", image);
         console.log(res);
-      } catch (err) {
-    
-      }
+      } catch (err) {}
       try {
         const res = await axios.patch(
           "http://localhost:5000/api/newregister",
           allPersonal
-         
         );
-        if(res.data.status){
+        if (res.data.status) {
           dispatch({ type: "LOGIN_SUCCESS", payload: res.data.user });
         }
       } catch (err) {
@@ -71,37 +68,6 @@ function Registration() {
       setErr({ status: true, message: "Please Select Image" });
     }
 
-    // const email="askaht";
-    // const phone=92;
-    // const allPersonal={
-    //   email,
-    //   phone,
-    //   ...personal
-    // };
-    // const image=new FormData();
-    // const filename=email;
-    // image.append("name",filename);
-    // image.append("file",file);
-    // allPersonal.photo=filename;
-
-    // try {
-    //   const res=await axios.post("http://localhost:5000/api/upload",image);
-    //   console.log(res);
-    // } catch (err) {
-
-    // }
-    // try {
-    //   if(user.email){
-    //     allPersonal.auth="email"
-    //   }else{
-    //     allPersonal.auth="phone"
-    //   }
-    //   const res=await axios.post("http://localhost:5000/api/auth/register",allPersonal);
-    //   console.log(res);
-    //   alert(res.data);
-    // } catch (err) {
-    //   console.log(err);
-    // }
   };
   return (
     <div className="regis">
@@ -284,34 +250,32 @@ function Registration() {
                 name="program"
                 id="program"
               >
-                <option name="program" value="">
-                  Select..
-                </option>
-                <option name="program" value="IT">
+                <option name="program" value="">select..</option>
+                <option name="program" value="MBA">
                   MBA
                 </option>
-                <option name="program" value="CSE">
+                <option name="program" value=" MCA">
                   MCA
                 </option>
-                <option name="program" value="ECE">
+                <option name="program" value="M.Tech">
                   M.Tech
                 </option>
-                <option name="program" value="ECE">
+                <option name="program" value="B.Tech">
                   B.Tech
                 </option>
-                <option name="program" value="ECE">
+                <option name="program" value="BBA">
                   BBA
                 </option>
-                <option name="program" value="ECE">
+                <option name="program" value="BCA">
                   BCA
                 </option>
-                <option name="program" value="ECE">
-                  B Farma
+                <option name="program" value="B.Pharm">
+                  B.Pharm
                 </option>
-                <option name="program" value="ECE">
-                  BHMA
+                <option name="program" value="BHM">
+                  BHM
                 </option>
-                <option name="program" value="ECE">
+                <option name="program" value="others">
                   Others
                 </option>
               </select>
@@ -328,6 +292,28 @@ function Registration() {
                 id="batch"
               />
             </div>
+            <div className="regis-inputgroup Col-lg-33 Col-md-50 Col-sm-100">
+              <label htmlFor="pyear">
+                Passing Year<span className="requiredLabel">*</span>
+              </label>
+              <input
+                            required
+                            className="myInput IP"
+                            type="number"
+                            name="pyear"
+                            id="pyear"
+                            type="number"
+                            min="1997"
+                            max="2050"
+                            step="1"
+                            onChange={handelChange}
+                            value={personal.pyear}
+                            placeholder="Passing Year"
+                          />
+            
+            </div>
+
+            
             <div className="regis-inputgroup Col-lg-100 Col-md-100 Col-sm-100">
               <label htmlFor="bio">
                 Short Bio<span className="requiredLabel">*</span>

@@ -20,8 +20,7 @@ function Login() {
     phone: "",
     username: "",
     password: "",
-    repassword: "",
-    pyear: "2020",
+    repassword: ""
   });
 
   const registerChange = (e) => {
@@ -50,7 +49,7 @@ function Login() {
         );
         if (res.data.status) {
           dispatch({ type: "LOGIN_SUCCESS", payload: res.data.user });
-          loadData();
+          
           localStorage.setItem("token", res.data.token);
         } else {
           if (res.data.message === "err") {
@@ -85,21 +84,7 @@ function Login() {
   const changeView = () => {
     setView(!view);
   };
-  const loadData = async () => {
-    if (localStorage.getItem("token")) {
-      try {
-        dispatch({ type: "Login_START" });
-        const data = await axios.get(
-          "http://localhost:5000/api/auth/verifytoken",
-          { headers: { token: localStorage.getItem("token") } }
-        );
-        console.log(data);
-        dispatch({ type: "LOGIN_SUCCESS", payload: data.data.user });
-      } catch (err) {
-        dispatch({ type: "LOGIN_FAILURE" });
-      }
-    }
-  };
+  
   const handelSubmit = async (e) => {
     e.preventDefault();
     dispatch({ type: "Login_START" });
@@ -215,7 +200,7 @@ function Login() {
                       </div>
                       <div className="Col-lg-33 Col-md-2 Col-sm-1">
                         <div className="form-group">
-                          <i class="far fa-envelope"></i>
+                          <i className="far fa-envelope"></i>
 
                           <input
                             className="myInput IP"
@@ -231,7 +216,7 @@ function Login() {
                       </div>
                       <div className="Col-lg-33 Col-md-2 Col-sm-1">
                         <div className="form-group">
-                          <i class="fas fa-phone"></i>
+                          <i className="fas fa-phone"></i>
 
                           <input
                             className="myInput IP"
@@ -292,32 +277,13 @@ function Login() {
                           />
                         </div>
                       </div>
-                      <div className="Col-lg-33 Col-md-2 Col-sm-1">
-                        <div className="form-group">
-                          <i class="fas fa-table"></i>
-
-                          <input
-                            required
-                            className="myInput IP"
-                            type="number"
-                            name="pyear"
-                            id="pyear"
-                            type="number"
-                            min="1997"
-                            max="2050"
-                            step="1"
-                            onChange={registerChange}
-                            value={register.pyear}
-                            placeholder="Passing Year"
-                          />
-                        </div>
-                      </div>
+                      
                     </div>
                     <input
                       type="submit"
                       className="butt"
                       name=""
-                      value="Register"
+                      value="Submit"
                     />
 
                     <br />

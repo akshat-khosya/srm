@@ -1,14 +1,16 @@
 import Login from "./pages/login/Login";
 import Home from './pages/home/Home'
-import { useContext } from "react";
+import { useContext,useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Registration from "./pages/registration/Registration";
 import { Context } from "./context/Context";
 import axios from "axios";
-import { useEffect } from "react/cjs/react.development";
+
 import Profile from "./pages/profile/Profile";
+
 function App() {
   const {user,dispatch,isFetching}=useContext(Context);
+  const[num,setNum]=useState(true);
   const loadData=async()=>{
     
     try {
@@ -20,13 +22,14 @@ function App() {
       dispatch({ type: "LOGIN_FAILURE" });
     }
   }
-  
-  useEffect(()=>{
-    if(localStorage.getItem('token')){
+  if(localStorage.getItem('token')&& num){
+    
       loadData();
-    }
-   
-  },[])
+      setNum(false);
+    
+  }
+ 
+  
 
   return (
     <Router>
@@ -35,7 +38,7 @@ function App() {
       <Route  path="/" element={user?(user.verifcation?(<Home />):<Registration />):<Login />}/>
       <Route  path="/login" element={user?<Home />:<Login />}/>
       <Route  path="/register" element={user?(user.verifcation?<Home />:<Registration />):<Login />}/>
-      <Route path="/profile" element={user&&(user.verifcation && <Profile /> )} />
+      <Route path="/profile" element={user?(user.verifcation ? <Profile /> :<Registration />):(<Login />)} />
     </Routes>
   </Router>
   );

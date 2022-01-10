@@ -1,7 +1,7 @@
 import "./home.css";
 import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
-import { useEffect, useState } from "react";
+import { useState,useEffect } from "react";
 import Write from "../../components/Write/Write";
 import Posts from "../../components/posts/Posts";
 import axios from "axios";
@@ -19,9 +19,10 @@ function Home() {
       console.log(err);
     }
   }
-    useEffect(()=>{
-      loadPost();
-    },[])
+useEffect(() => {
+  loadPost();
+}, [])
+  
   const [navbar, setNavbar] = useState("Navbar");
   const changeClass = () => {
     console.log(window.scrollY);

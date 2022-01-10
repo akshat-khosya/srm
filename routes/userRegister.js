@@ -18,7 +18,7 @@ router.post("/newregister", async (req, res) => {
         phone: req.body.phone,
         username: req.body.username,
         password: hasedPass,
-        pyear: req.body.pyear,
+      
         verifcation: false,
       });
       await newUser.save((err, savedUser) => {
@@ -115,7 +115,7 @@ router.post("/login", async (req, res) => {
 router.patch("/newregister", async (req, res) => {
   try {
     const { email, ...rest } = req.body;
-    const user = await UserData.findOneAndUpdate(
+    await UserData.findOneAndUpdate(
       { email: email },
       {
         verifcation: true,
@@ -130,6 +130,33 @@ router.patch("/newregister", async (req, res) => {
             res.send({ status: true, message: "verified", user: others });
           } else {
             res.send({ satus: false, message: "something went go" });
+          }
+        }
+      }
+    );
+  } catch (err) {
+    console.log(err);
+  }
+});
+router.patch("/profile", async (req, res) => {
+  try {
+    const { email, ...rest } = req.body;
+   
+    await UserData.findOneAndUpdate(
+      { email: email },
+      {
+        $set: rest,
+      },
+      (err, foundUser) => {
+        if (err) {
+          console.log(err);
+          res.json({ status: false, message: "err", err: err.keyValue });
+        } else {
+          if (foundUser) {
+           
+            res.send({ status: true, message: "verified", user: req.body });
+          } else {
+            res.json({ status: false, message: "err", err: err.keyValue });
           }
         }
       }

@@ -9,7 +9,7 @@ const PostSchema = new mongoose.Schema({
     },
     media:{
         type:String,
-        unique:true
+        
     },
     desc:{
         type:String

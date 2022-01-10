@@ -24,8 +24,7 @@ const UserDataSchema = new mongoose.Schema(
         unique:true
     },
     pyear:{
-        type:String,
-        required:true,
+        type:String
     },
     password: {
       type: String,
