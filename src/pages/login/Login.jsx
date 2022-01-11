@@ -21,7 +21,6 @@ function Login() {
     username: "",
     password: "",
     repassword: "",
-    pyear: "2020",
   });
 
   const registerChange = (e) => {
@@ -285,32 +284,13 @@ function Login() {
                           />
                         </div>
                       </div>
-                      <div className="Col-lg-33 Col-md-2 Col-sm-1">
-                        <div className="form-group">
-                          <i class="fas fa-table"></i>
-
-                          <input
-                            required
-                            className="myInput IP"
-                            type="number"
-                            name="pyear"
-                            id="pyear"
-                            type="number"
-                            min="1997"
-                            max="2050"
-                            step="1"
-                            onChange={registerChange}
-                            value={register.pyear}
-                            placeholder="Passing Year"
-                          />
-                        </div>
-                      </div>
+                      
                     </div>
                     <input
                       type="submit"
                       className="butt"
                       name=""
-                      value="Register"
+                      value="Submit"
                     />
 
                     <br />

@@ -216,18 +216,7 @@ function Registration() {
                 name="currentoriginaztion"
               />
             </div>
-            <div className="regis-inputgroup Col-lg-33 Col-md-50 Col-sm-100">
-              <label htmlFor="pyear">
-                Passing Year<span className="requiredLabel">*</span>
-              </label>
-              <input
-                disabled
-                value={user.pyear}
-                type="text"
-                id="pyear"
-                name="pyear"
-              />
-            </div>
+           
             <div className="regis-inputgroup Col-lg-33 Col-md-50 Col-sm-100">
               <label htmlFor="desgination">
                 Desgination<span className="requiredLabel">*</span>

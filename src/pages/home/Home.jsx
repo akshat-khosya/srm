@@ -11,7 +11,7 @@ function Home() {
   const loadPost=async()=>{
     try {
       
-      const data=await axios.get("/api/post")
+      const data=await axios.get("http://54.167.139.48:4000/api/post")
       console.log(data);
       setPosts(data.data);
       

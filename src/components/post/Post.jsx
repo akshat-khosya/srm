@@ -11,7 +11,7 @@ function Post({post}) {
                 <div className="postUser">
                 <div className="postUser-details">
                 <div className="postProfilePhoto">
-                    <img src={"/images/"+post.email} alt="" />
+                    <img src={"http://54.167.139.48:4000/images/"+post.email} alt="" />
                 </div>
                 <div className="postUserName">
                     <h4>{post.author}</h4>
