@@ -11,7 +11,7 @@ const post=require("./routes/post")
 const register= require("./routes/userRegister")
 dotenv.config();
 app.use(express.json());
-app.use(cors());
+app.use(cors({origin:"https://217.21.87.31/"}));
 app.use("/images",express.static(path.join(__dirname,"/images")));
 mongoose.connect(process.env.MONGO_URL,{ useNewUrlParser: true, useUnifiedTopology: true }, function(err) {
     if (err){console.log(err)}else{
