@@ -61,7 +61,7 @@ function Write({load}) {
                     <h3 className="writeheading">Create Post</h3>
                     </div>
                     <div className="write-desc">
-                        <label htmlFor="desc"><img src={"/images/"+user.photo} alt="" />{user.name}</label>
+                        <label htmlFor="desc"><img src={"https://rktheprince.online/images/"+user.photo} alt="" />{user.name}</label>
                         <textarea value={desc} onChange={(e)=>{setDesc(e.target.value)}} placeholder='Write somethings here' name="desc" id="desc" ></textarea>
                     </div>
                     {file && (<div className='media-show'>
