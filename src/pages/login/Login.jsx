@@ -177,6 +177,8 @@ function Login() {
                       name=""
                       value="Register"
                     />
+                    <br />
+                    <a >Forgot Password</a>
                   </form>
                 </div>
               </div>

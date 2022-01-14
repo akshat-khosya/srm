@@ -1,5 +1,5 @@
 .login{
-    background-image: url(../../Images/123.jpg);
+    background-image: url(../../Images/srmcollege.png);
     background-position: 100% 20%;
     background-repeat: no-repeat;
     background-size: cover;
@@ -19,7 +19,7 @@
   .container{
     position: absolute;
     max-width: 800px;
-    height: 500px;
+    height: 600px;
     margin: auto;
     margin-top: 50px;
     top: 50%;
