@@ -15,7 +15,7 @@ function App() {
     
     try {
       dispatch({ type: "Login_START" });
-      const data=await axios.get("http://54.167.139.48:4000/api/verifytoken",{ headers: {"token" : localStorage.getItem('token')}})
+      const data=await axios.get("https://rktheprince.online/api/verifytoken",{ headers: {"token" : localStorage.getItem('token')}})
       console.log(data);
       dispatch({ type: "LOGIN_SUCCESS", payload: data.data.user });
     } catch (err) {

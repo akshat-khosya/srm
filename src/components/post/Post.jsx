@@ -3,15 +3,17 @@ import { Context } from '../../context/Context'
 import './post.css'
 
 import like from '../../Images/like.png'
-function Post({post}) {
+function Post({post,keys}) {
     const {user}=useContext(Context);
+    console.log(keys);
     return (
-        <div className='Post'>
+
+        <div key={keys} className='Post'>
             <div className="postContainer">
                 <div className="postUser">
                 <div className="postUser-details">
                 <div className="postProfilePhoto">
-                    <img src={"http://54.167.139.48:4000/images/"+post.email} alt="" />
+                    <img src={"https://rktheprince.online/images/"+post.email} alt="" />
                 </div>
                 <div className="postUserName">
                     <h4>{post.author}</h4>
@@ -29,7 +31,7 @@ function Post({post}) {
                 )}
                 {post.media && (
                     <div className="postMedia">
-                    <img src={"http://54.167.139.48:4000/images/"+post.media} alt="" />
+                    <img src={"https://rktheprince.online/images/"+post.media} alt="" />
                     </div>
                 )}
                 

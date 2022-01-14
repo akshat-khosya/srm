@@ -4,9 +4,9 @@ import './posts.css'
 function Posts({ posts }) {
     return (
         <div>
-           {posts.map((p)=>(
-          
-          <Post post={p} />
+           {posts.map((p,index)=>(
+         
+          <Post keys={index} post={p} />
       ))}
         </div>
     )

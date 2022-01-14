@@ -37,7 +37,7 @@ function Profile() {
     
     try {
       dispatch({ type: "Login_START" });
-      const data=await axios.get("http://54.167.139.48:4000/api/verifytoken",{ headers: {"token" : localStorage.getItem('token')}})
+      const data=await axios.get("https://rktheprince.online/api/verifytoken",{ headers: {"token" : localStorage.getItem('token')}})
       console.log(data);
       dispatch({ type: "LOGIN_SUCCESS", payload: data.data.user });
     } catch (err) {
@@ -73,7 +73,7 @@ function Profile() {
       allPersonal.photo = filename;
       console.log(allPersonal);
       try {
-        const res = await axios.post("http://54.167.139.48:4000/api/upload", image);
+        const res = await axios.post("https://rktheprince.online/api/upload", image);
         console.log(res);
         loadData();
       } catch (err) {
@@ -83,7 +83,7 @@ function Profile() {
 
     try {
       const res = await axios.patch(
-        "http://54.167.139.48:4000/api/profile",
+        "https://rktheprince.online/api/profile",
         allPersonal
       );
       if (res.data.status) {
@@ -128,7 +128,7 @@ function Profile() {
                       <label className="Imglabel" htmlFor="file">
                         <img
                           className="regisImg"
-                          src={"http://54.167.139.48:4000/images/" + user.photo}
+                          src={"https://rktheprince.online/images/" + user.photo}
                           alt=""
                         />
                       </label>
