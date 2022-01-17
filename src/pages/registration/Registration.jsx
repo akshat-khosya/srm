@@ -50,7 +50,7 @@ function Registration() {
       allPersonal.photo = filename;
       console.log(allPersonal);
       try {
-        const res = await axios.post("https://rktheprince.online/api/upload", image);
+        const res = await axios.post("https://tegniescorporation.tech/api/upload", image);
         console.log(res);
       } catch (err) {}
       try {

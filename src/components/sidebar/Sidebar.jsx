@@ -40,7 +40,7 @@ function Sidebar() {
               >
                 <div className="Sidebar-profile Col-lg-20">
                   <img
-                    src={"https://rktheprince.online/images/" + user.photo}
+                    src={"https://tegniescorporation.tech/images/" + user.photo}
                     alt=""
                   />
                 </div>

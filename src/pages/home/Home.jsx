@@ -11,7 +11,7 @@ function Home() {
   const loadPost=async()=>{
     try {
       
-      const data=await axios.get("https://rktheprince.online/api/post")
+      const data=await axios.get("https://tegniescorporation.tech/api/post")
       console.log(data);
       setPosts(data.data);
       
