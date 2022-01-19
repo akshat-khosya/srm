@@ -8,6 +8,7 @@ function Sidebar() {
   const { user, dispatch } = useContext(Context);
   const [icon, setIcon] = useState("fas fa-caret-down");
   const [dropdown, setDropdown] = useState("dropdown");
+  const [classname,setClassname]=useState(window.innerWidth>1200?"Col-lg-16 Sidebar":"Sidebar");
   const handleIcon = () => {
     if (icon === "fas fa-caret-down") {
       setIcon("fas fa-caret-up");
@@ -18,7 +19,7 @@ function Sidebar() {
     }
   };
   return (
-    <div className="Sidebar Col-lg-16">
+    <div className={classname}>
       <div className="Sidebar-container">
         <div className="Sidebar-wrapper">
           <ul className="Sidebar-ul ">
@@ -172,6 +173,7 @@ function Sidebar() {
               <div className="Sidebar-icon Col-lg-10"></div>
             </div>
           </li>
+          <Link className="link" to="/events">
           <li className="Sidebar-li ">
             <div className="profile-group Row">
               <div className="Sidebar-profile Col-lg-20">
@@ -181,6 +183,7 @@ function Sidebar() {
               <div className="Sidebar-icon Col-lg-10"></div>
             </div>
           </li>
+                </Link>
         </div>
       </div>
     </div>

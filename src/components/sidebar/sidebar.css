@@ -9,6 +9,13 @@
     width: 20%;
     
 }
+@media (max-width:1200px){
+    .Sidebar{
+        display: none;
+        visibility: hidden;
+        opacity: 0;
+    }
+}
 
 .Sidebar-container{
     background-color: rgb(21, 21, 29);

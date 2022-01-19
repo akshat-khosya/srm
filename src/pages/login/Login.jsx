@@ -116,22 +116,16 @@ function Login() {
       console.log(err);
     }
   };
-  return (
+  return (<>
+   <TopBar />
     <div className="login">
-      <TopBar />
-      <div className={view ? "container" : "container-regis"}>
+     
+      <div className="container">
         <div className="myCard">
-          <div className="row">
-            <div className={view ? "col-md-6" : "col-md-4"}>
-              <div className="myLeftCtn">
-                <div className="box">
-                  <header>SRM NCR ALUMNI PORTAL</header>
-                  <p></p>
-                </div>
-              </div>
-            </div>
+          <div className="Row">
+            
             {view ? (
-              <div className="col-md-6">
+              <div className="Col-lg-100">
                 <div className="myRightCtn">
                   <form onSubmit={handelSubmit} className="myForm text-center">
                     <header>Login</header>
@@ -170,6 +164,7 @@ function Login() {
                       name=""
                       value="Login"
                     />
+                    <br />
                     <input
                       onClick={changeView}
                       type="button"
@@ -183,7 +178,7 @@ function Login() {
                 </div>
               </div>
             ) : (
-              <div className="col-md-8">
+              <div className="Col-lg-100">
                 <div className="myRightCtn">
                   <form
                     onSubmit={handelRegister}
@@ -296,6 +291,7 @@ function Login() {
                     />
 
                     <br />
+
                     <button onClick={changeView} className="butt">
                       Login
                     </button>
@@ -308,6 +304,7 @@ function Login() {
       </div>
       {err.status && <SnackBar text={err.message} />}
     </div>
+    </>
   );
 }
 

@@ -37,7 +37,7 @@ useEffect(() => {
     <div className="home">
       <div className="Row">
         <Sidebar />
-        <div className="Col-lg-83">
+        <div className="Col-lg-83 Col-md-100">
           <div className="home-main">
             <Navbar />
             <div className="home-container">

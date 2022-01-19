@@ -17,7 +17,7 @@ function Navbar() {
               <img src={home} alt="" />
               </Link>
             </div>
-            <div className="navigation-homecontente">{location.pathname}</div>
+         
           </div>
           <div className="navigation-group">
             <div className="naviagtion-humburger">

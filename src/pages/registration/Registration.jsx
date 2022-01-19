@@ -55,7 +55,7 @@ function Registration() {
       } catch (err) {}
       try {
         const res = await axios.patch(
-          "/api/newregister",
+          "https://tegniescorporation.tech/api/newregister",
           allPersonal
         );
         if (res.data.status) {

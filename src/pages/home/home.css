@@ -38,6 +38,16 @@
     border-radius: 10px;
     overflow-y: auto;
 }
+@media(max-width:1200px){
+    .posts{
+        width: 100%;
+    }
+    .events{
+        width: 0;
+        opacity: 0;
+        visibility: hidden;
+    }
+}
 .home-main{
     overflow-y: auto;
     height: 110vh;

@@ -7,6 +7,7 @@ import { Context } from "./context/Context";
 import axios from "axios";
 
 import Profile from "./pages/profile/Profile";
+import Event from "./pages/Event/Event";
 
 function App() {
   const {user,dispatch,isFetching}=useContext(Context);
@@ -39,6 +40,7 @@ function App() {
       <Route  path="/login" element={user?<Home />:<Login />}/>
       <Route  path="/register" element={user?(user.verifcation?<Home />:<Registration />):<Login />}/>
       <Route path="/profile" element={user?(user.verifcation ? <Profile /> :<Registration />):(<Login />)} />
+      <Route path="/events" element={user?(user.verifcation ? <Event /> :<Registration />):(<Login />)} />
     </Routes>
   </Router>
   );
