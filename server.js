@@ -9,6 +9,7 @@ const path = require('path');
 const authRoute= require("./routes/authUser");
 const post=require("./routes/post")
 const register= require("./routes/userRegister")
+const event=require("./routes/event");
 dotenv.config();
 app.use(express.json());
 app.use(cors({origin:"*"}))
@@ -36,6 +37,7 @@ app.post("/api/upload", upload.single("file"),(req,res)=>{
     app.use("/api/auth/",authRoute);
     app.use("/api/post/",post);
     app.use("/api/",register);
+    app.use("/api/event/",event);
 // app.use("/api/users",userRoute);
 // app.use("/api/posts",postRoute);
 // app.use("/api/categories",categoryRoute);
