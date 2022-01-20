@@ -1,8 +1,7 @@
-import axios from "axios";
 import React, { useContext, useState } from "react";
 import { Context } from "../../context/Context";
 
-const EventPopup = ({ close, submitEvent,load }) => {
+const EventPopup = ({ close, submitEvent,load,axiosInstance }) => {
   const { user } = useContext(Context);
   const currentDate = `${new Date().getFullYear()}-${
     new Date().getMonth() < 9
@@ -51,15 +50,15 @@ const EventPopup = ({ close, submitEvent,load }) => {
       eventData.photo = filename;
       console.log(eventData);
       try {
-        const res = await axios.post("https://tegniescorporation.tech/api/upload", image);
+        const res = await axiosInstance.post("/api/upload", image);
         console.log(res);
       } catch (err) {
         console.log(err);
       }
     }
     try {
-      const res = await axios.post(
-        "https://tegniescorporation.tech/api/event/",
+      const res = await axiosInstance.post(
+        "/api/event/",
         eventData
       );
       console.log(res);
