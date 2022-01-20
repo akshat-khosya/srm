@@ -42,6 +42,7 @@ function Event() {
                
 								{eventPopupBox && (
 									<EventPopup
+                    load={loadData}
 										close={() => setEventPopupBox(false)}
 										submitEvent={(a) => {
 											addEvent(a);
