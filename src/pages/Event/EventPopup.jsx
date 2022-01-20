@@ -51,7 +51,7 @@ const EventPopup = ({ close, submitEvent,load }) => {
       eventData.photo = filename;
       console.log(eventData);
       try {
-        const res = await axios.post("http://localhost:4000/api/upload", image);
+        const res = await axios.post("https://tegniescorporation.tech/api/upload", image);
         console.log(res);
       } catch (err) {
         console.log(err);
@@ -59,7 +59,7 @@ const EventPopup = ({ close, submitEvent,load }) => {
     }
     try {
       const res = await axios.post(
-        "http://localhost:4000/api/event/",
+        "https://tegniescorporation.tech/api/event/",
         eventData
       );
       console.log(res);

@@ -6,7 +6,7 @@ function SingleEvent({ event }) {
     <>
       {event.map((e) => (
         <div className="post">
-            {e.photo&&<img src={"http://localhost:4000/images/"+e.photo} alt="" className="postImg" />}
+            {e.photo&&<img src={"https://tegniescorporation.tech/images/"+e.photo} alt="" className="postImg" />}
           
 
           <div className="postInfo">

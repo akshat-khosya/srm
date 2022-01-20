@@ -19,7 +19,7 @@ function Event() {
     
     try {
       
-      const data=await axios.get("http://localhost:4000/api/event/");
+      const data=await axios.get("https://tegniescorporation.tech/api/event/");
       console.log(data);
       setEvent(data.data);
     } catch (err) {
