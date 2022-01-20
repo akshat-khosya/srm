@@ -5,6 +5,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Registration from "./pages/registration/Registration";
 import { Context } from "./context/Context";
 import axios from "axios";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 import Profile from "./pages/profile/Profile";
 import Event from "./pages/Event/Event";
@@ -29,6 +31,7 @@ function App() {
       setNum(false);
     
   }
+  AOS.init();
  
   
 

@@ -10,6 +10,11 @@ import axios from "axios";
 import SingleEvent from "./SingleEvent";
 function Event() {
   const [event,setEvent]=useState([]);
+	const [eventPopupBox, setEventPopupBox] = useState(false);
+	const addEvent = (a) => {
+		console.log(a);
+    setEventPopupBox(false);
+	};
   const loadData=async()=>{
     
     try {
@@ -35,9 +40,17 @@ function Event() {
             <div className="home-container">
               <div className="event">
                
+								{eventPopupBox && (
+									<EventPopup
+										close={() => setEventPopupBox(false)}
+										submitEvent={(a) => {
+											addEvent(a);
+										}}
+									/>
+								)}
                 <div className="event-heading">Events</div>
                 <div className="new-Event">
-                  <button type="submit" className="aavesh-btn">
+                  <button type="submit" className="aavesh-btn" onClick={() => setEventPopupBox(true)}>
                     <span className="aavesh-btn-text">Create Event</span>
                   </button>
                 </div>

@@ -1,3 +1,15 @@
+:root {
+	--bgcolor: #f0f0f0;
+	--tcolor: #121212;
+	--back-shadow: rgba(0, 0, 0, 0.2);
+	--back-shadow-dark: rgba(0, 0, 0, 0.5);
+	--back-shadow-light: rgba(0, 0, 0, 0.1);
+	--transition-time: 200ms;
+	--blue: #4285f4;
+	--red: #ea4335;
+	--yellow: #fbbc05;
+	--green: #34a853;
+}
 .event{
    position: relative;
     width: 100%;
@@ -83,13 +95,182 @@
        
 }
 
-.eventpopup{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    background-color: #fff;
-    height: 70%;
-    width: 70%;
-    z-index: 20;
+.event-popup {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 5;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+.event-popup-box {
+	width: 60%;
+	min-height: 75%;
+	max-height: 95%;
+	display: flex;
+	flex-flow: column;
+	background-color: var(--bgcolor);
+	border-radius: 0.5rem;
+	overflow: hidden;
+}
+
+@media (max-width: 880px) {
+	.event-popup-box {
+		width: 80%;
+	}
+}
+@media (max-width: 672px) {
+	.event-popup-box {
+		width: 95%;
+	}
+}
+
+.event-popup button {
+	border: 0;
+	outline: 0;
+}
+.event-popup .icon {
+	border-radius: 500px;
+	padding: 0.45rem;
+	margin: 0.5rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: all var(--transition-time) ease-in-out;
+	background-color: transparent;
+}
+.event-popup .icon:hover {
+	background-color: var(--back-shadow-light);
+}
+.event-popup-head {
+	width: 100%;
+	height: 3rem;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	background-color: var(--back-shadow-light);
+}
+.event-popup-body {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	height: calc(100% - 3rem);
+	overflow-y: auto;
+}
+.event-popup form {
+	width: 75%;
+	margin: 1rem 0;
+	padding: 0.5rem 0;
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	flex-flow: column;
+}
+@media (max-width: 880px) {
+	.event-popup form {
+		width: 90%;
+	}
+}
+.event-popup form > * {
+	margin: 1.1rem 0;
+}
+.event-popup label {
+	width: 90%;
+	margin: 1rem 0 0 0;
+	font-size: 0.9rem;
+	color: var(--back-shadow-dark);
+}
+.event-popup input,
+.event-popup textarea {
+	width: 90%;
+	font: inherit;
+	text-rendering: auto;
+	background-color: transparent;
+	color: var(--tcolor);
+	letter-spacing: normal;
+	word-spacing: normal;
+	line-height: normal;
+	display: inline-block;
+	cursor: text;
+	border: none;
+	outline: 3px solid transparent;
+	border-bottom: 1px solid var(--back-shadow-light);
+	margin: 0.5rem;
+	padding: 0.5rem;
+	resize: none;
+	transition: all var(--transition-time) ease-in-out;
+}
+.event-popup input[type="file"] {
+	margin: 0 0.5rem 0.5rem 0.5rem;
+}
+.event-popup input:hover,
+.event-popup textarea:hover {
+	border-bottom: 1px solid var(--back-shadow-light);
+}
+.event-popup input:active:invalid,
+.event-popup input:focus:invalid,
+.event-popup textarea:active:invalid,
+.event-popup textarea:focus:invalid {
+	border-bottom: 1px solid var(--red);
+}
+.event-popup input:active:valid,
+.event-popup input:focus:valid,
+.event-popup textarea:active:valid,
+.event-popup textarea:focus:valid {
+	border-bottom: 1px solid var(--green);
+}
+.event-popup input::placeholder,
+.event-popup textarea::placeholder {
+	font-size: 0.875rem;
+}
+.event-popup-form-group {
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	flex-flow: row;
+	width: 100%;
+}
+.event-popup-form-group input {
+	width: 40%;
+}
+input::-webkit-file-upload-button {
+	border: 0;
+	outline: 0;
+	content: "Upload Image";
+	background: transparent;
+	font: inherit;
+	font-size: 0.875rem;
+}
+
+input::-webkit-file-upload-button {
+	border-radius: 500px;
+	padding: 0.5rem 0.75rem;
+	cursor: pointer;
+	transition: all var(--transition-time) ease-in-out;
+	background-color: transparent;
+}
+input::-webkit-file-upload-button:hover {
+	background-color: var(--back-shadow-light);
+}
+::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+	background-color: rgba(0, 0, 0, 0.01);
+	border: 4px solid transparent;
+}
+::-webkit-scrollbar-track {
+	background-color: rgba(0, 0, 0, 0.2);
+}
+::-webkit-scrollbar-thumb {
+	background-color: #7a7a7a;
+	border-radius: 500px;
+}
+::-webkit-scrollbar-thumb:hover {
+	background-color: #525252;
 }
