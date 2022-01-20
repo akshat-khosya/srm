@@ -9,6 +9,28 @@ router.post("/", async (req, res) => {
        console.log(err);
    }
   });
+  router.patch("/", async (req, res) => {
+      const {id,...others}=req.body;
+     
+    try {
+        Event.updateOne(
+            {_id: req.body.id},
+            {$set:others},
+            
+            function(err){
+                if(!err){
+                    res.send({status:true,message:"Event updated Sucessfully"});
+                }
+                else{
+                    console.log(err);
+                    res.send(err);
+                }
+            }
+        );
+    } catch (err) {
+        console.log(err);
+    }
+   });
 
   router.get("/", async (req, res) => {
     try {

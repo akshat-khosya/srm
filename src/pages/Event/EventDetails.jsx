@@ -23,6 +23,7 @@ const EventDetails = ({ close, load, Event, axiosInstance, submitEvent }) => {
 			category1: event.category1,
 			category2: event.category2,
 			desc: event.desc,
+			id:event._id
 		};
 		if (file) {
 			const image = new FormData();
@@ -39,7 +40,7 @@ const EventDetails = ({ close, load, Event, axiosInstance, submitEvent }) => {
 			}
 		}
 		try {
-			const res = await axiosInstance.post("/api/event/", eventData);
+			const res = await axiosInstance.patch("/api/event/", eventData);
 			console.log(res);
 			if (res.data.status) {
 				load();
@@ -53,13 +54,14 @@ const EventDetails = ({ close, load, Event, axiosInstance, submitEvent }) => {
 					image: "",
 					type1: "",
 					type2: "",
+					
 				});
 			}
 		} catch (err) {
 			console.log(err);
 		}
 	};
-	const [userValid, setUserValid] = useState(true);
+	const [userValid, setUserValid] = useState(user.email===event.email?true:false);
 	return (
 		<div className="event-popup">
 			<div className="event-popup-box" data-aos="zoom-in">
