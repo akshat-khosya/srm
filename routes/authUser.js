@@ -12,7 +12,7 @@ router.post("/email", async (req, res) => {
     const user = await Auth.findOne({ email: req.body.email });
     console.log(user);
     if (user) {
-      const validate = await bcrypt.compare(req.body.password, user.password);
+      const vaSlidate = await bcrypt.compare(req.body.password, user.password);
       console.log(validate);
       if (validate) {
         const token = jwt.sign(user._id.toString(), process.env.JWT_SECRET);
