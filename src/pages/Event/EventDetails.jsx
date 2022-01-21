@@ -45,6 +45,7 @@ const EventDetails = ({ close, load, Event, axiosInstance, submitEvent }) => {
 			if (res.data.status) {
 				load();
 				alert(res.data.message);
+				close();
 				submitEvent(event);
 				setEvent({
 					title: "",

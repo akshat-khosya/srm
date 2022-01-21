@@ -15,10 +15,7 @@ function SingleEvent({ event, axiosInstance, openEvent }) {
 					)}
 
 					<div className="postInfo">
-						<div className="postcats">
-							<span className="postCat">{e.category1}</span>
-							<span className="postCat">{e.category2}</span>
-						</div>
+						
 						<div className="postTile-Date">
 							<span
 								className="postTitle"
@@ -30,6 +27,12 @@ function SingleEvent({ event, axiosInstance, openEvent }) {
 							<hr />
 							<span className="postDate">{e.date}</span>
 						</div>
+                        <div className="postcats">
+							<span className="postCat">{e.category1}</span>
+							<span className="postCat">{e.category2}</span>
+						</div>
+                        <h6>Author: {e.author}</h6>
+                        
 					</div>
 					<p className="postDesc">{e.desc}</p>
 				</div>

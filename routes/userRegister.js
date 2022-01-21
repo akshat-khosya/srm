@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const UserData = require("../models/userData");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt-nodejs");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 router.post("/newregister", async (req, res) => {
