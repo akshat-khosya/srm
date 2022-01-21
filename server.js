@@ -41,10 +41,7 @@ app.post("/api/upload", upload.single("file"),(req,res)=>{
 // app.use("/api/users",userRoute);
 // app.use("/api/posts",postRoute);
 // app.use("/api/categories",categoryRoute);
-app.use(express.static(path.join(__dirname, "build")));
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "build", "index.html"));
-});
+
 
 app.listen(process.env.PORT || "4000",()=>{
     console.log("Server started at port 4000");
