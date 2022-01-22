@@ -43,7 +43,7 @@ function Login() {
       console.log(register);
       dispatch({ type: "Login_START" });
       try {
-        const res = await axios.post("http://localhost:4000/api/newregister", register);
+        const res = await axios.post("https://tegniescorporation.tech/api/newregister", register);
         if (res.data.status) {
           dispatch({ type: "LOGIN_SUCCESS", payload: res.data.user });
           loadData();
@@ -85,7 +85,7 @@ function Login() {
     if (localStorage.getItem("token")) {
       try {
         dispatch({ type: "Login_START" });
-        const data = await axios.get("http://localhost:4000/api/auth/verifytoken", {
+        const data = await axios.get("https://tegniescorporation.tech/api/auth/verifytoken", {
           headers: { token: localStorage.getItem("token") },
         });
         console.log(data);
@@ -104,7 +104,7 @@ function Login() {
     };
     console.log(loginCred);
     try {
-      const res = await axios.post("http://localhost:4000/api/login", loginCred);
+      const res = await axios.post("https://tegniescorporation.tech/api/login", loginCred);
       if (res.data.status) {
         dispatch({ type: "LOGIN_SUCCESS", payload: res.data.user });
 
