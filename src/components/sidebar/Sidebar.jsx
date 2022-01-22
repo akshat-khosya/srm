@@ -100,6 +100,7 @@ function Sidebar() {
               </div>
             </li>
           </Link>
+          <Link className="link" to="/connections">
           <li className="Sidebar-li ">
             <div className="profile-group Row">
               <div className="Sidebar-profile Col-lg-20">
@@ -111,6 +112,8 @@ function Sidebar() {
               <div className="Sidebar-icon Col-lg-10"></div>
             </div>
           </li>
+          </Link>
+          <Link className="link" to="/group">
           <li className="Sidebar-li ">
             <div className="profile-group Row">
               <div className="Sidebar-profile Col-lg-20">
@@ -122,15 +125,19 @@ function Sidebar() {
               <div className="Sidebar-icon Col-lg-10"></div>
             </div>
           </li>
+          </Link>
+         
           <li className="Sidebar-li ">
             <div className="profile-group Row">
               <div className="Sidebar-profile Col-lg-20">
                 <i className="fas fa-people-arrows"></i>
               </div>
-              <div className="Sidebar-profile-content Col-lg-70">Mentoring</div>
+              <div className="Sidebar-profile-content Col-lg-70"><a href="https://docs.google.com/forms/d/e/1FAIpQLSeIP6lTcFrLbTsJwn-p4FbNTncIEF7n4XjIOCB97P-PElcajg/viewform" target="_blank">Mentoring</a></div>
               <div className="Sidebar-icon Col-lg-10"></div>
             </div>
           </li>
+         
+          <Link className="link" to="/">
           <li className="Sidebar-li ">
             <div className="profile-group Row">
               <div className="Sidebar-profile Col-lg-20">
@@ -142,6 +149,8 @@ function Sidebar() {
               <div className="Sidebar-icon Col-lg-10"></div>
             </div>
           </li>
+          </Link>
+          <Link className="link" to="/resource">
           <li className="Sidebar-li ">
             <div className="profile-group Row">
               <div className="Sidebar-profile Col-lg-20">
@@ -151,6 +160,8 @@ function Sidebar() {
               <div className="Sidebar-icon Col-lg-10"></div>
             </div>
           </li>
+          </Link>
+          <Link className="link" to="/code">
           <li className="Sidebar-li ">
             <div className="profile-group Row">
               <div className="Sidebar-profile Col-lg-20">
@@ -162,6 +173,8 @@ function Sidebar() {
               <div className="Sidebar-icon Col-lg-10"></div>
             </div>
           </li>
+          </Link>
+          <Link className="link" to="/scholarships">
           <li className="Sidebar-li ">
             <div className="profile-group Row">
               <div className="Sidebar-profile Col-lg-20">
@@ -173,6 +186,7 @@ function Sidebar() {
               <div className="Sidebar-icon Col-lg-10"></div>
             </div>
           </li>
+          </Link>
           <Link className="link" to="/events">
           <li className="Sidebar-li ">
             <div className="profile-group Row">

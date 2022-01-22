@@ -5,7 +5,7 @@ import './post.css'
 import like from '../../Images/like.png'
 function Post({post,keys}) {
     const {user}=useContext(Context);
-    console.log(keys);
+    
     return (
 
         <div key={keys} className='Post'>

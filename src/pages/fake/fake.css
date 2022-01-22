@@ -1,0 +1,12 @@
+.fake{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    font-size: 72px;
+    color: rgb(21, 21, 29);
+    flex-direction: column;
+}
+.fake >span{
+    display: block;
+}

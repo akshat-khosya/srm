@@ -8,7 +8,7 @@ function SingleEvent({ event, axiosInstance, openEvent }) {
 				<div className="post" key={index}>
 					{e.photo && (
 						<img
-							src={`${axiosInstance.defaults.baseURL}/images/${e.photo}`}
+							src={`${axiosInstance.defaults.baseURL}images/${e.photo}`}
 							alt=""
 							className="postImg"
 						/>
