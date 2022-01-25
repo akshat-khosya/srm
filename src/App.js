@@ -11,15 +11,19 @@ import "aos/dist/aos.css";
 import Profile from "./pages/profile/Profile";
 import Event from "./pages/Event/Event";
 import Fake from "./pages/fake/Fake";
+import Opportunity from "./pages/Opportunity/Opportunity";
 
 function App() {
+	const axiosInstance = axios.create({
+		baseURL: "http://localhost:4000",
+	});
   const {user,dispatch,isFetching}=useContext(Context);
   const[num,setNum]=useState(true);
   const loadData=async()=>{
     
     try {
       dispatch({ type: "Login_START" });
-      const data=await axios.get("https://tegniescorporation.tech/api/verifytoken",{ headers: {"token" : localStorage.getItem('token')}})
+      const data=await axiosInstance.get("/api/verifytoken",{ headers: {"token" : localStorage.getItem('token')}})
       console.log(data);
       dispatch({ type: "LOGIN_SUCCESS", payload: data.data.user });
     } catch (err) {
@@ -40,16 +44,17 @@ function App() {
     <Router>
       
     <Routes>
-      <Route  path="/" element={user?(user.verifcation?(<Home />):<Registration />):<Login />}/>
-      <Route  path="/login" element={user?<Home />:<Login />}/>
-      <Route  path="/register" element={user?(user.verifcation?<Home />:<Registration />):<Login />}/>
-      <Route path="/profile" element={user?(user.verifcation ? <Profile /> :<Registration />):(<Login />)} />
-      <Route path="/events" element={user?(user.verifcation ? <Event /> :<Registration />):(<Login />)} />
-      <Route path="/connections" element={user?(user.verifcation ? <Fake />:<Registration />):(<Login />)} />
-      <Route path="/group" element={user?(user.verifcation ? <Fake />:<Registration />):(<Login />)} />
-      <Route path="/resource" element={user?(user.verifcation ? <Fake />:<Registration />):(<Login />)} />
-      <Route path="/code" element={user?(user.verifcation ? <Fake />:<Registration />):(<Login />)} />
-      <Route path="/scholarships" element={user?(user.verifcation ? <Fake />:<Registration />):(<Login />)} />
+      <Route  path="/" element={user?(user.verifcation?(<Home axiosInstance={axiosInstance} />):<Registration />):<Login axiosInstance={axiosInstance} />}/>
+      <Route  path="/login" element={user?<Home axiosInstance={axiosInstance} />:<Login axiosInstance={axiosInstance} />}/>
+      <Route  path="/register" element={user?(user.verifcation?<Home axiosInstance={axiosInstance} />:<Registration />):<Login axiosInstance={axiosInstance} />}/>
+      <Route path="/profile" element={user?(user.verifcation ? <Profile axiosInstance={axiosInstance} /> :<Registration />):(<Login axiosInstance={axiosInstance} />)} />
+      <Route path="/events" element={user?(user.verifcation ? <Event axiosInstance={axiosInstance} /> :<Registration />):(<Login axiosInstance={axiosInstance} />)} />
+      <Route path="/connections" element={user?(user.verifcation ? <Fake />:<Registration />):(<Login axiosInstance={axiosInstance} />)} />
+      <Route path="/group" element={user?(user.verifcation ? <Fake />:<Registration />):(<Login axiosInstance={axiosInstance} />)} />
+      <Route path="/opportunity" element={user?(user.verifcation ? <Opportunity axiosInstance={axiosInstance} />:<Registration />):(<Login axiosInstance={axiosInstance} />)} />
+      <Route path="/resource" element={user?(user.verifcation ? <Fake />:<Registration />):(<Login axiosInstance={axiosInstance} />)} />
+      <Route path="/code" element={user?(user.verifcation ? <Fake />:<Registration />):(<Login axiosInstance={axiosInstance} />)} />
+      <Route path="/scholarships" element={user?(user.verifcation ? <Fake />:<Registration />):(<Login axiosInstance={axiosInstance} />)} />
     </Routes>
   </Router>
   );

@@ -4,7 +4,7 @@ import dashboard from "../../Images/dashboard_white_24dp.svg";
 import { useContext, useState } from "react";
 import { Context } from "../../context/Context";
 import { Link } from "react-router-dom";
-function Sidebar() {
+function Sidebar({axiosInstance}) {
   const { user, dispatch } = useContext(Context);
   const [icon, setIcon] = useState("fas fa-caret-down");
   const [dropdown, setDropdown] = useState("dropdown");
@@ -41,7 +41,7 @@ function Sidebar() {
               >
                 <div className="Sidebar-profile Col-lg-20">
                   <img
-                    src={"https://tegniescorporation.tech/images/" + user.photo}
+                    src={`${axiosInstance.defaults.baseURL}/images/${user.photo}`}
                     alt=""
                   />
                 </div>
@@ -137,7 +137,7 @@ function Sidebar() {
             </div>
           </li>
          
-          <Link className="link" to="/">
+          <Link className="link" to="/opportunity">
           <li className="Sidebar-li ">
             <div className="profile-group Row">
               <div className="Sidebar-profile Col-lg-20">

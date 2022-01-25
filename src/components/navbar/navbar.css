@@ -1,9 +1,10 @@
 .Navbar{
    
     border-radius: 10px;
-    overflow: hidden;
+    /* overflow: hidden; */
     height: 10%;
     width: 100%;
+    position: relative;
 }
 .Navbaractive{
     
@@ -11,11 +12,15 @@
     backdrop-filter: saturate(200%) blur(1.875rem);
 }
 .Navbar-container{
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 20px;
+    padding: 0 20px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
 }
 .naviagtion-humburger{
     display: none;
@@ -55,8 +60,12 @@
     outline: none;
     border: 3px solid rgb(0, 68, 255);
     border-radius: 10px;
-    padding: 10px 10px;
+    padding: 8px 10px;
     padding-left: 20px;
+    transition: all var(--transition-time) ease-in-out;
+}
+.navbar-input>input:active,.navbar-input>input:focus{
+    border: 3px solid rgb(0, 68, 200);
 }
 .Navbar-user{
     display: flex;

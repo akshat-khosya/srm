@@ -1,0 +1,282 @@
+.opportunity {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  background-color: rgba(180, 167, 167, 0.342);
+}
+.opportunity-container {
+  width: 80%;
+  margin: 0 auto;
+  height: 90vh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-flow: column;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: relative;
+}
+.opportunity-container .Navbar {
+  position: fixed;
+  z-index: 5;
+  width: 76%;
+  top: 5vh;
+  left: 21.5%;
+}
+.opportunity-box {
+  width: 100%;
+  height: 90%;
+  padding: 2rem 0;
+  display: flex;
+  flex-flow: column;
+  position: absolute;
+  top: 10%;
+}
+.opportunity-head {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  padding: 0.5rem 0;
+  font-size: 2rem;
+  line-height: 2.5rem;
+}
+.opportunity-add {
+  width: 95%;
+  margin: 1rem auto;
+}
+.opportunity-job {
+  width: 90%;
+  height: 15rem;
+  background-color: var(--bgcolor);
+  border-radius: 8px;
+  padding: 0.75rem;
+  overflow: hidden;
+  margin: 1rem auto;
+  display: flex;
+  justify-content: space-between;
+  flex-flow: column;
+  transition: all var(--transition-time) ease-in-out;
+  box-shadow: 0 0 1px rgba(0, 12, 32, 0.04), 0 2px 6px rgba(3, 17, 38, 0.107135);
+}
+.opportunity-job-head {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.opportunity-job-head-icon {
+  width: 15%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.opportunity-job-head-icon img {
+  object-fit: cover;
+  max-width: 75%;
+  max-height: 75%;
+}
+.opportunity-job-head-content {
+  width: 80%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-flow: column;
+  padding: 0 1rem;
+}
+.opportunity-job-head-content-title {
+  height: 50%;
+  font-size: 1.1rem;
+  line-height: 1.25rem;
+  padding: 0.4rem 0;
+}
+.opportunity-job-head-content-field {
+  font-size: 0.875rem;
+  line-height: 1rem;
+  padding: 0.2rem 0;
+}
+.opportunity-job-head-content-department {
+  font-size: 0.75rem;
+  line-height: 0.875rem;
+  color: #505050;
+}
+.opportunity-job-head-showmore {
+  width: 10%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.opportunity-job-head-showmore span {
+  border-radius: 500px;
+  padding: 0.5rem;
+  transition: all var(--transition-time) ease-in-out;
+}
+.opportunity-job-head-showmore span:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+.opportunity-job-body {
+  font-size: 0.875rem;
+  padding: 0.5rem 0.3rem;
+}
+.opportunity-job-body-actions {
+  margin: 0.65rem 0;
+}
+.opportunity-job-body-actions button {
+  border: 0;
+  outline: 0;
+  border: 1px solid #0f6fff;
+  margin: 0 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 5px;
+  transition: all var(--transition-time) ease-in-out;
+}
+.opportunity-job:hover {
+  box-shadow: 0 0 1px rgba(0, 20, 32, 0.4), 0 2px 6px rgba(3, 25, 38, 0.2);
+}
+.opportunity-btn {
+  background-color: #0f6fff;
+  color: #f0f0f0;
+}
+.opportunity-btn:hover {
+  background-color: #0a6cff;
+}
+.opportunity-btn-outline {
+  background-color: #f0f0f0;
+  color: #0f6fff;
+}
+.opportunity-btn-outline:hover {
+  background-color: #0a6cff;
+  color: #f0f0f0;
+}
+
+.add-job {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.add-job-box {
+  background-color: var(--bgcolor);
+  width: 60%;
+  min-height: 50%;
+  max-height: 95%;
+  border-radius: 8px;
+}
+.add-job-head {
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 2.75rem;
+}
+.add-job-head-close {
+  border: 0;
+  outline: 0;
+  border-radius: 500px;
+  padding: 0.35rem;
+  margin: 0.5rem 1rem;
+  background: transparent;
+  transition: all var(--transition-time) ease-in-out;
+}
+.add-job-head-close:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.add-job-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0;
+}
+.add-job-body button {
+  border: 0;
+  outline: 0;
+  border: 1px solid #0f6fff;
+  margin: 0 0.5rem;
+  padding: 0.4rem 1rem;
+  border-radius: 5px;
+  resize: none;
+  transition: all var(--transition-time) ease-in-out;
+}
+.add-job-body label {
+  width: 25%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.add-job-body input,
+.add-job-body textarea,
+.add-job-body select {
+  width: 75%;
+  border: 0;
+  outline: 2px solid transparent;
+  margin: 0 0.5rem;
+  padding: 0.4rem 0.5rem;
+  border-radius: 5px;
+  resize: none;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+.add-job-body input::placeholder,
+.add-job-body textarea::placeholder,
+.add-job-body select::placeholder {
+  font-size: 0.875rem;
+}
+.add-job-body input:active, .add-job-body input:focus,
+.add-job-body textarea:active,
+.add-job-body textarea:focus,
+.add-job-body select:active,
+.add-job-body select:focus {
+  outline: 2px solid rgba(0, 0, 0, 0.04);
+}
+.add-job-form {
+  width: 80%;
+  height: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  flex-flow: column;
+}
+.add-job-form-group {
+  width: 100%;
+  margin: 0.6rem 0;
+  display: flex;
+}
+.add-job-form-group:last-child {
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+.add-job-btn {
+  background-color: #0f6fff;
+  color: #f0f0f0;
+}
+.add-job-btn:hover {
+  background-color: #0a6cff;
+}
+.add-job-btn-outline {
+  background-color: #f0f0f0;
+  color: #0f6fff;
+}
+.add-job-btn-outline:hover {
+  background-color: #0a6cff;
+  color: #f0f0f0;
+}
+
+.material-icons {
+  user-select: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+/*# sourceMappingURL=opportunity.css.map */

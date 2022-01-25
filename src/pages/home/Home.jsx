@@ -4,14 +4,13 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import { useState,useEffect } from "react";
 import Write from "../../components/Write/Write";
 import Posts from "../../components/posts/Posts";
-import axios from "axios";
 
-function Home() {
+function Home({axiosInstance}) {
   const [posts,setPosts]=useState([]);
   const loadPost=async()=>{
     try {
       
-      const data=await axios.get("https://tegniescorporation.tech/api/post")
+      const data=await axiosInstance.get("/api/post")
       console.log(data);
       setPosts(data.data);
       
@@ -36,14 +35,14 @@ useEffect(() => {
   return (
     <div className="home">
       <div className="Row">
-        <Sidebar />
+        <Sidebar axiosInstance={axiosInstance} />
         <div className="Col-lg-83 Col-md-100">
           <div className="home-main">
             <Navbar />
             <div className="home-container">
                 <div className="posts">
-               <Write load={loadPost} />
-               <Posts posts={posts} />
+               <Write load={loadPost} axiosInstance={axiosInstance} />
+               <Posts posts={posts} axiosInstance={axiosInstance} />
                 </div>
                 <div className="events">
                 
