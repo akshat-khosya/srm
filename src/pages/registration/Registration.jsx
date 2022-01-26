@@ -5,7 +5,7 @@ import { Context } from "../../context/Context";
 import SnackBar from "../../components/Snackbar";
 import axios from "axios";
 import userLogo from "../../Images/user.svg";
-function Registration() {
+function Registration({axiosInstance}) {
   const { user, dispatch } = useContext(Context);
   const [err, setErr] = useState({
     status: false,
@@ -50,12 +50,12 @@ function Registration() {
       allPersonal.photo = filename;
       console.log(allPersonal);
       try {
-        const res = await axios.post("https://tegniescorporation.tech/api/upload", image);
+        const res = await axiosInstance.post("/api/upload", image);
         console.log(res);
       } catch (err) {}
       try {
-        const res = await axios.patch(
-          "https://tegniescorporation.tech/api/newregister",
+        const res = await axiosInstance.patch(
+          "/api/newregister",
           allPersonal
         );
         if (res.data.status) {

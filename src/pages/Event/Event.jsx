@@ -3,13 +3,10 @@ import "./event.css";
 import { useState } from "react";
 import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
-import { Link } from "react-router-dom";
-import logo from "../../Images/post.jpg";
 import EventPopup from "./EventPopup";
-import axios from "axios";
 import SingleEvent from "./SingleEvent";
 import EventDetails from "./EventDetails";
-function Event() {
+function Event({axiosInstance}) {
 	const [event, setEvent] = useState([]);
 	const [eventPopupBox, setEventPopupBox] = useState(false);
 	const [eventDetailsBox, setEventDetailsBox] = useState(false);
@@ -22,9 +19,6 @@ function Event() {
 		console.log(a);
 		setEventPopupBox(false);
 	};
-	const axiosInstance = axios.create({
-		baseURL: "https://tegniescorporation.tech/",
-	});
 	const loadData = async () => {
 		try {
 			const data = await axiosInstance.get("/api/event");
@@ -43,7 +37,7 @@ function Event() {
 	return (
 		<div className="home">
 			<div className="Row">
-				<Sidebar />
+				<Sidebar axiosInstance={axiosInstance} />
 				<div className={classname}>
 					<div className="home-main">
 						<Navbar />

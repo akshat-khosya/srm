@@ -4,204 +4,242 @@ import dashboard from "../../Images/dashboard_white_24dp.svg";
 import { useContext, useState } from "react";
 import { Context } from "../../context/Context";
 import { Link } from "react-router-dom";
-function Sidebar() {
-  const { user, dispatch } = useContext(Context);
-  const [icon, setIcon] = useState("fas fa-caret-down");
-  const [dropdown, setDropdown] = useState("dropdown");
-  const [classname,setClassname]=useState(window.innerWidth>1200?"Col-lg-16 Sidebar":"Sidebar");
-  const handleIcon = () => {
-    if (icon === "fas fa-caret-down") {
-      setIcon("fas fa-caret-up");
-      setDropdown("dropdown-active");
-    } else {
-      setIcon("fas fa-caret-down");
-      setDropdown("dropdown");
-    }
-  };
-  return (
-    <div className={classname}>
-      <div className="Sidebar-container">
-        <div className="Sidebar-wrapper">
-          <ul className="Sidebar-ul ">
-            <li className="Sidebar-li Sidebar-logo-1 ">
-              <div className="logo-group Row">
-                <div className="Sidebar-logo Col-lg-20">
-                  <img src={logo} alt="" />
-                </div>
-                <div className="Sidebar-content Col-lg-70">SRM Alumni</div>
-              </div>
-            </li>
+function Sidebar({ axiosInstance }) {
+	const { user, dispatch } = useContext(Context);
+	const [icon, setIcon] = useState("fas fa-caret-down");
+	const [dropdown, setDropdown] = useState("dropdown");
+	const [classname, setClassname] = useState(
+		window.innerWidth > 1200 ? "Col-lg-16 Sidebar" : "Sidebar"
+	);
+	const handleIcon = () => {
+		if (icon === "fas fa-caret-down") {
+			setIcon("fas fa-caret-up");
+			setDropdown("dropdown-active");
+		} else {
+			setIcon("fas fa-caret-down");
+			setDropdown("dropdown");
+		}
+	};
+	return (
+		<div className={classname}>
+			<div className="Sidebar-container" data-aos="zoom-out-right">
+				<div className="Sidebar-wrapper">
+					<ul className="Sidebar-ul ">
+						<li className="Sidebar-li Sidebar-logo-1 ">
+							<div className="logo-group Row">
+								<div className="Sidebar-logo Col-lg-30">
+									<img src={logo} alt="" />
+								</div>
+								<div className="Sidebar-content Col-lg-70">
+									SRM Alumni
+								</div>
+							</div>
+						</li>
 
-            <li className="Sidebar-li profile">
-              <div
-                onClick={() => {
-                  handleIcon();
-                }}
-                className="profile-group Row"
-              >
-                <div className="Sidebar-profile Col-lg-20">
-                  <img
-                    src={"https://tegniescorporation.tech/images/" + user.photo}
-                    alt=""
-                  />
-                </div>
-                <div className="Sidebar-profile-content Col-lg-70">
-                  {user.name}
-                </div>
-                <div className="Sidebar-icon Col-lg-10">
-                  <i className={icon}></i>
-                </div>
-              </div>
-            </li>
-            <ul className={dropdown}>
-              <Link className="link" to="/profile">
-                <li className="dropdownItem Row">
-                  <div className="dropdown-icon Col-lg-20">
-                    <i className="far fa-user"></i>
-                  </div>
-                  <div className="dropdown-Content Col-lg-70">Profile</div>
-                </li>
-              </Link>
-              <Link className="link" to="/profile">
-                <li className="dropdownItem Row">
-                  <div className="dropdown-icon Col-lg-20">
-                    <i className="fas fa-cog"></i>
-                  </div>
-                  <div className="dropdown-Content Col-lg-70">Settings</div>
-                </li>
-              </Link>
-              <Link
-                onClick={() => {
-                  dispatch({ type: "LOGIN_FAILURE" });
-                  localStorage.removeItem("token");
-                }}
-                className="link"
-                to="/"
-              >
-                <li className="dropdownItem Row">
-                  <div className="dropdown-icon Col-lg-20">
-                    <i className="fas fa-sign-out-alt"></i>
-                  </div>
-                  <div className="dropdown-Content Col-lg-70">Logout</div>
-                </li>
-              </Link>
-            </ul>
-          </ul>
-          <Link className="link" to="/">
-            <li className="Sidebar-li ">
-              <div className="profile-group Row">
-                <div className="Sidebar-profile Col-lg-20">
-                  <img src={dashboard} alt="" />
-                </div>
-                <div className="Sidebar-profile-content Col-lg-70">
-                  Dashboard
-                </div>
-                <div className="Sidebar-icon Col-lg-10"></div>
-              </div>
-            </li>
-          </Link>
-          <Link className="link" to="/connections">
-          <li className="Sidebar-li ">
-            <div className="profile-group Row">
-              <div className="Sidebar-profile Col-lg-20">
-                <i className="fas fa-user-friends"></i>
-              </div>
-              <div className="Sidebar-profile-content Col-lg-70">
-                Connections
-              </div>
-              <div className="Sidebar-icon Col-lg-10"></div>
-            </div>
-          </li>
-          </Link>
-          <Link className="link" to="/group">
-          <li className="Sidebar-li ">
-            <div className="profile-group Row">
-              <div className="Sidebar-profile Col-lg-20">
-                <i className="fas fa-users"></i>
-              </div>
-              <div className="Sidebar-profile-content Col-lg-70">
-                Groups/Club
-              </div>
-              <div className="Sidebar-icon Col-lg-10"></div>
-            </div>
-          </li>
-          </Link>
-         
-          <li className="Sidebar-li ">
-            <div className="profile-group Row">
-              <div className="Sidebar-profile Col-lg-20">
-                <i className="fas fa-people-arrows"></i>
-              </div>
-              <div className="Sidebar-profile-content Col-lg-70"><a href="https://docs.google.com/forms/d/e/1FAIpQLSeIP6lTcFrLbTsJwn-p4FbNTncIEF7n4XjIOCB97P-PElcajg/viewform" target="_blank">Mentoring</a></div>
-              <div className="Sidebar-icon Col-lg-10"></div>
-            </div>
-          </li>
-         
-          <Link className="link" to="/opportunity">
-          <li className="Sidebar-li ">
-            <div className="profile-group Row">
-              <div className="Sidebar-profile Col-lg-20">
-                <i className="fas fa-building"></i>
-              </div>
-              <div className="Sidebar-profile-content Col-lg-70">
-                Opportunity
-              </div>
-              <div className="Sidebar-icon Col-lg-10"></div>
-            </div>
-          </li>
-          </Link>
-          <Link className="link" to="/resource">
-          <li className="Sidebar-li ">
-            <div className="profile-group Row">
-              <div className="Sidebar-profile Col-lg-20">
-                <i className="far fa-sticky-note"></i>
-              </div>
-              <div className="Sidebar-profile-content Col-lg-70">Resources</div>
-              <div className="Sidebar-icon Col-lg-10"></div>
-            </div>
-          </li>
-          </Link>
-          <Link className="link" to="/code">
-          <li className="Sidebar-li ">
-            <div className="profile-group Row">
-              <div className="Sidebar-profile Col-lg-20">
-                <i className="fas fa-code"></i>
-              </div>
-              <div className="Sidebar-profile-content Col-lg-70">
-                Let's Code
-              </div>
-              <div className="Sidebar-icon Col-lg-10"></div>
-            </div>
-          </li>
-          </Link>
-          <Link className="link" to="/scholarships">
-          <li className="Sidebar-li ">
-            <div className="profile-group Row">
-              <div className="Sidebar-profile Col-lg-20">
-                <i className="fas fa-graduation-cap"></i>
-              </div>
-              <div className="Sidebar-profile-content Col-lg-70">
-                Scholarships
-              </div>
-              <div className="Sidebar-icon Col-lg-10"></div>
-            </div>
-          </li>
-          </Link>
-          <Link className="link" to="/events">
-          <li className="Sidebar-li ">
-            <div className="profile-group Row">
-              <div className="Sidebar-profile Col-lg-20">
-                <i className="fas fa-calendar-week"></i>
-              </div>
-              <div className="Sidebar-profile-content Col-lg-70">Events</div>
-              <div className="Sidebar-icon Col-lg-10"></div>
-            </div>
-          </li>
-                </Link>
-        </div>
-      </div>
-    </div>
-  );
+						<li className="Sidebar-li profile">
+							<div
+								onClick={() => {
+									handleIcon();
+								}}
+								className="profile-group Row"
+							>
+								<div className="Sidebar-profile Col-lg-20">
+									<img
+										src={`${axiosInstance.defaults.baseURL}/images/${user.photo}`}
+										alt=""
+										style={{
+											marginLeft: "11px",
+										}}
+									/>
+								</div>
+								<div className="Sidebar-profile-content Col-lg-70">
+									{user.name}
+								</div>
+								<div className="Sidebar-icon Col-lg-10">
+									<i
+										className="fas fa-caret-down"
+										style={{
+											transition: "all 0.3s ease-in-out",
+											transform: `rotateZ(${
+												dropdown === "dropdown"
+													? "0deg"
+													: "180deg"
+											})`,
+										}}
+									></i>
+								</div>
+							</div>
+						</li>
+						<ul
+							className="dropdown"
+							style={{
+								transition: "height 0.25s ease-in",
+								height:
+									dropdown === "dropdown" ? "0" : "125px",
+							}}
+						>
+							<Link className="link" to="/profile">
+								<li className="dropdownItem Row">
+									<div className="dropdown-icon Col-lg-20">
+										<i className="far fa-user"></i>
+									</div>
+									<div className="dropdown-Content Col-lg-70">
+										Profile
+									</div>
+								</li>
+							</Link>
+							<Link className="link" to="/profile">
+								<li className="dropdownItem Row">
+									<div className="dropdown-icon Col-lg-20">
+										<i className="fas fa-cog"></i>
+									</div>
+									<div className="dropdown-Content Col-lg-70">
+										Settings
+									</div>
+								</li>
+							</Link>
+							<Link
+								onClick={() => {
+									dispatch({ type: "LOGIN_FAILURE" });
+									localStorage.removeItem("token");
+								}}
+								className="link"
+								to="/"
+							>
+								<li className="dropdownItem Row">
+									<div className="dropdown-icon Col-lg-20">
+										<i className="fas fa-sign-out-alt"></i>
+									</div>
+									<div className="dropdown-Content Col-lg-70">
+										Logout
+									</div>
+								</li>
+							</Link>
+						</ul>
+					</ul>
+					<Link className="link" to="/">
+						<li className="Sidebar-li ">
+							<div className="profile-group Row">
+								<div className="Sidebar-profile Col-lg-20">
+									<img src={dashboard} alt="" />
+								</div>
+								<div className="Sidebar-profile-content Col-lg-70">
+									Dashboard
+								</div>
+								<div className="Sidebar-icon Col-lg-10"></div>
+							</div>
+						</li>
+					</Link>
+					<Link className="link" to="/connections">
+						<li className="Sidebar-li ">
+							<div className="profile-group Row">
+								<div className="Sidebar-profile Col-lg-20">
+									<i className="fas fa-user-friends"></i>
+								</div>
+								<div className="Sidebar-profile-content Col-lg-70">
+									Connections
+								</div>
+								<div className="Sidebar-icon Col-lg-10"></div>
+							</div>
+						</li>
+					</Link>
+					<Link className="link" to="/group">
+						<li className="Sidebar-li ">
+							<div className="profile-group Row">
+								<div className="Sidebar-profile Col-lg-20">
+									<i className="fas fa-users"></i>
+								</div>
+								<div className="Sidebar-profile-content Col-lg-70">
+									Groups/Club
+								</div>
+								<div className="Sidebar-icon Col-lg-10"></div>
+							</div>
+						</li>
+					</Link>
+
+					<li className="Sidebar-li ">
+						<div className="profile-group Row">
+							<div className="Sidebar-profile Col-lg-20">
+								<i className="fas fa-people-arrows"></i>
+							</div>
+							<div className="Sidebar-profile-content Col-lg-70">
+								
+									Mentoring
+								
+							</div>
+							<div className="Sidebar-icon Col-lg-10"></div>
+						</div>
+					</li>
+
+					<Link className="link" to="/opportunity">
+						<li className="Sidebar-li ">
+							<div className="profile-group Row">
+								<div className="Sidebar-profile Col-lg-20">
+									<i className="fas fa-building"></i>
+								</div>
+								<div className="Sidebar-profile-content Col-lg-70">
+									Opportunity
+								</div>
+								<div className="Sidebar-icon Col-lg-10"></div>
+							</div>
+						</li>
+					</Link>
+					<Link className="link" to="/resource">
+						<li className="Sidebar-li ">
+							<div className="profile-group Row">
+								<div className="Sidebar-profile Col-lg-20">
+									<i className="far fa-sticky-note"></i>
+								</div>
+								<div className="Sidebar-profile-content Col-lg-70">
+									Resources
+								</div>
+								<div className="Sidebar-icon Col-lg-10"></div>
+							</div>
+						</li>
+					</Link>
+					<Link className="link" to="/code">
+						<li className="Sidebar-li ">
+							<div className="profile-group Row">
+								<div className="Sidebar-profile Col-lg-20">
+									<i className="fas fa-code"></i>
+								</div>
+								<div className="Sidebar-profile-content Col-lg-70">
+									Let's Code
+								</div>
+								<div className="Sidebar-icon Col-lg-10"></div>
+							</div>
+						</li>
+					</Link>
+					<Link className="link" to="/scholarships">
+						<li className="Sidebar-li ">
+							<div className="profile-group Row">
+								<div className="Sidebar-profile Col-lg-20">
+									<i className="fas fa-graduation-cap"></i>
+								</div>
+								<div className="Sidebar-profile-content Col-lg-70">
+									Scholarships
+								</div>
+								<div className="Sidebar-icon Col-lg-10"></div>
+							</div>
+						</li>
+					</Link>
+					<Link className="link" to="/events">
+						<li className="Sidebar-li ">
+							<div className="profile-group Row">
+								<div className="Sidebar-profile Col-lg-20">
+									<i className="fas fa-calendar-week"></i>
+								</div>
+								<div className="Sidebar-profile-content Col-lg-70">
+									Events
+								</div>
+								<div className="Sidebar-icon Col-lg-10"></div>
+							</div>
+						</li>
+					</Link>
+				</div>
+			</div>
+		</div>
+	);
 }
 
 export default Sidebar;

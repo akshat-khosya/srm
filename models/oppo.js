@@ -1,11 +1,17 @@
 const mongoose = require('mongoose');
 
 const OppoSchema = new mongoose.Schema({
+    title:{
+        type:String,
+    },
     field:{
         type:String,
     },
     email:{
         type:String    
+    },
+    companyicon:{
+        type:String
     },
     department:{
         type:String

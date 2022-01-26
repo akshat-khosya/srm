@@ -7,7 +7,7 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import axios from "axios";
 
 import SnackBar from "../../components/Snackbar";
-function Profile() {
+function Profile({axiosInstance}) {
   const [edit, setEdit] = useState(true);
   const { user, dispatch } = useContext(Context);
   const [err, setErr] = useState({
@@ -37,7 +37,7 @@ function Profile() {
     
     try {
       dispatch({ type: "Login_START" });
-      const data=await axios.get("https://tegniescorporation.tech/api/verifytoken",{ headers: {"token" : localStorage.getItem('token')}})
+      const data=await axiosInstance.get("/api/verifytoken",{ headers: {"token" : localStorage.getItem('token')}})
       console.log(data);
       dispatch({ type: "LOGIN_SUCCESS", payload: data.data.user });
     } catch (err) {
@@ -73,7 +73,7 @@ function Profile() {
       allPersonal.photo = filename;
       console.log(allPersonal);
       try {
-        const res = await axios.post("https://tegniescorporation.tech/api/upload", image);
+        const res = await axiosInstance.post("/api/upload", image);
         console.log(res);
         loadData();
       } catch (err) {
@@ -82,8 +82,8 @@ function Profile() {
     }
 
     try {
-      const res = await axios.patch(
-        "https://tegniescorporation.tech/api/profile",
+      const res = await axiosInstance.patch(
+        "/api/profile",
         allPersonal
       );
       if (res.data.status) {
@@ -115,7 +115,7 @@ function Profile() {
   return (
     <div className="home">
       <div className="Row">
-        <Sidebar />
+        <Sidebar axiosInstance={axiosInstance} />
         <div className="Col-lg-83">
           <div className="home-main">
             <Navbar />
@@ -128,7 +128,7 @@ function Profile() {
                       <label className="Imglabel" htmlFor="file">
                         <img
                           className="regisImg"
-                          src={"https://tegniescorporation.tech/images/" + user.photo}
+                          src={`${axiosInstance.defaults.baseURL}/images/${user.photo}`}
                           alt=""
                         />
                       </label>

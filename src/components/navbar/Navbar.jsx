@@ -8,7 +8,7 @@ function Navbar() {
    
     
   return (
-    <div className="Navbar Navbaractive">
+    <div className="Navbar Navbaractive" data-aos="fade-down">
       <div className="Navbar-container ">
         <div className="Navbar-navigation">
           <div className="navigation-group">
@@ -28,8 +28,8 @@ function Navbar() {
         <div className="Navbar-user">
             <form>
                 <div className="navbar-input">
-                <input className="navbarInput" type="text" id="search"  />
-                <label className="navbarLabel" htmlFor="search">Search</label>
+                <input className="navbarInput" type="text" id="search" placeholder="Search"  />
+                {/* <label className="navbarLabel" htmlFor="search">Search</label> */}
                 </div>
                 
             </form>
