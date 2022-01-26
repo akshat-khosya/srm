@@ -2,12 +2,12 @@ import './topbar.css'
 import logo from "../../Images/logo.png";
 function TopBar() {
     return (
-        <section id="">
+        <section id="" className='Menu-section' data-aos="fade-down">
         <div className="menu-bar">
-          <nav className="navbar navbar-light navbar-dark">
-            <a className="navbar-brand sizing" href="#">
+          <nav className="Navbar Navbar-light Navbar-dark">
+            <a className="Navbar-brand sizing" href="#">
               <img
-                className="navclass"
+                className="Navclass"
                 src={logo}
                 width="60"
                 height="60"

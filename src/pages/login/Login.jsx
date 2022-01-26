@@ -1,7 +1,6 @@
 import "./login.css";
 
-import react, { useState, useContext } from "react";
-import axios from "axios";
+import React, { useState, useContext } from "react";
 import TopBar from "../../components/topbar/TopBar";
 import { Context } from "../../context/Context";
 import SnackBar from "../../components/Snackbar";
@@ -120,8 +119,8 @@ function Login({axiosInstance}) {
    <TopBar />
     <div className="login">
      
-      <div className="container">
-        <div className="myCard">
+      <div className="Container">
+        <div className="myCard" data-aos="zoom-in">
           <div className="Row">
             
             {view ? (

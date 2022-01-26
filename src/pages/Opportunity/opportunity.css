@@ -1,6 +1,10 @@
+body{
+  overflow-x: hidden;
+}
 .opportunity {
   width: 100vw;
   height: 100vh;
+  overflow: hidden;
   display: flex;
   align-items: center;
   background-color: rgba(180, 167, 167, 0.342);

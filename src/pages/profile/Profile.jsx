@@ -115,7 +115,7 @@ function Profile({axiosInstance}) {
   return (
     <div className="home">
       <div className="Row">
-        <Sidebar />
+        <Sidebar axiosInstance={axiosInstance} />
         <div className="Col-lg-83">
           <div className="home-main">
             <Navbar />

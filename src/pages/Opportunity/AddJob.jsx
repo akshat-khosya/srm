@@ -46,8 +46,9 @@ const AddJob = ({ close, save }) => {
 								name="title"
 								value={job.title}
 								onChange={handleChange}
+								required
 							>
-								<option selected>Choose One</option>
+								<option>Choose One</option>
 								<option value="internship">Internship</option>
 								<option value="training">Training</option>
 								<option value="job">Job</option>
@@ -102,9 +103,10 @@ const AddJob = ({ close, save }) => {
 							<input
 								type="file"
 								name="link"
-								placeholder="Link to Apply"
+								placeholder="Job Details"
 								value={job.file}
 								onChange={handleChange}
+								required
 							/>
 						</div>
 						<div className="add-job-form-group">
@@ -115,6 +117,7 @@ const AddJob = ({ close, save }) => {
 								placeholder="Link to Apply"
 								value={job.link}
 								onChange={handleChange}
+								required
 							/>
 						</div>
 						<div className="add-job-form-group">

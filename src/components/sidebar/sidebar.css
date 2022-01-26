@@ -2,7 +2,8 @@
 
 .Sidebar{
     height: 100vh;
-    font-family: 'Cormorant Garamond', serif;
+    /* font-family: 'Cormorant Garamond', serif; */
+    font-size: 1rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -18,13 +19,12 @@
 }
 
 .Sidebar-container{
-    background-color: rgb(21, 21, 29);
+    background-color: #006a9f;
+    background-image: linear-gradient(to bottom,rgba(0,0,0,0.3),rgba(0,0,0,0.2),rgba(0,0,0,0.1));
     height: 95vh;
     width: 90%;
     border-radius: 25px;
     color: #fff;
-
-
 }
 
 .Sidebar-ul{
@@ -36,7 +36,7 @@
 }
 
 .Sidebar-li{
-    
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -44,10 +44,10 @@
 }
 .Sidebar-logo-1{
    padding-top: 20px;
+   font-size: 1.25rem;
 }
 .Sidebar-logo>img{
     width: 80%;
-    
 }
 .Sidebar-profile>img{
     width: 36px;
@@ -56,12 +56,12 @@
     object-fit: cover;
 }
 .profile{
-    padding-top: 40px;
+    padding-top: 20px;
     width: 100%;
 }
 .Sidebar-logo{
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
 }
 .Sidebar-profile{
@@ -74,26 +74,24 @@
     justify-content: flex-start;
     padding-left: 10px;
     align-items: center;
-    font-size: 20px;
-    font-weight: 500;
+    font-weight: 400;
 }
 .Sidebar-content{
     display: flex;
     justify-content: flex-start;
     padding-left: 10px;
     align-items: center;
-    font-size: 20px;
-    
 }
 .logo-group{
     width: 80%;
 }
 .profile-group{
-    width: 80%;
+    width: 90%;
     padding-top: 10px;
     padding-bottom: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    transition: all 0.15s ease-in-out;
 }
 .Sidebar-icon{
     display: flex;
@@ -106,34 +104,24 @@
     cursor: pointer;
 }
 .Sidebar-profile>i{
-    font-size: 30px;
-    
+    font-size: 24px;
 }
-
-
-
+ul{
+    margin-top: 0;
+    margin-bottom: 0;
+}
 .dropdown{
-    visibility: hidden;
-    opacity: 0;
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    padding-inline-start:0 !important ;
     width: 100%;
-    padding-top: 5px;
-    transition: all ease-in-out .3s;
-}
-.dropdown-active{
     opacity: 1;
     display: flex;
-    visibility:visible;
-
+    height: auto;
     flex-direction: column;
     align-items: center;
     padding-inline-start:0 !important ;
     width: 100%;
     padding-top: 5px;
-    transition: all ease-in-out .3s;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
 }
 .dropdownItem{
     display: flex;
@@ -141,8 +129,8 @@
     justify-content: center;
     height: auto;
     width: 80% !important;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 8px;
+    padding-bottom: 8px;
     margin-left: 10px;
     margin-right: 10px;
 }
@@ -157,7 +145,6 @@
     justify-content: flex-start;
     align-items: center;
     padding-left: 20px;
-    font-size: 20px;
 }
 .dropdownItem:hover{
     background-color: rgba(128, 128, 128, 0.527);
@@ -167,4 +154,5 @@
 a,a:hover,a:active{
     color: inherit;
     text-decoration: none;
+    transition: all 0.25s ease-in-out;
 }

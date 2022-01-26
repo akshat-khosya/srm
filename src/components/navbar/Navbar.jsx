@@ -8,7 +8,7 @@ function Navbar() {
    
     
   return (
-    <div className="Navbar Navbaractive">
+    <div className="Navbar Navbaractive" data-aos="fade-down">
       <div className="Navbar-container ">
         <div className="Navbar-navigation">
           <div className="navigation-group">
