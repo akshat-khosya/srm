@@ -1,10 +1,6 @@
-body{
-  overflow-x: hidden;
-}
 .opportunity {
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
   display: flex;
   align-items: center;
   background-color: rgba(180, 167, 167, 0.342);
@@ -142,19 +138,23 @@ body{
   box-shadow: 0 0 1px rgba(0, 20, 32, 0.4), 0 2px 6px rgba(3, 25, 38, 0.2);
 }
 .opportunity-btn {
-  
+  background-color: #0f6fff;
   color: #f0f0f0;
 }
 .opportunity-btn:hover {
-
+  background-color: #0a6cff;
 }
 .opportunity-btn-outline {
   background-color: #f0f0f0;
   color: #0f6fff;
 }
 .opportunity-btn-outline:hover {
- 
+  background-color: #0a6cff;
   color: #f0f0f0;
+}
+.opportunity a {
+  text-decoration: none;
+  color: inherit;
 }
 
 .add-job {

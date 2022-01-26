@@ -4,93 +4,38 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import AddJob from "./AddJob";
 import "./opportunity.css";
 
-const Opportunity = ({ axiosInstance,load }) => {
+const Opportunity = ({ axiosInstance, load }) => {
+	const [jobs, setJobs] = useState([]);
 	const loadData = async () => {
 		try {
 			const data = await axiosInstance.get("/api/oppo/");
-			setJobs({
-				title:data.data.title,
-				icon:`${axiosInstance.defaults.baseURL}images/${data.data.companyicon}`,
-				filed:data.data.field,
-				department:data.data.department,
-				link:data.data.link,
-				content:data.data.content,
-				file:`${axiosInstance.defaults.baseURL}pdf/${data.data.pdf}`
-			})
-			console.log(data);
-			
+			let allJobs = [...data.data];
+			let newJobs = [];
+			allJobs.forEach((Job) => {
+				newJobs = [
+					...newJobs,
+					{
+						title: Job.title,
+						icon: `${axiosInstance.defaults.baseURL}/images/${Job.companyicon}`,
+						field: Job.field,
+						department: Job.department,
+						link: Job.link,
+						content: Job.content,
+						file: `${axiosInstance.defaults.baseURL}/pdf/${Job.pdf}`,
+					},
+				];
+			});
+			setJobs(newJobs);
 		} catch (err) {
 			console.log(err);
 		}
 	};
-	// const [jobs, setJobs] = useState([
-	// 	{
-	// 		title: "Frontend Developer",
-	// 		icon: "https://cdn-icons-png.flaticon.com/512/2991/2991148.png",
-	// 		field: "Web Development",
-	// 		department: "devs",
-	// 		link: "https://g.co/io",
-	// 		content:
-	// 			"Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and ",
-	// 		file: "https://edutechlearners.com/download/Introduction_to_algorithms-3rd%20Edition.pdf",
-	// 	},
-	// 	{
-	// 		title: "Frontend Developer",
-	// 		icon: "https://cdn-icons-png.flaticon.com/512/2991/2991148.png",
-	// 		field: "Web Development",
-	// 		department: "devs",
-	// 		link: "https://g.co/io",
-	// 		content:
-	// 			"Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.",
-	// 		file: "https://edutechlearners.com/download/Introduction_to_algorithms-3rd%20Edition.pdf",
-	// 	},
-	// 	{
-	// 		title: "Frontend Developer",
-	// 		icon: "https://cdn-icons-png.flaticon.com/512/2991/2991148.png",
-	// 		field: "Web Development",
-	// 		department: "devs",
-	// 		link: "https://g.co/io",
-	// 		content:
-	// 			"Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.",
-	// 		file: "https://edutechlearners.com/download/Introduction_to_algorithms-3rd%20Edition.pdf",
-	// 	},
-	// 	{
-	// 		title: "Frontend Developer",
-	// 		icon: "https://cdn-icons-png.flaticon.com/512/2991/2991148.png",
-	// 		field: "Web Development",
-	// 		department: "devs",
-	// 		link: "https://g.co/io",
-	// 		content:
-	// 			"Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.",
-	// 		file: "https://edutechlearners.com/download/Introduction_to_algorithms-3rd%20Edition.pdf",
-	// 	},
-	// 	{
-	// 		title: "Frontend Developer",
-	// 		icon: "https://cdn-icons-png.flaticon.com/512/2991/2991148.png",
-	// 		field: "Web Development",
-	// 		department: "devs",
-	// 		link: "https://g.co/io",
-	// 		content:
-	// 			"Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.",
-	// 		file: "https://edutechlearners.com/download/Introduction_to_algorithms-3rd%20Edition.pdf",
-	// 	},
-	// 	{
-	// 		title: "Frontend Developer",
-	// 		icon: "https://cdn-icons-png.flaticon.com/512/2991/2991148.png",
-	// 		field: "Web Development",
-	// 		department: "devs",
-	// 		link: "https://g.co/io",
-	// 		content:
-	// 			"Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.",
-	// 		file: "https://edutechlearners.com/download/Introduction_to_algorithms-3rd%20Edition.pdf",
-	// 	},
-	// ]);
-	const [jobs, setJobs] = useState([]);
-	useEffect(()=>{
+	useEffect(() => {
 		loadData();
-	},[])
+	}, []);
 	const handleJobs = (item) => {
-		
+		console.log(item);
+		setShowAddJobBox(false);
 	};
 	const [showAddJobBox, setShowAddJobBox] = useState(false);
 	return (

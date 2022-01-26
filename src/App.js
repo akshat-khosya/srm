@@ -7,7 +7,6 @@ import { Context } from "./context/Context";
 import axios from "axios";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Profile from "./pages/profile/Profile";
 import Event from "./pages/Event/Event";
 import Fake from "./pages/fake/Fake";
