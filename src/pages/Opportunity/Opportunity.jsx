@@ -84,7 +84,7 @@ const Opportunity = ({ axiosInstance, load }) => {
 												</span>
 											</div>
 											<div className="opportunity-job-head-showmore">
-												<a href={job.file}>
+												<a target="_blank" href={job.file}>
 													<span className="material-icons">
 														chevron_right
 													</span>
