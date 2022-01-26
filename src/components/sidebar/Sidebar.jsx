@@ -8,7 +8,7 @@ function Sidebar({ axiosInstance }) {
 	const { user, dispatch } = useContext(Context);
 	const [icon, setIcon] = useState("fas fa-caret-down");
 	const [dropdown, setDropdown] = useState("dropdown");
-	const [coddropdown, setCoddropdown] = useState(false);
+	const [coddropdown, setCoddropdown] = useState(true);
 	const [classname, setClassname] = useState(
 		window.innerWidth > 1200 ? "Col-lg-16 Sidebar" : "Sidebar"
 	);
