@@ -8,6 +8,7 @@ function Sidebar({ axiosInstance }) {
 	const { user, dispatch } = useContext(Context);
 	const [icon, setIcon] = useState("fas fa-caret-down");
 	const [dropdown, setDropdown] = useState("dropdown");
+	const [coddropdown, setCoddropdown] = useState(false);
 	const [classname, setClassname] = useState(
 		window.innerWidth > 1200 ? "Col-lg-16 Sidebar" : "Sidebar"
 	);
@@ -74,8 +75,7 @@ function Sidebar({ axiosInstance }) {
 							className="dropdown"
 							style={{
 								transition: "height 0.25s ease-in",
-								height:
-									dropdown === "dropdown" ? "0" : "125px",
+								height: dropdown === "dropdown" ? "0" : "125px",
 							}}
 						>
 							<Link className="link" to="/profile">
@@ -143,19 +143,64 @@ function Sidebar({ axiosInstance }) {
 							</div>
 						</li>
 					</Link>
-					<Link className="link" to="/group">
-						<li className="Sidebar-li ">
-							<div className="profile-group Row">
-								<div className="Sidebar-profile Col-lg-20">
-									<i className="fas fa-users"></i>
-								</div>
-								<div className="Sidebar-profile-content Col-lg-70">
-									Groups/Club
-								</div>
-								<div className="Sidebar-icon Col-lg-10"></div>
+
+					<li
+						className="Sidebar-li profile"
+						style={{ padding: "0", margin: "0.25rem 0" }}
+					>
+						<div
+							onClick={() => {
+								setCoddropdown(!coddropdown);
+							}}
+							className="profile-group Row"
+						>
+							<div className="Sidebar-profile Col-lg-20">
+								<i className="fas fa-users"></i>
 							</div>
-						</li>
-					</Link>
+							<div className="Sidebar-profile-content Col-lg-70">
+								Groups / Clubs
+							</div>
+							<div className="Sidebar-icon Col-lg-10">
+								<i
+									className="fas fa-caret-down"
+									style={{
+										transition: "all 0.3s ease-in-out",
+										transform: `rotateZ(${
+											coddropdown ? "0deg" : "180deg"
+										})`,
+									}}
+								></i>
+							</div>
+						</div>
+					</li>
+					<ul
+						className="dropdown"
+						style={{
+							transition: "height 0.25s ease-in",
+							height: coddropdown ? "0" : "85px",
+						}}
+					>
+						<Link className="link" to="/addgroup">
+							<li className="dropdownItem Row">
+								<div className="dropdown-icon Col-lg-20">
+									<i className="far fa-user"></i>
+								</div>
+								<div className="dropdown-Content Col-lg-70">
+									Add group
+								</div>
+							</li>
+						</Link>
+						<Link className="link" to="/code">
+							<li className="dropdownItem Row">
+								<div className="dropdown-icon Col-lg-20">
+									<i className="fas fa-code"></i>
+								</div>
+								<div className="dropdown-Content Col-lg-70">
+									Let's Code
+								</div>
+							</li>
+						</Link>
+					</ul>
 
 					<li className="Sidebar-li ">
 						<div className="profile-group Row">
@@ -163,9 +208,7 @@ function Sidebar({ axiosInstance }) {
 								<i className="fas fa-people-arrows"></i>
 							</div>
 							<div className="Sidebar-profile-content Col-lg-70">
-								
-									Mentoring
-								
+								Mentoring
 							</div>
 							<div className="Sidebar-icon Col-lg-10"></div>
 						</div>
@@ -192,19 +235,6 @@ function Sidebar({ axiosInstance }) {
 								</div>
 								<div className="Sidebar-profile-content Col-lg-70">
 									Resources
-								</div>
-								<div className="Sidebar-icon Col-lg-10"></div>
-							</div>
-						</li>
-					</Link>
-					<Link className="link" to="/code">
-						<li className="Sidebar-li ">
-							<div className="profile-group Row">
-								<div className="Sidebar-profile Col-lg-20">
-									<i className="fas fa-code"></i>
-								</div>
-								<div className="Sidebar-profile-content Col-lg-70">
-									Let's Code
 								</div>
 								<div className="Sidebar-icon Col-lg-10"></div>
 							</div>
