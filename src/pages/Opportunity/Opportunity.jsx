@@ -16,12 +16,12 @@ const Opportunity = ({ axiosInstance, load }) => {
 					...newJobs,
 					{
 						title: Job.title,
-						icon: `${axiosInstance.defaults.baseURL}/images/${Job.companyicon}`,
+						icon: `${axiosInstance.defaults.baseURL}images/${Job.companyicon}`,
 						field: Job.field,
 						department: Job.department,
 						link: Job.link,
 						content: Job.content,
-						file: `${axiosInstance.defaults.baseURL}/pdf/${Job.pdf}`,
+						file: `${axiosInstance.defaults.baseURL}pdf/${Job.pdf}`,
 					},
 				];
 			});

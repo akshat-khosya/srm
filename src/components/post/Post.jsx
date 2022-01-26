@@ -13,7 +13,7 @@ function Post({post,keys,axiosInstance}) {
                 <div className="postUser">
                 <div className="postUser-details">
                 <div className="postProfilePhoto">
-                    <img src={`${axiosInstance.defaults.baseURL}/images/${post.email}`} alt="" />
+                    <img src={`${axiosInstance.defaults.baseURL}images/${post.email}`} alt="" />
                 </div>
                 <div className="postUserName">
                     <h4>{post.author}</h4>
