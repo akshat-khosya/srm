@@ -137,7 +137,7 @@ function Sidebar() {
             </div>
           </li>
          
-          <Link className="link" to="/">
+          <Link className="link" to="/opportunity">
           <li className="Sidebar-li ">
             <div className="profile-group Row">
               <div className="Sidebar-profile Col-lg-20">

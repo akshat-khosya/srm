@@ -7,10 +7,11 @@ import { Context } from "./context/Context";
 import axios from "axios";
 import AOS from "aos";
 import "aos/dist/aos.css";
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Profile from "./pages/profile/Profile";
 import Event from "./pages/Event/Event";
 import Fake from "./pages/fake/Fake";
+import Opportunity from "./pages/Opp/Opportunity";
 
 function App() {
   const {user,dispatch,isFetching}=useContext(Context);
@@ -50,6 +51,7 @@ function App() {
       <Route path="/resource" element={user?(user.verifcation ? <Fake />:<Registration />):(<Login />)} />
       <Route path="/code" element={user?(user.verifcation ? <Fake />:<Registration />):(<Login />)} />
       <Route path="/scholarships" element={user?(user.verifcation ? <Fake />:<Registration />):(<Login />)} />
+      <Route path="/opportunity" element={user?(user.verifcation ? <Opportunity />:<Registration />):(<Login />)} />
     </Routes>
   </Router>
   );

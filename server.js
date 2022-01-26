@@ -10,10 +10,12 @@ const authRoute= require("./routes/authUser");
 const post=require("./routes/post")
 const register= require("./routes/userRegister")
 const event=require("./routes/event");
+const oppo=require("./routes/oppo");
 dotenv.config();
 app.use(express.json());
 app.use(cors({origin:"*"}))
 app.use("/images",express.static(path.join(__dirname,"/images")));
+app.use("/pdf",express.static(path.join(__dirname,"/pdf")));
 mongoose.connect(process.env.MONGO_URL,{ useNewUrlParser: true, useUnifiedTopology: true }, function(err) {
     if (err){console.log(err)}else{
         console.log("Connected");
@@ -34,10 +36,22 @@ const upload= multer({storage:storage});
 app.post("/api/upload", upload.single("file"),(req,res)=>{
     res.status(200).json("File has been uploaded");
 });
+const pdfStorage=multer.diskStorage({
+    destination:(req,file,cb)=>{
+        cb(null,"pdf");
+    },filename:(req,file,cb)=>{
+        cb(null,req.body.name);
+    }
+});
+const uploadpdf= multer({storage:pdfStorage});
+app.post("/api/upload/pdf", uploadpdf.single("file"),(req,res)=>{
+    res.status(200).json("File has been uploaded");
+});
     app.use("/api/auth/",authRoute);
     app.use("/api/post/",post);
     app.use("/api/",register);
     app.use("/api/event/",event);
+    app.use("/api/oppo/",oppo);
 // app.use("/api/users",userRoute);
 // app.use("/api/posts",postRoute);
 // app.use("/api/categories",categoryRoute);
