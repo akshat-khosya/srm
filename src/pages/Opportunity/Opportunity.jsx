@@ -8,6 +8,7 @@ const Opportunity = ({ axiosInstance,load }) => {
 	const loadData = async () => {
 		try {
 			const data = await axiosInstance.get("/api/oppo/");
+			
 			setJobs({
 				title:data.data.title,
 				icon:`${axiosInstance.defaults.baseURL}images/${data.data.companyicon}`,
