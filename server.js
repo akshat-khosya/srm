@@ -13,7 +13,7 @@ const event=require("./routes/event");
 const oppo=require("./routes/oppo");
 dotenv.config();
 app.use(express.json());
-app.use(cors({origin:"*"}))
+app.use(cors());
 app.use("/images",express.static(path.join(__dirname,"/images")));
 app.use("/pdf",express.static(path.join(__dirname,"/pdf")));
 mongoose.connect(process.env.MONGO_URL,{ useNewUrlParser: true, useUnifiedTopology: true }, function(err) {

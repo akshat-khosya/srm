@@ -14,7 +14,7 @@ import Opportunity from "./pages/Opportunity/Opportunity";
 
 function App() {
 	const axiosInstance = axios.create({
-		baseURL: "http://localhost:4000",
+		baseURL: "https://tegniescorporation.tech/",
 	});
   const {user,dispatch,isFetching}=useContext(Context);
   const[num,setNum]=useState(true);
