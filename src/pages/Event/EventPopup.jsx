@@ -111,7 +111,7 @@ const EventPopup = ({ close, submitEvent,load,axiosInstance }) => {
             <input
               className="event-popup-form__input"
               name="image"
-              value={event.image}
+              
               onChange={(e) => {
                 setFile(e.target.files[0]);
               }}
