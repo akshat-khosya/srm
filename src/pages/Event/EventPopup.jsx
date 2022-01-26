@@ -150,11 +150,11 @@ const EventPopup = ({ close, submitEvent,load,axiosInstance }) => {
                 required
               />
               <datalist id="typeSuggestions1">
-                <option value="birthday" />
-                <option value="anniversary" />
-                <option value="meeting" />
-                <option value="festival" />
-                <option value="ceremony" />
+                <option value="Conference" />
+                <option value="Seminar" />
+                <option value="Workshop" />
+                <option value="Hackathon" />
+                <option value="Competition" />
               </datalist>
               <input
                 className="event-popup-form__input"
@@ -167,11 +167,11 @@ const EventPopup = ({ close, submitEvent,load,axiosInstance }) => {
                 required
               />
               <datalist id="typeSuggestions2">
-                <option value="birthday" />
-                <option value="anniversary" />
-                <option value="meeting" />
-                <option value="festival" />
-                <option value="ceremony" />
+                <option value="Technical" />
+                <option value="Cultural" />
+                <option value="Academic" />
+                <option value="others" />
+               
               </datalist>
             </div>
             <button className="aavesh-btn" type="submit">

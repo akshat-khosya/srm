@@ -1,20 +1,17 @@
-
 import React, { useContext, useState } from "react";
 import { Context } from "../../context/Context";
 
-const AddJob = ({ close, save ,load,axiosInstance}) => {
-	const {user}=useContext(Context);
+const AddJob = ({ close, save, load, axiosInstance }) => {
+	const { user } = useContext(Context);
 	const [job, setJob] = useState({
 		title: "",
-	
 		field: "",
 		department: "",
 		link: "",
 		content: "",
-		
 	});
-	const [file,setFile]=useState(null);
-	const [icon,setIcon]=useState(null);
+	const [file, setFile] = useState(null);
+	const [icon, setIcon] = useState(null);
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 		setJob({
@@ -22,71 +19,67 @@ const AddJob = ({ close, save ,load,axiosInstance}) => {
 			[name]: value,
 		});
 	};
-	const handleSubmit =async (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		
-		const userData={
-			title:job.title,
-			field:job.field,
-			email:user.email,
-			department:job.department,
-			link:job.link,
-			author:user.name
-		}
+
+		const userData = {
+			title: job.title,
+			field: job.field,
+			email: user.email,
+			department: job.department,
+			link: job.link,
+			author: user.name,
+			content: job.content,
+		};
 		console.log(userData);
-		if(icon){
-			const imageIcon=new FormData();
-			const filename=Date.now()+icon.name;
-			imageIcon.append("name",filename);
-			imageIcon.append("file",icon);
-			userData.companyicon=filename;
+		if (icon) {
+			const imageIcon = new FormData();
+			const filename = Date.now() + icon.name;
+			imageIcon.append("name", filename);
+			imageIcon.append("file", icon);
+			userData.companyicon = filename;
 			try {
 				const res = await axiosInstance.post("/api/upload", imageIcon);
 				console.log(res);
-			  } catch (err) {
+			} catch (err) {
 				console.log(err);
-			  }
+			}
 		}
-		if(file){
-			const pdfFile=new FormData();
-			const filename=Date.now()+file.name;
-			pdfFile.append("name",filename);
-			pdfFile.append("file",file);
-			userData.pdf=filename;
+		if (file) {
+			const pdfFile = new FormData();
+			const filename = Date.now() + file.name;
+			pdfFile.append("name", filename);
+			pdfFile.append("file", file);
+			userData.pdf = filename;
 			try {
-				const res = await axiosInstance.post("/api/upload/pdf", pdfFile);
+				const res = await axiosInstance.post(
+					"/api/upload/pdf",
+					pdfFile
+				);
 				console.log(res);
-			  } catch (err) {
+			} catch (err) {
 				console.log(err);
-			  }
+			}
 		}
 		try {
-			const res = await axiosInstance.post(
-				"/api/oppo/",
-				userData
-			  );
-			  if(res.data.status){
-				  load();
-				  alert(res.data.message);
-				  setJob({
+			const res = await axiosInstance.post("/api/oppo/", userData);
+			if (res.data.status) {
+				load();
+				alert(res.data.message);
+				setJob({
 					title: "",
-					
 					field: "",
 					department: "",
 					link: "",
 					content: "",
-					
 				});
 				setIcon(null);
 				setFile(null);
 				save(job);
-			  }
-
+			}
 		} catch (error) {
 			console.log(error);
 		}
-		
-		
 	};
 	return (
 		<div className="add-job">
@@ -141,8 +134,9 @@ const AddJob = ({ close, save ,load,axiosInstance}) => {
 								type="file"
 								name="icon"
 								placeholder="Icon"
-								
-								onChange={(e)=>{setIcon(e.target.files[0])}}
+								onChange={(e) => {
+									setIcon(e.target.files[0]);
+								}}
 							/>
 						</div>
 						<div className="add-job-form-group">
@@ -155,8 +149,8 @@ const AddJob = ({ close, save ,load,axiosInstance}) => {
 								placeholder="Job Content"
 								value={job.content}
 								onChange={handleChange}
-								rows={3}
-								required						
+								rows={4}
+								required
 							></textarea>
 						</div>
 						<div className="add-job-form-group">
@@ -165,8 +159,9 @@ const AddJob = ({ close, save ,load,axiosInstance}) => {
 								type="file"
 								name="link"
 								placeholder="Job Details"
-								
-								onChange={(e)=>{setFile(e.target.files[0])}}
+								onChange={(e) => {
+									setFile(e.target.files[0]);
+								}}
 								required
 							/>
 						</div>
