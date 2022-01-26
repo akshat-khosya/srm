@@ -128,7 +128,7 @@ function Profile({axiosInstance}) {
                       <label className="Imglabel" htmlFor="file">
                         <img
                           className="regisImg"
-                          src={`${axiosInstance.defaults.baseURL}/images/${user.photo}`}
+                          src={`${axiosInstance.defaults.baseURL}images/${user.photo}`}
                           alt=""
                         />
                       </label>
