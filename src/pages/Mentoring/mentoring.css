@@ -1,0 +1,130 @@
+.mentoring {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background-color: rgba(180, 167, 167, 0.342);
+}
+.mentoring-container {
+  width: 80%;
+  margin: 0 auto;
+  height: 90vh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-flow: column;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: relative;
+}
+.mentoring-container .Navbar {
+  position: fixed;
+  z-index: 5;
+  width: 76%;
+  top: 5vh;
+  left: 21.5%;
+}
+.mentoring-box {
+  width: 100%;
+  height: 90%;
+  padding: 2rem 0;
+  display: flex;
+  flex-flow: column;
+  position: absolute;
+  top: 10%;
+}
+.mentoring-head {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  padding: 0.5rem 0;
+  font-size: 2rem;
+  line-height: 2.5rem;
+}
+.mentoring-body {
+  width: 80%;
+  margin: 0 auto;
+}
+.mentoring-form {
+  width: 90%;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  flex-flow: column;
+}
+.mentoring-form-group {
+  width: 100%;
+  margin: 0.75rem 0;
+  display: flex;
+}
+.mentoring-form-group:last-child {
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+.mentoring-form > * > label {
+  width: 25%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.mentoring-form > * > label > input {
+  width: fit-content;
+}
+.mentoring-form > * > label > input:active, .mentoring-form > * > label > input:focus {
+  outline: none;
+}
+.mentoring-form input,
+.mentoring-form textarea,
+.mentoring-form select {
+  width: 75%;
+  border: 0;
+  outline: 2px solid transparent;
+  margin: 0 0.5rem;
+  padding: 0.4rem 0.5rem;
+  border-radius: 5px;
+  resize: none;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+.mentoring-form input::placeholder,
+.mentoring-form textarea::placeholder,
+.mentoring-form select::placeholder {
+  font-size: 0.875rem;
+}
+.mentoring-form input:active, .mentoring-form input:focus,
+.mentoring-form textarea:active,
+.mentoring-form textarea:focus,
+.mentoring-form select:active,
+.mentoring-form select:focus {
+  outline: 2px solid rgba(0, 0, 0, 0.04);
+}
+.mentoring-form option {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.mentoring-interests-group {
+  display: flex;
+  flex-flow: column;
+}
+.mentoring-interests-group > * {
+  margin: 0.25rem 0;
+}
+.mentoring-interests-group > * > input {
+  width: fit-content;
+}
+.mentoring-interests-group > * > input:active, .mentoring-interests-group > * > input:focus {
+  outline: none;
+}
+
+.material-icons {
+  user-select: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+/*# sourceMappingURL=mentoring.css.map */

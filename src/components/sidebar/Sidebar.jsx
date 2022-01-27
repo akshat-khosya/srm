@@ -46,7 +46,7 @@ function Sidebar({ axiosInstance }) {
 							>
 								<div className="Sidebar-profile Col-lg-20">
 									<img
-										src={`${axiosInstance.defaults.baseURL}images/${user.photo}`}
+										src={`{axiosInstance.defaults.baseURL}images/${user.photo}`}
 										alt=""
 										style={{
 											marginLeft: "11px",
@@ -201,19 +201,19 @@ function Sidebar({ axiosInstance }) {
 							</li>
 						</Link>
 					</ul>
-
-					<li className="Sidebar-li ">
-						<div className="profile-group Row">
-							<div className="Sidebar-profile Col-lg-20">
-								<i className="fas fa-people-arrows"></i>
+					<Link className="link" to="/mentoring">
+						<li className="Sidebar-li ">
+							<div className="profile-group Row">
+								<div className="Sidebar-profile Col-lg-20">
+									<i className="fas fa-people-arrows"></i>
+								</div>
+								<div className="Sidebar-profile-content Col-lg-70">
+									Mentoring
+								</div>
+								<div className="Sidebar-icon Col-lg-10"></div>
 							</div>
-							<div className="Sidebar-profile-content Col-lg-70">
-								Mentoring
-							</div>
-							<div className="Sidebar-icon Col-lg-10"></div>
-						</div>
-					</li>
-
+						</li>
+					</Link>
 					<Link className="link" to="/opportunity">
 						<li className="Sidebar-li ">
 							<div className="profile-group Row">

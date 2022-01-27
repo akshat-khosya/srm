@@ -11,6 +11,7 @@ import Profile from "./pages/profile/Profile";
 import Event from "./pages/Event/Event";
 import Fake from "./pages/fake/Fake";
 import Opportunity from "./pages/Opportunity/Opportunity";
+import Mentoring from "./pages/Mentoring/Mentoring";
 
 function App() {
 	const axiosInstance = axios.create({
@@ -54,6 +55,8 @@ function App() {
       <Route path="/resource" element={user?(user.verifcation ? <Fake axiosInstance={axiosInstance} />:<Registration axiosInstance={axiosInstance} />):(<Login axiosInstance={axiosInstance} />)} />
       <Route path="/code" element={user?(user.verifcation ? <Fake axiosInstance={axiosInstance} />:<Registration axiosInstance={axiosInstance} />):(<Login axiosInstance={axiosInstance} />)} />
       <Route path="/scholarships" element={user?(user.verifcation ? <Fake axiosInstance={axiosInstance} />:<Registration axiosInstance={axiosInstance} />):(<Login axiosInstance={axiosInstance} />)} />
+      <Route path="/mentoring" element={user?(user.verifcation ? <Mentoring axiosInstance={axiosInstance} />:<Registration axiosInstance={axiosInstance} />):(<Login axiosInstance={axiosInstance} />)} />
+      <Route path='*' element={<Fake axiosInstance={axiosInstance} />} />
     </Routes>
   </Router>
   );

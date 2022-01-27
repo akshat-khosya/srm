@@ -1,0 +1,220 @@
+import React, { useState } from "react";
+import Navbar from "../../components/navbar/Navbar";
+import Sidebar from "../../components/sidebar/Sidebar";
+import SnackBar from "../../components/Snackbar";
+import "./mentoring.css";
+
+const Mentoring = (axiosInstance) => {
+	const [mentorData, setMentorData] = useState({
+		email: "",
+		name: "",
+		interests: [],
+		current: "",
+		mode: "",
+		frequency: "",
+	});
+	const [snackMsg, setSnackMsg] = useState("");
+	const [open, setOpen] = useState(false);
+	const [snackColor, setSnackColor] = useState("var(--red)");
+	const currOptions = [
+		"Technology",
+		"Buisness",
+		"Legal",
+		"HR",
+		"Finance",
+		"Marketing",
+		"Innovation",
+		"Research",
+		"Design",
+		"Investment",
+		"Intellectual Property",
+		"Social Media",
+	];
+	const mentorOptions = [
+		"Academic Mentor",
+		"Professional Mentor",
+		"Enterpreneur",
+		"Career Development",
+	];
+	const freqOptions = ["Weekly", "Fortnightly", "Monthly"];
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+		if (name === "interests") {
+			let newMent = [...mentorData.interests];
+			if (mentorData.interests.includes(e.target.value)) {
+				newMent = mentorData.interests.filter((item) => item !== value);
+			} else newMent = [...newMent, value];
+			setMentorData({
+				...mentorData,
+				interests: newMent,
+			});
+		} else
+			setMentorData({
+				...mentorData,
+				[name]: value,
+			});
+	};
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		if (
+			mentorData.interests.length === 0 ||
+			mentorData.mode === "" ||
+			mentorData.frequency === "" ||
+			mentorData.current === "" ||
+			mentorData.current === "Choose One" ||
+			mentorData.mode === "Choose One"
+		) {
+			setSnackMsg("Please select at least one choice in every field");
+			setOpen(true);
+			setTimeout(() => {
+				setOpen(false);
+			}, 3500);
+		} else {
+			setSnackColor("var(--blue)")
+			setSnackMsg("Submission Successful");
+			setOpen(true);
+			setTimeout(() => {
+				setOpen(false);
+			}, 3500);
+			setMentorData({
+				email: "",
+				name: "",
+				interests: [],
+				current: "",
+				mode: "",
+				frequency: "",
+			});
+		}
+	};
+	return (
+		<div className="mentoring">
+			<Sidebar axiosInstance={axiosInstance} />
+			<div className="mentoring-container">
+				<Navbar />
+				<div className="mentoring-box">
+					<div className="mentoring-head">
+						<span>Expression of Interest to be Mentor</span>
+					</div>
+					<div className="mentoring-body">
+						<form
+							className="mentoring-form"
+							onSubmit={handleSubmit}
+						>
+							<div className="mentoring-form-group">
+								<label htmlFor="email">Name</label>
+								<input
+									type="text"
+									name="name"
+									placeholder="Name"
+									value={mentorData.name}
+									onChange={handleChange}
+									required
+								/>
+							</div>
+							<div className="mentoring-form-group">
+								<label htmlFor="email">Email</label>
+								<input
+									type="email"
+									name="email"
+									placeholder="Email"
+									value={mentorData.email}
+									onChange={handleChange}
+									required
+								/>
+							</div>
+							<div className="mentoring-form-group">
+								<label htmlFor="email">Mentor Interests</label>
+								<div className="mentoring-interests-group">
+									{mentorOptions.map((item, index) => (
+										<label key={index}>
+											<input
+												type="checkbox"
+												name="interests"
+												placeholder={item}
+												value={item}
+												onChange={handleChange}
+												checked={mentorData.interests.includes(
+													item
+												)}
+											/>
+											{item}
+										</label>
+									))}
+								</div>
+							</div>
+							<div className="mentoring-form-group">
+								<label htmlFor="email">
+									Your current area of work
+								</label>
+								<select
+									type="text"
+									name="current"
+									placeholder="Email"
+									value={mentorData.current}
+									onChange={handleChange}
+									required
+								>
+									<option hidden>Choose One</option>
+									{currOptions.map((item, index) => (
+										<option value={item} key={index}>
+											{item}
+										</option>
+									))}
+								</select>
+							</div>
+							<div className="mentoring-form-group">
+								<label htmlFor="email">
+									How would you prefer to mentor
+								</label>
+								<select
+									type="text"
+									name="mode"
+									value={mentorData.mode}
+									placeholder="Email"
+									onChange={handleChange}
+									required
+								>
+									<option hidden>Choose One</option>
+									<option value="Online">Online</option>
+									<option value="In-person">In-person</option>
+									<option value="Both">Both</option>
+								</select>
+							</div>
+							<div className="mentoring-form-group">
+								<label htmlFor="email">
+									Your preferred frequency of mentoring would
+									be
+								</label>
+								{freqOptions.map((item, index) => (
+									<label key={index}>
+										<input
+											type="radio"
+											name="frequency"
+											placeholder={item}
+											value={item}
+											onChange={handleChange}
+											checked={
+												mentorData.frequency === item
+											}
+										/>
+										{item}
+									</label>
+								))}
+							</div>
+							<div className="mentoring-form-group">
+								<button className="aavesh-btn" type="submit">
+									<span className="aavesh-btn-text">
+										Submit
+									</span>
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			{open && <SnackBar text={snackMsg} color={snackColor} />}
+		</div>
+	);
+};
+
+export default Mentoring;
