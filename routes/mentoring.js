@@ -1,7 +1,9 @@
 const router = require("express").Router();
 const Mentoring = require("../models/mentoring");
 router.post("/", async (req, res) => {
+  
    try {
+      
        const newEvent=new Mentoring(req.body);
        const savedEvent=await newEvent.save();
        res.send({status:true,message:"Form added Sucessfully"});
