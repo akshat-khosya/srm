@@ -34,7 +34,7 @@ router.post("/", async (req, res) => {
 
   router.get("/", async (req, res) => {
     try {
-      const events=await Event.find()
+      const events=await Event.find().sort({createdAt:-1});
      
       res.send(events);
     } catch (err) {

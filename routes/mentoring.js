@@ -36,7 +36,8 @@ router.post("/", async (req, res) => {
 
   router.get("/", async (req, res) => {
     try {
-      const events=await Mentoring.find()
+      const events=await Mentoring.find({}).sort({createdAt:-1});
+      console.log(events);
      
       res.send(events);
     } catch (err) {

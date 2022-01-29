@@ -34,7 +34,7 @@ router.post("/", async (req, res) => {
 
   router.get("/", async (req, res) => {
     try {
-      const events=await Oppo.find()
+      const events=await Oppo.find({}).sort({createdAt:-1});
      
       res.send(events);
     } catch (err) {

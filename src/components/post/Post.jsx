@@ -31,7 +31,7 @@ function Post({post,keys,axiosInstance}) {
                 )}
                 {post.media && (
                     <div className="postMedia">
-                    <img src={`${axiosInstance.defaults.baseURL}/images/${post.media}`} alt="" />
+                    <img src={`${axiosInstance.defaults.baseURL}images/${post.media}`} alt="" />
                     </div>
                 )}
                 

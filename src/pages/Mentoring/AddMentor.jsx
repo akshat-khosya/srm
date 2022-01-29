@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import SnackBar from "../../components/Snackbar";
 import { Context } from "../../context/Context";
 
-const AddMentor = ({ close, save ,axiosInstance}) => {
+const AddMentor = ({ close, save ,axiosInstance,load}) => {
 	const {user}=useContext(Context);
 	const [mentorData, setMentorData] = useState({
 		email: user.email,
@@ -81,6 +81,7 @@ const AddMentor = ({ close, save ,axiosInstance}) => {
 			} catch (err) {
 				console.log(err);
 			}
+			load();
 			setSnackColor("var(--blue)");
 			setSnackMsg("Submission Successful");
 			setOpen(true);

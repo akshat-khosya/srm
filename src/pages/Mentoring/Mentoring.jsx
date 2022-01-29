@@ -102,6 +102,7 @@ const Mentoring = ({ axiosInstance }) => {
 					close={() => setShowAddMentorBox(false)}
 					save={addMentor}
 					axiosInstance={axiosInstance}
+					load={loadData}
 				/>
 			)}
 		</div>
