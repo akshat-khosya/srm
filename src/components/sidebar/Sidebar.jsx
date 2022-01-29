@@ -46,7 +46,7 @@ function Sidebar({ axiosInstance }) {
 							>
 								<div className="Sidebar-profile Col-lg-20">
 									<img
-										src={`{axiosInstance.defaults.baseURL}images/${user.photo}`}
+										src={`${axiosInstance.defaults.baseURL}images/${user.photo}`}
 										alt=""
 										style={{
 											marginLeft: "11px",

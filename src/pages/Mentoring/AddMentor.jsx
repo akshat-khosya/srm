@@ -178,7 +178,7 @@ const AddMentor = ({ close, save }) => {
 								<option hidden>Choose One</option>
 								<option value="Online">Online</option>
 								<option value="In-person">In-person</option>
-								<option value="Both">Both</option>
+								<option value="Both">Both Online and In-person</option>
 							</select>
 						</div>
 						<div className="mentoring-add-form-group">
