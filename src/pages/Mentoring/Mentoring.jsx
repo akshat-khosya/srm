@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import SnackBar from "../../components/Snackbar";
+import { Context } from "../../context/Context";
 import "./mentoring.css";
 
-const Mentoring = (axiosInstance) => {
+const Mentoring = ({axiosInstance}) => {
+	const {user}=useContext(Context);
 	const [mentorData, setMentorData] = useState({
-		email: "",
-		name: "",
+		email:user.email,
+		name:user.name,
 		interests: [],
 		current: "",
 		mode: "",
@@ -54,7 +56,7 @@ const Mentoring = (axiosInstance) => {
 				[name]: value,
 			});
 	};
-	const handleSubmit = (e) => {
+	const handleSubmit = async(e) => {
 		e.preventDefault();
 		if (
 			mentorData.interests.length === 0 ||
@@ -70,6 +72,18 @@ const Mentoring = (axiosInstance) => {
 				setOpen(false);
 			}, 3500);
 		} else {
+				console.log(mentorData);
+
+			try {
+				const res = await axiosInstance.post("/api/mentoring/", mentorData);
+				console.log(res);
+				if(res.data.status){
+					alert(res.data.message);
+				}
+			} catch (err) {
+				console.log(err);
+			}
+			
 			setSnackColor("var(--blue)")
 			setSnackMsg("Submission Successful");
 			setOpen(true);
@@ -106,9 +120,9 @@ const Mentoring = (axiosInstance) => {
 									type="text"
 									name="name"
 									placeholder="Name"
-									value={mentorData.name}
-									onChange={handleChange}
-									required
+									value={user.name}
+									disabled
+									
 								/>
 							</div>
 							<div className="mentoring-form-group">
@@ -117,9 +131,9 @@ const Mentoring = (axiosInstance) => {
 									type="email"
 									name="email"
 									placeholder="Email"
-									value={mentorData.email}
-									onChange={handleChange}
-									required
+									value={user.email}
+									disabled
+									
 								/>
 							</div>
 							<div className="mentoring-form-group">

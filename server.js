@@ -11,6 +11,7 @@ const post=require("./routes/post")
 const register= require("./routes/userRegister")
 const event=require("./routes/event");
 const oppo=require("./routes/oppo");
+const mentoring=require("./routes/mentoring");
 dotenv.config();
 app.use(express.json());
 app.use(cors());
@@ -52,6 +53,7 @@ app.post("/api/upload/pdf", uploadpdf.single("file"),(req,res)=>{
     app.use("/api/",register);
     app.use("/api/event/",event);
     app.use("/api/oppo/",oppo);
+    app.use("/api/mentoring/",mentoring);
 // app.use("/api/users",userRoute);
 // app.use("/api/posts",postRoute);
 // app.use("/api/categories",categoryRoute);

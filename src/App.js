@@ -15,7 +15,7 @@ import Mentoring from "./pages/Mentoring/Mentoring";
 
 function App() {
 	const axiosInstance = axios.create({
-		baseURL: "https://tegniescorporation.tech/",
+		baseURL: "http://localhost:4000/",
 	});
   const {user,dispatch,isFetching}=useContext(Context);
   const[num,setNum]=useState(true);
