@@ -60,7 +60,6 @@ function Login({axiosInstance}) {
             });
             document.getElementById(Object.keys(res.data.err)).className =
               "myInput red";
-            // alert("Your "+ Object.keys(res.data.err)+" "+res.data.err[Object.keys(res.data.err)[0]]+" is already taken");
             document.getElementById(Object.keys(res.data.err)).focus();
           } else {
             alert("You are already registered");
@@ -71,7 +70,6 @@ function Login({axiosInstance}) {
       }
     } else {
       document.getElementById("repassword").className = "myInput red";
-      // alert("Your password did'nt matches");
       document.getElementById("repassword").focus();
       setErr({ status: true, message: "Your password did'nt matches" });
     }
@@ -308,19 +306,3 @@ function Login({axiosInstance}) {
 }
 
 export default Login;
-
-// const [checkIP,setCheckIP]=useState("tel");
-// const handleChange=(e)=>{
-// const {name,value}=e.target;
-// for(let i=0;i<value.length;++i)if(value[i]==='@')setCheckIP("email");
-// }
-
-// current originazation
-// passing year 1997-2050
-// prgoram
-// mba
-// mca
-// mtech
-// btech,bba,bca,bfarma,bhma,others
-// branch
-// desgination

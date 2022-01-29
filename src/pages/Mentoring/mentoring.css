@@ -39,15 +39,72 @@
   display: flex;
   justify-content: center;
   align-content: center;
-  padding: 0.5rem 0;
+  flex-flow: column;
   font-size: 2rem;
   line-height: 2.5rem;
+}
+.mentoring-head > * {
+  width: fit-content;
+  margin: 0.5rem auto;
 }
 .mentoring-body {
   width: 80%;
   margin: 0 auto;
 }
-.mentoring-form {
+.mentoring-add {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.mentoring-add-box {
+  background-color: var(--bgcolor);
+  width: 60%;
+  min-height: 50%;
+  max-height: 95%;
+  border-radius: 8px;
+}
+@media (max-width: 850px) {
+  .mentoring-add-box {
+    width: 80%;
+  }
+}
+.mentoring-add-head {
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 2.75rem;
+}
+.mentoring-add-head-close {
+  border: 0;
+  outline: 0;
+  border-radius: 500px;
+  padding: 0.35rem;
+  margin: 0.5rem 1rem;
+  background: transparent;
+  transition: all var(--transition-time) ease-in-out;
+}
+.mentoring-add-head-close:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.mentoring-add-body button {
+  border: 0;
+  outline: 0;
+  border: 1px solid #0f6fff;
+  margin: 0 0.5rem;
+  padding: 0.4rem 1rem;
+  border-radius: 5px;
+  resize: none;
+  transition: all var(--transition-time) ease-in-out;
+}
+.mentoring-add-form {
   width: 90%;
   height: 100%;
   margin: 0 auto;
@@ -56,31 +113,31 @@
   align-items: flex-start;
   flex-flow: column;
 }
-.mentoring-form-group {
+.mentoring-add-form-group {
   width: 100%;
   margin: 0.75rem 0;
   display: flex;
 }
-.mentoring-form-group:last-child {
+.mentoring-add-form-group:last-child {
   justify-content: center;
   align-items: center;
   padding: 0.5rem 0;
 }
-.mentoring-form > * > label {
+.mentoring-add-form > * > label {
   width: 25%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
 }
-.mentoring-form > * > label > input {
+.mentoring-add-form > * > label > input {
   width: fit-content;
 }
-.mentoring-form > * > label > input:active, .mentoring-form > * > label > input:focus {
+.mentoring-add-form > * > label > input:active, .mentoring-add-form > * > label > input:focus {
   outline: none;
 }
-.mentoring-form input,
-.mentoring-form textarea,
-.mentoring-form select {
+.mentoring-add-form input,
+.mentoring-add-form textarea,
+.mentoring-add-form select {
   width: 75%;
   border: 0;
   outline: 2px solid transparent;
@@ -90,33 +147,48 @@
   resize: none;
   background-color: rgba(0, 0, 0, 0.05);
 }
-.mentoring-form input::placeholder,
-.mentoring-form textarea::placeholder,
-.mentoring-form select::placeholder {
+.mentoring-add-form input::placeholder,
+.mentoring-add-form textarea::placeholder,
+.mentoring-add-form select::placeholder {
   font-size: 0.875rem;
 }
-.mentoring-form input:active, .mentoring-form input:focus,
-.mentoring-form textarea:active,
-.mentoring-form textarea:focus,
-.mentoring-form select:active,
-.mentoring-form select:focus {
+.mentoring-add-form input:active, .mentoring-add-form input:focus,
+.mentoring-add-form textarea:active,
+.mentoring-add-form textarea:focus,
+.mentoring-add-form select:active,
+.mentoring-add-form select:focus {
   outline: 2px solid rgba(0, 0, 0, 0.04);
 }
-.mentoring-form option {
+.mentoring-add-form option {
   background-color: rgba(0, 0, 0, 0.4);
 }
-.mentoring-interests-group {
+.mentoring-add-interests-group {
   display: flex;
   flex-flow: column;
 }
-.mentoring-interests-group > * {
+.mentoring-add-interests-group > * {
   margin: 0.25rem 0;
 }
-.mentoring-interests-group > * > input {
+.mentoring-add-interests-group > * > input {
   width: fit-content;
 }
-.mentoring-interests-group > * > input:active, .mentoring-interests-group > * > input:focus {
+.mentoring-add-interests-group > * > input:active, .mentoring-add-interests-group > * > input:focus {
   outline: none;
+}
+.mentoring-add-btn {
+  background-color: #0f6fff;
+  color: #f0f0f0;
+}
+.mentoring-add-btn:hover {
+  background-color: #0a6cff;
+}
+.mentoring-add-btn-outline {
+  background-color: #f0f0f0;
+  color: #0f6fff;
+}
+.mentoring-add-btn-outline:hover {
+  background-color: #0a6cff;
+  color: #f0f0f0;
 }
 
 .material-icons {
