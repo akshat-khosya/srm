@@ -6,15 +6,7 @@ import AllConnections from "./AllConnections";
 import "./connections.css";
 
 const Connections = ({ axiosInstance }) => {
-	const bgs = [
-		"white-diamond-dark",
-		"skulls",
-		"robots",
-		"crissxcross",
-		"batthern",
-		"food",
-		"always-grey",
-	];
+	const bgs = ["skulls"];
 	const [allConnectionsBox, setAllConnectionsBox] = useState(false);
 	const [userConnections, setUserConnections] = useState([
 		"akshatmittal61",
