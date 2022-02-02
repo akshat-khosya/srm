@@ -182,7 +182,7 @@ function Profile({axiosInstance}) {
                       </div>
                       <div className="regis-inputgroup regis-inputgroup-profile Col-lg-33 Col-md-50 Col-sm-100">
                         <label htmlFor="name">
-                          Phone Number<span className="requiredLabel">*</span>
+                          Username<span className="requiredLabel">*</span>
                         </label>
                         <input
                           disabled
