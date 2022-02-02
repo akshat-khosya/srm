@@ -71,7 +71,7 @@
 .connections-card {
   width: 95%;
   height: 20rem;
-  margin: 0.75rem 0;
+  margin: 0.75rem auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -136,6 +136,10 @@
   line-height: 1rem;
   margin: 0.1rem auto;
 }
+.connections-card-content__about {
+  font-size: 0.9rem;
+  line-height: 1.1rem;
+}
 .connections-card-btn {
   width: 60%;
   border: 0;
@@ -158,6 +162,58 @@
 .connections-card-btn-outline:hover {
   background-color: #0a6cff;
   color: #f0f0f0;
+}
+.connections-popup {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.connections-popup-box {
+  background-color: var(--bgcolor);
+  width: 80%;
+  height: 95%;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-flow: column;
+}
+.connections-popup-head {
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  height: 2.75rem;
+}
+.connections-popup-head-close {
+  border: 0;
+  outline: 0;
+  border-radius: 500px;
+  padding: 0.35rem;
+  margin: 0.5rem 1rem;
+  background: transparent;
+  transition: all var(--transition-time) ease-in-out;
+}
+.connections-popup-head-close:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.connections-popup-body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1rem;
+  height: calc(100% - 2.75rem);
+  overflow-y: auto;
 }
 
 /*# sourceMappingURL=connections.css.map */
