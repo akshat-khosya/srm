@@ -23,7 +23,7 @@ function Sidebar({ axiosInstance }) {
 	};
 	return (
 		<div className={classname}>
-			<div className="Sidebar-container" data-aos="zoom-out-right">
+			<div className="Sidebar-container">
 				<div className="Sidebar-wrapper">
 					<ul className="Sidebar-ul ">
 						<li className="Sidebar-li Sidebar-logo-1 ">
