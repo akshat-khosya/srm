@@ -54,7 +54,7 @@ const Mentoring = ({ axiosInstance }) => {
 										<div className="mentoring-mentor-head">
 											<div className="mentoring-mentor-head-icon">
 												<img
-													src={`${axiosInstance.defaults.baseURL}images/${user.photo}`}
+													src={`${axiosInstance.defaults.baseURL}images/${mentor.photo}`}
 													className="mentoring-mentor-head-icon__img"
 												/>
 											</div>
