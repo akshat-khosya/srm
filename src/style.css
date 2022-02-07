@@ -9,3 +9,11 @@
 	align-items: center;
     background-color: var(--back-color);
 }
+main{
+	width: 80%;
+}
+@media (max-width:1200px){
+    main{
+		width: 100%;
+    }
+}

@@ -82,34 +82,41 @@ function App() {
 			) : (
 				<></>
 			)}
-
-			<Routes>
-				<Route path="/" element={getPage("/")} />
-				<Route
-					path="/login"
-					element={
-						user ? (
-							<Home axiosInstance={axiosInstance} />
-						) : (
-							<Login axiosInstance={axiosInstance} />
-						)
-					}
-				/>
-				<Route path="/register" element={getPage("/register")} />
-				<Route path="/profile" element={getPage("/profile")} />
-				<Route path="/events" element={getPage("/events")} />
-				<Route path="/connections" element={getPage("/connections")} />
-				<Route path="/group" element={getPage("/group")} />
-				<Route path="/opportunity" element={getPage("/opportunity")} />
-				<Route path="/resource" element={getPage("/resource")} />
-				<Route path="/code" element={getPage("/code")} />
-				<Route
-					path="/scholarships"
-					element={getPage("/scholarships")}
-				/>
-				<Route path="/mentoring" element={getPage("/mentoring")} />
-				<Route path="*" element={getPage("*")} />
-			</Routes>
+			<main>
+				<Routes>
+					<Route path="/" element={getPage("/")} />
+					<Route
+						path="/login"
+						element={
+							user ? (
+								<Home axiosInstance={axiosInstance} />
+							) : (
+								<Login axiosInstance={axiosInstance} />
+							)
+						}
+					/>
+					<Route path="/register" element={getPage("/register")} />
+					<Route path="/profile" element={getPage("/profile")} />
+					<Route path="/events" element={getPage("/events")} />
+					<Route
+						path="/connections"
+						element={getPage("/connections")}
+					/>
+					<Route path="/group" element={getPage("/group")} />
+					<Route
+						path="/opportunity"
+						element={getPage("/opportunity")}
+					/>
+					<Route path="/resource" element={getPage("/resource")} />
+					<Route path="/code" element={getPage("/code")} />
+					<Route
+						path="/scholarships"
+						element={getPage("/scholarships")}
+					/>
+					<Route path="/mentoring" element={getPage("/mentoring")} />
+					<Route path="*" element={getPage("*")} />
+				</Routes>
+			</main>
 		</>
 	);
 }

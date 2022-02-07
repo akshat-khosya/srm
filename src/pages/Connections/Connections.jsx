@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AllConnections from "./AllConnections";
 import "./connections.css";
 import ConnectionsCard from "./ConnectionsCard";
+import _ from "lodash";
+import nullGIF from "../../Images/null-lens.png";
 
 const Connections = ({ axiosInstance }) => {
 	const [allConnectionsBox, setAllConnectionsBox] = useState(false);
@@ -10,74 +12,9 @@ const Connections = ({ axiosInstance }) => {
 		"akshat-khosya",
 		"Mitalijain3",
 	]);
-	const [connections, setConnections] = useState([
-		{
-			name: "Akshat Mittal",
-			image: "https://akshatmittal61.github.io/akshatmittal61/static/media/favicon.f216be050314e2836b31.png",
-			about: "MERN stack developer",
-			username: "akshatmittal61",
-		},
-		{
-			name: "Akshat Khosya",
-			image: "https://techtatva.netlify.app/static/media/akshatKhosya.29804d4dec99ee7c6ff0.jpeg",
-			about: "MERN stack developer",
-			username: "akshat-khosya",
-		},
-		{
-			name: "Mitali Jain",
-			image: "https://techtatva.netlify.app/static/media/mitaliJain.87aba1769dbdd8dbf0ae.jpg",
-			about: "MERN stack developer",
-			username: "Mitalijain3",
-		},
-		{
-			name: "Varun Prohit",
-			image: "https://techtatva.netlify.app/static/media/varunProhit.b20a20297a99df3d0851.jpg",
-			about: "Competitive Programmer | Frontend Developer",
-			username: "VarunProhit",
-		},
-		{
-			name: "Aditi Chauhan",
-			image: "https://techtatva.netlify.app/static/media/aditiChauhan.3545f70d61f8521c642b.jpeg",
-			about: "Tech Enthusiast",
-			username: "aditichauhan04",
-		},
-		{
-			name: "Sayak Mondal",
-			image: "https://techtatva.netlify.app/static/media/sayakMondal.357c00699c5b5682243e.png",
-			about: "Video Editor, Graphic designer",
-			username: "sayak22",
-		},
-		{
-			name: "Pranav Jalan",
-			image: "https://techtatva.netlify.app/static/media/pranavJalan.934eb7d4d0c0a8e03612.jpg",
-			about: "Graphic Designer",
-			username: "pranav22",
-		},
-		{
-			name: "Vansh Singh",
-			image: "https://techtatva.netlify.app/static/media/vanshSingh.1f19dad884b3d8535c1a.jpg",
-			about: "Full Stack Developer | UI/UX Designer",
-			username: "Va1nsh14",
-		},
-		{
-			name: "Chelsi Jain",
-			about: "Web Developer",
-			image: "https://techtatva.netlify.app/static/media/chelsiJain.bdbd751ccac397c349db.jpg",
-			username: "Chelsijain20",
-		},
-		{
-			name: "Pratham Singh",
-			image: "https://techtatva.netlify.app/static/media/prathamSingh.44ab45939e0c64331c2b.jpeg",
-			about: "Web Developer",
-			username: "pratham891",
-		},
-		{
-			name: "Shubhi Arora",
-			image: "https://techtatva.netlify.app/static/media/shubhiArora.d400e9b420067cff2140.jpg",
-			about: "Competitive Programmer | Full Stack Web Developer",
-			username: "shubhi-arora",
-		},
-	]);
+	const [connections, setConnections] = useState([]);
+	const [searchStr, setSearchStr] = useState("");
+	const [openSearch, setOpenSearch] = useState(false);
 	const handleConnect = (username) => {
 		let presentuserConnections = [...userConnections];
 		if (presentuserConnections.includes(username)) {
@@ -90,14 +27,87 @@ const Connections = ({ axiosInstance }) => {
 		console.log(presentuserConnections);
 		setUserConnections(presentuserConnections);
 	};
+	const searchPeople = (value) => {
+		let check = [];
+		const allConnections = [];
+		allConnections.forEach((person) => {
+			const searchName = _.lowerCase(_.camelCase(person.name));
+			if (searchName.includes(value)) check = [...check, person];
+		});
+		setConnections(check);
+		console.log(connections);
+	};
+	const handleSearch = (e) => {
+		e.preventDefault();
+		setSearchStr("");
+	};
+	const handleChange = (e) => {
+		const { value } = e.target;
+		setSearchStr(openSearch ? value : "");
+		searchPeople(value);
+	};
+	useEffect(() => {
+		document.onkeydown = function (evt) {
+			evt = evt || window.event;
+			var isEscape = false;
+			if ("key" in evt) {
+				isEscape = evt.key === "Escape" || evt.key === "Esc";
+			} else {
+				isEscape = evt.keyCode === 27;
+			}
+			if (isEscape) {
+				if (openSearch) {
+					setSearchStr("");
+					searchPeople("");
+					setOpenSearch(false);
+				}
+			}
+		};
+	}, [openSearch]);
+
 	return (
 		<div className="connections-container">
 			<div className="connections-box">
 				<div className="connections-head">
 					<span>Connect with people across the portal</span>
+					<form
+						className="connections-head-form"
+						onSubmit={handleSearch}
+					>
+						<input
+							type="text"
+							value={searchStr}
+							onChange={handleChange}
+							placeholder="Search People..."
+							style={{
+								width: openSearch ? "15rem" : "0",
+								padding: openSearch
+									? "0.5rem 1rem"
+									: "0.5rem 0",
+							}}
+						/>
+						<button
+							onClick={() => {
+								if (openSearch) {
+									setSearchStr("");
+									searchPeople("");
+								}
+								setOpenSearch(!openSearch);
+							}}
+							style={{
+								borderRadius: openSearch
+									? "0 500px 500px 0"
+									: "500px",
+							}}
+						>
+							<span className="material-icons">
+								{openSearch ? "close" : "search"}
+							</span>
+						</button>
+					</form>
 				</div>
 				<div className="connections-body">
-					{userConnections.length > 0 && (
+					{userConnections.length > 0 && connections.length > 0 && (
 						<div className="connections-row">
 							<div className="connections-row-head">
 								<span>Your Connections</span>
@@ -140,37 +150,47 @@ const Connections = ({ axiosInstance }) => {
 							</div>
 						</div>
 					)}
-					<div className="connections-row">
-						<div className="connections-row-head">
-							<span>Connect with More</span>
-						</div>
-						<div className="connections-row-body">
-							<div className="Row">
-								{connections.map(
-									(person, index) =>
-										!userConnections.includes(
-											person.username
-										) && (
-											<div
-												className="Col-lg-25 Col-md-25 col-lg-30"
-												key={index}
-											>
-												<ConnectionsCard
-													person={person}
-													included={userConnections.includes(
-														person.username
-													)}
-													handleConnect={
-														handleConnect
-													}
-												/>
-											</div>
-										)
-								)}
+					{connections.length > 0 && (
+						<div className="connections-row">
+							<div className="connections-row-head">
+								<span>Connect with More</span>
+							</div>
+							<div className="connections-row-body">
+								<div className="Row">
+									{connections.map(
+										(person, index) =>
+											!userConnections.includes(
+												person.username
+											) && (
+												<div
+													className="Col-lg-25 Col-md-25 col-lg-30"
+													key={index}
+												>
+													<ConnectionsCard
+														person={person}
+														included={userConnections.includes(
+															person.username
+														)}
+														handleConnect={
+															handleConnect
+														}
+													/>
+												</div>
+											)
+									)}
+								</div>
 							</div>
 						</div>
-					</div>
+					)}
 				</div>
+				{connections.length <= 0 && searchStr !== "" && (
+					<div className="connections-null">
+						<div className="connections-null-box">
+							<img src={nullGIF} alt="NULL" />
+							<span>{`No results with the name ${searchStr}`}</span>
+						</div>
+					</div>
+				)}
 			</div>
 			{allConnectionsBox && (
 				<AllConnections

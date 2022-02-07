@@ -115,8 +115,11 @@ function Login({axiosInstance}) {
   };
   return (<div style={
     {
+      position: 'absolute',
       flexFlow: 'column',
-      width: '100%'
+      width: '100vw',
+      left: '0',
+      top: '0'
     }
   }>
    <TopBar />

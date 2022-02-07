@@ -1,6 +1,6 @@
 .home{
     height: 100vh;
-    width: 80%;
+    width: 100%;
     display: flex;
     flex-flow: column;
     justify-content: space-between;
