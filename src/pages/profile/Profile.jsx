@@ -2,9 +2,6 @@ import { useState, useContext } from "react";
 import { Context } from "../../context/Context";
 
 import "./profile.css";
-import Navbar from "../../components/navbar/Navbar";
-import Sidebar from "../../components/sidebar/Sidebar";
-import axios from "axios";
 
 import SnackBar from "../../components/Snackbar";
 function Profile({axiosInstance}) {
@@ -114,11 +111,7 @@ function Profile({axiosInstance}) {
 
   return (
     <div className="home">
-      <div className="Row">
-        <Sidebar axiosInstance={axiosInstance} />
-        <div className="Col-lg-83">
           <div className="home-main">
-            <Navbar />
             <div className="profile user-profile ">
               {edit ? (
                 <div className="regisWrapper">
@@ -563,7 +556,6 @@ function Profile({axiosInstance}) {
                           type="number"
                           name="pyear"
                           id="pyear"
-                          type="number"
                           min="1997"
                           max="2050"
                           step="1"
@@ -601,8 +593,6 @@ function Profile({axiosInstance}) {
             </div>
           </div>
         </div>
-      </div>
-    </div>
   );
 }
 

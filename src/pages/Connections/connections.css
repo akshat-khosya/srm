@@ -1,37 +1,21 @@
-.connections {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  background-color: rgba(180, 167, 167, 0.342);
-}
 .connections-container {
   width: 80%;
   margin: 0 auto;
-  height: 90vh;
+  height: 100vh;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   flex-flow: column;
   overflow-x: hidden;
   overflow-y: auto;
-  position: relative;
-}
-.connections-container .Navbar {
-  position: fixed;
-  z-index: 5;
-  width: 76%;
-  top: 5vh;
-  left: 21.5%;
+  background-color: var(--back-color);
 }
 .connections-box {
   width: 100%;
-  height: 90%;
+  height: 100%;
   padding: 2rem 0;
   display: flex;
   flex-flow: column;
-  position: absolute;
-  top: 10%;
 }
 .connections-head {
   width: 100%;

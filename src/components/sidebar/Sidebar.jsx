@@ -1,28 +1,31 @@
 import "./sidebar.css";
 import logo from "../../Images/logo.png";
 import dashboard from "../../Images/dashboard_white_24dp.svg";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Context } from "../../context/Context";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 function Sidebar({ axiosInstance }) {
 	const { user, dispatch } = useContext(Context);
 	const [icon, setIcon] = useState("fas fa-caret-down");
-	const [dropdown, setDropdown] = useState("dropdown");
+	const [dropdown, setDropdown] = useState(true);
 	const [coddropdown, setCoddropdown] = useState(true);
-	const [classname, setClassname] = useState(
-		window.innerWidth > 1200 ? "Col-lg-16 Sidebar" : "Sidebar"
-	);
+	const location = useLocation();
 	const handleIcon = () => {
 		if (icon === "fas fa-caret-down") {
 			setIcon("fas fa-caret-up");
-			setDropdown("dropdown-active");
+			setDropdown(false);
 		} else {
 			setIcon("fas fa-caret-down");
-			setDropdown("dropdown");
+			setDropdown(true);
 		}
 	};
+	useEffect(() => {
+		setDropdown(true);
+		setCoddropdown(true);
+	}, [location.pathname]);
+
 	return (
-		<div className={classname}>
+		<div className="Sidebar">
 			<div className="Sidebar-container">
 				<div className="Sidebar-wrapper">
 					<ul className="Sidebar-ul ">
@@ -62,9 +65,7 @@ function Sidebar({ axiosInstance }) {
 										style={{
 											transition: "all 0.3s ease-in-out",
 											transform: `rotateZ(${
-												dropdown === "dropdown"
-													? "0deg"
-													: "180deg"
+												dropdown ? "0deg" : "180deg"
 											})`,
 										}}
 									></i>
@@ -75,7 +76,7 @@ function Sidebar({ axiosInstance }) {
 							className="dropdown"
 							style={{
 								transition: "height 0.25s ease-in",
-								height: dropdown === "dropdown" ? "0" : "125px",
+								height: dropdown ? "0" : "125px",
 							}}
 						>
 							<Link className="link" to="/profile">

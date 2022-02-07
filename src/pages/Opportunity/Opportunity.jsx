@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../../components/navbar/Navbar";
-import Sidebar from "../../components/sidebar/Sidebar";
 import AddJob from "./AddJob";
 import "./opportunity.css";
 
@@ -39,10 +37,7 @@ const Opportunity = ({ axiosInstance, load }) => {
 	};
 	const [showAddJobBox, setShowAddJobBox] = useState(false);
 	return (
-		<div className="opportunity">
-			<Sidebar axiosInstance={axiosInstance} />
 			<div className="opportunity-container">
-				<Navbar />
 				<div className="opportunity-box">
 					<div className="opportunity-head">
 						<span>All Jobs</span>
@@ -122,7 +117,6 @@ const Opportunity = ({ axiosInstance, load }) => {
 						</div>
 					</div>
 				</div>
-			</div>
 			{showAddJobBox && (
 				<AddJob
 					close={() => setShowAddJobBox(false)}
@@ -131,7 +125,7 @@ const Opportunity = ({ axiosInstance, load }) => {
 					load={loadData}
 				/>
 			)}
-		</div>
+			</div>
 	);
 };
 

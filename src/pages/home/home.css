@@ -1,18 +1,18 @@
 .home{
     height: 100vh;
-    width: 100vw ;
+    width: 80%;
     display: flex;
     flex-flow: column;
     justify-content: space-between;
     align-items: center;
-    background-color: rgba(180, 167, 167, 0.342);
+    /* background-color: rgba(180, 167, 167, 0.342); */
     overflow: hidden;
     
 }
 
 .home-container{
     
-    height: 90%;
+    height: 100%;
     width: 100%;
     overflow: hidden;
     border-radius: 10px;
@@ -21,7 +21,7 @@
 
 }
 .posts{
-    width: 67.5%;
+    width: 100%;
     border-radius: 10px;
     padding-bottom: 30px;
     overflow: hidden;
@@ -58,10 +58,6 @@
     width: 100%;
     padding: 2.5%;
     position: relative;
-}
-
-.home-main>*{
-    margin: 0 0 2.5% 0;
 }
 
 .link{

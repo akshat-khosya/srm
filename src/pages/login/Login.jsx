@@ -113,7 +113,12 @@ function Login({axiosInstance}) {
       console.log(err);
     }
   };
-  return (<>
+  return (<div style={
+    {
+      flexFlow: 'column',
+      width: '100%'
+    }
+  }>
    <TopBar />
     <div className="login">
      
@@ -301,7 +306,7 @@ function Login({axiosInstance}) {
       </div>
       {err.status && <SnackBar text={err.message} />}
     </div>
-    </>
+    </div>
   );
 }
 

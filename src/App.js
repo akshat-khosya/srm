@@ -1,7 +1,7 @@
 import Login from "./pages/login/Login";
-import Home from './pages/home/Home'
-import { useContext,useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from "./pages/home/Home";
+import { useContext, useState } from "react";
+import { Route, Routes } from "react-router-dom";
 import Registration from "./pages/registration/Registration";
 import { Context } from "./context/Context";
 import axios from "axios";
@@ -13,54 +13,105 @@ import Fake from "./pages/fake/Fake";
 import Opportunity from "./pages/Opportunity/Opportunity";
 import Mentoring from "./pages/Mentoring/Mentoring";
 import Connections from "./pages/Connections/Connections";
+import Sidebar from "./components/sidebar/Sidebar";
+import "./style.css";
 
 function App() {
 	const axiosInstance = axios.create({
 		baseURL: "https://tegniescorporation.tech/",
 	});
-  const {user,dispatch,isFetching}=useContext(Context);
-  const[num,setNum]=useState(true);
-  const loadData=async()=>{
-    
-    try {
-      dispatch({ type: "Login_START" });
-      const data=await axiosInstance.get("/api/verifytoken",{ headers: {"token" : localStorage.getItem('token')}})
-      console.log(data);
-      dispatch({ type: "LOGIN_SUCCESS", payload: data.data.user });
-    } catch (err) {
-      dispatch({ type: "LOGIN_FAILURE" });
-    }
-  }
-  if(localStorage.getItem('token')&& num){
-    
-      loadData();
-      setNum(false);
-    
-  }
-  AOS.init();
- 
-  
+	const { user, dispatch, isFetching } = useContext(Context);
+	const [num, setNum] = useState(true);
+	const loadData = async () => {
+		try {
+			dispatch({ type: "Login_START" });
+			const data = await axiosInstance.get("/api/verifytoken", {
+				headers: { token: localStorage.getItem("token") },
+			});
+			console.log(data);
+			dispatch({ type: "LOGIN_SUCCESS", payload: data.data.user });
+		} catch (err) {
+			dispatch({ type: "LOGIN_FAILURE" });
+		}
+	};
+	if (localStorage.getItem("token") && num) {
+		loadData();
+		setNum(false);
+	}
+	AOS.init();
+	const getPage = (route) => {
+		let component = <Fake axiosInstance={axiosInstance} />;
+		switch (route) {
+			case "/":
+				component = <Home axiosInstance={axiosInstance} />;
+				break;
+			case "/login":
+				component = <Home axiosInstance={axiosInstance} />;
+				break;
+			case "/register":
+				component = <Home axiosInstance={axiosInstance} />;
+				break;
+			case "/profile":
+				component = <Profile axiosInstance={axiosInstance} />;
+				break;
+			case "/events":
+				component = <Event axiosInstance={axiosInstance} />;
+				break;
+			case "/connections":
+				component = <Connections axiosInstance={axiosInstance} />;
+				break;
+			case "/opportunity":
+				component = <Opportunity axiosInstance={axiosInstance} />;
+				break;
+			case "/mentoring":
+				component = <Mentoring axiosInstance={axiosInstance} />;
+				break;
+			default:
+				component = <Fake axiosInstance={axiosInstance} />;
+				break;
+		}
+		if (user) {
+			if (user.verifcation) return component;
+			else return <Registration axiosInstance={axiosInstance} />;
+		} else return <Login axiosInstance={axiosInstance} />;
+	};
+	return (
+		<>
+			{user ? (
+				user.verifcation && <Sidebar axiosInstance={axiosInstance} />
+			) : (
+				<></>
+			)}
 
-  return (
-    <Router>
-      
-    <Routes>
-      <Route  path="/" element={user?(user.verifcation?(<Home axiosInstance={axiosInstance} />):<Registration axiosInstance={axiosInstance} />):<Login axiosInstance={axiosInstance} />}/>
-      <Route  path="/login" element={user?<Home axiosInstance={axiosInstance} />:<Login axiosInstance={axiosInstance} />}/>
-      <Route  path="/register" element={user?(user.verifcation?<Home axiosInstance={axiosInstance} />:<Registration axiosInstance={axiosInstance} />):<Login axiosInstance={axiosInstance} />}/>
-      <Route path="/profile" element={user?(user.verifcation ? <Profile axiosInstance={axiosInstance} /> :<Registration axiosInstance={axiosInstance} />):(<Login axiosInstance={axiosInstance} />)} />
-      <Route path="/events" element={user?(user.verifcation ? <Event axiosInstance={axiosInstance} /> :<Registration axiosInstance={axiosInstance} />):(<Login axiosInstance={axiosInstance} />)} />
-      <Route path="/connections" element={user?(user.verifcation ? <Fake axiosInstance={axiosInstance} />:<Registration axiosInstance={axiosInstance} />):(<Login axiosInstance={axiosInstance} />)} />
-      <Route path="/group" element={user?(user.verifcation ? <Fake axiosInstance={axiosInstance} />:<Registration axiosInstance={axiosInstance} />):(<Login axiosInstance={axiosInstance} />)} />
-      <Route path="/opportunity" element={user?(user.verifcation ? <Opportunity load={loadData} axiosInstance={axiosInstance} />:<Registration axiosInstance={axiosInstance} />):(<Login axiosInstance={axiosInstance} />)} />
-      <Route path="/resource" element={user?(user.verifcation ? <Fake axiosInstance={axiosInstance} />:<Registration axiosInstance={axiosInstance} />):(<Login axiosInstance={axiosInstance} />)} />
-      <Route path="/code" element={user?(user.verifcation ? <Fake axiosInstance={axiosInstance} />:<Registration axiosInstance={axiosInstance} />):(<Login axiosInstance={axiosInstance} />)} />
-      <Route path="/scholarships" element={user?(user.verifcation ? <Fake axiosInstance={axiosInstance} />:<Registration axiosInstance={axiosInstance} />):(<Login axiosInstance={axiosInstance} />)} />
-      <Route path="/mentoring" element={user?(user.verifcation ? <Mentoring axiosInstance={axiosInstance} />:<Registration axiosInstance={axiosInstance} />):(<Login axiosInstance={axiosInstance} />)} />
-      <Route path='*' element={user?(user.verifcation ? <Fake axiosInstance={axiosInstance} />:<Registration axiosInstance={axiosInstance} />):(<Login axiosInstance={axiosInstance} />)} />
-    </Routes>
-  </Router>
-  );
+			<Routes>
+				<Route path="/" element={getPage("/")} />
+				<Route
+					path="/login"
+					element={
+						user ? (
+							<Home axiosInstance={axiosInstance} />
+						) : (
+							<Login axiosInstance={axiosInstance} />
+						)
+					}
+				/>
+				<Route path="/register" element={getPage("/register")} />
+				<Route path="/profile" element={getPage("/profile")} />
+				<Route path="/events" element={getPage("/events")} />
+				<Route path="/connections" element={getPage("/connections")} />
+				<Route path="/group" element={getPage("/group")} />
+				<Route path="/opportunity" element={getPage("/opportunity")} />
+				<Route path="/resource" element={getPage("/resource")} />
+				<Route path="/code" element={getPage("/code")} />
+				<Route
+					path="/scholarships"
+					element={getPage("/scholarships")}
+				/>
+				<Route path="/mentoring" element={getPage("/mentoring")} />
+				<Route path="*" element={getPage("*")} />
+			</Routes>
+		</>
+	);
 }
 
 export default App;

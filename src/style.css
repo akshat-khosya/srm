@@ -1,0 +1,11 @@
+:root {
+	--back-color: #f0f0f0;
+}
+#root {
+    width: 100vw;
+    height: 100vh;
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+    background-color: var(--back-color);
+}

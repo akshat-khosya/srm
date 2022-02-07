@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 import "./event.css";
 import { useState } from "react";
-import Navbar from "../../components/navbar/Navbar";
-import Sidebar from "../../components/sidebar/Sidebar";
 import EventPopup from "./EventPopup";
 import SingleEvent from "./SingleEvent";
 import EventDetails from "./EventDetails";
@@ -36,11 +34,8 @@ function Event({axiosInstance}) {
 	);
 	return (
 		<div className="home">
-			<div className="Row">
-				<Sidebar axiosInstance={axiosInstance} />
 				<div className={classname}>
 					<div className="home-main">
-						<Navbar />
 						<div className="home-container">
 							<div className="event">
 								{eventPopupBox && (
@@ -94,7 +89,6 @@ function Event({axiosInstance}) {
 					</div>
 				</div>
 			</div>
-		</div>
 	);
 }
 

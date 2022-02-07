@@ -1,12 +1,9 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import Navbar from "../../components/navbar/Navbar";
-import Sidebar from "../../components/sidebar/Sidebar";
 import AllConnections from "./AllConnections";
 import "./connections.css";
+import ConnectionsCard from "./ConnectionsCard";
 
 const Connections = ({ axiosInstance }) => {
-	const bgs = ["skulls"];
 	const [allConnectionsBox, setAllConnectionsBox] = useState(false);
 	const [userConnections, setUserConnections] = useState([
 		"akshatmittal61",
@@ -85,7 +82,7 @@ const Connections = ({ axiosInstance }) => {
 		let presentuserConnections = [...userConnections];
 		if (presentuserConnections.includes(username)) {
 			presentuserConnections = presentuserConnections.filter(
-				(a) => a != username
+				(a) => a !== username
 			);
 		} else {
 			presentuserConnections = [...presentuserConnections, username];
@@ -94,206 +91,82 @@ const Connections = ({ axiosInstance }) => {
 		setUserConnections(presentuserConnections);
 	};
 	return (
-		<div className="connections">
-			<Sidebar axiosInstance={axiosInstance} />
-			<div className="connections-container">
-				<Navbar />
-				<div className="connections-box">
-					<div className="connections-head">
-						<span>Connect with people across the portal</span>
-					</div>
-					<div className="connections-body">
-						{userConnections.length > 0 && (
-							<div className="connections-row">
-								<div className="connections-row-head">
-									<span>Your Connections</span>
-									<button
-										className="aavesh-btn"
-										onClick={() =>
-											setAllConnectionsBox(true)
-										}
-									>
-										<span className="aavesh-btn-text">
-											View All
-										</span>
-									</button>
-								</div>
-								<div className="connections-row-body">
-									<div className="Row">
-										{connections.map(
-											(person, index) =>
-												userConnections.includes(
-													person.username
-												) &&
-												userConnections.indexOf(
-													person.username
-												) < 4 && (
-													<div
-														className="Col-lg-25 Col-md-25 col-lg-30"
-														key={index}
-													>
-														<div className="connections-card">
-															<div
-																className="connections-card-box"
-																style={{
-																	backgroundImage: `url(http://www.transparenttextures.com/patterns/${
-																		bgs[
-																			index %
-																				bgs.length
-																		]
-																	}.png)`,
-																}}
-															>
-																<div
-																	className="connections-card-image"
-																	style={{
-																		backgroundImage: `url(${person.image})`,
-																	}}
-																></div>
-																<div className="connections-card-content">
-																	<Link
-																		to={`/people/${person.username}`}
-																		className="connections-card-content__name"
-																	>
-																		{
-																			person.name
-																		}
-																	</Link>
-																	<Link
-																		to={`/people/${person.username}`}
-																		className="connections-card-content__username"
-																	>
-																		{
-																			person.username
-																		}
-																	</Link>
-																	<span className="connections-card-content__about">
-																		{
-																			person.about
-																		}
-																	</span>
-																	{userConnections.includes(
-																		person.username
-																	) ? (
-																		<button
-																			className="connections-card-btn"
-																			onClick={() =>
-																				handleConnect(
-																					person.username
-																				)
-																			}
-																		>
-																			Unfollow
-																		</button>
-																	) : (
-																		<button
-																			className="connections-card-btn"
-																			onClick={() =>
-																				handleConnect(
-																					person.username
-																				)
-																			}
-																		>
-																			Connect
-																		</button>
-																	)}
-																</div>
-															</div>
-														</div>
-													</div>
-												)
-										)}
-									</div>
-								</div>
-							</div>
-						)}
+		<div className="connections-container">
+			<div className="connections-box">
+				<div className="connections-head">
+					<span>Connect with people across the portal</span>
+				</div>
+				<div className="connections-body">
+					{userConnections.length > 0 && (
 						<div className="connections-row">
 							<div className="connections-row-head">
-								<span>Connect with More</span>
+								<span>Your Connections</span>
+								<button
+									className="aavesh-btn"
+									onClick={() => setAllConnectionsBox(true)}
+								>
+									<span className="aavesh-btn-text">
+										View All
+									</span>
+								</button>
 							</div>
 							<div className="connections-row-body">
 								<div className="Row">
 									{connections.map(
 										(person, index) =>
-											!userConnections.includes(
+											userConnections.includes(
 												person.username
-											) && (
+											) &&
+											userConnections.indexOf(
+												person.username
+											) < 4 && (
 												<div
 													className="Col-lg-25 Col-md-25 col-lg-30"
 													key={index}
 												>
-													<div className="connections-card">
-														<div
-															className="connections-card-box"
-															style={{
-																backgroundImage: `url(http://www.transparenttextures.com/patterns/${
-																	bgs[
-																		index %
-																			bgs.length
-																	]
-																}.png)`,
-															}}
-														>
-															<div
-																className="connections-card-image"
-																style={{
-																	backgroundImage: `url(${person.image})`,
-																}}
-															></div>
-															<div className="connections-card-content">
-																<Link
-																	to={`/people/${person.username}`}
-																	className="connections-card-content__name"
-																>
-																	{
-																		person.name
-																	}
-																</Link>
-																<Link
-																	to={`/people/${person.username}`}
-																	className="connections-card-content__username"
-																>
-																	{
-																		person.username
-																	}
-																</Link>
-																<span className="connections-card-content__about">
-																	{
-																		person.about
-																	}
-																</span>
-																{userConnections.includes(
-																	person.username
-																) ? (
-																	<button
-																		className="connections-card-btn"
-																		onClick={() =>
-																			handleConnect(
-																				person.username
-																			)
-																		}
-																	>
-																		Unfollow
-																	</button>
-																) : (
-																	<button
-																		className="connections-card-btn"
-																		onClick={() =>
-																			handleConnect(
-																				person.username
-																			)
-																		}
-																	>
-																		Connect
-																	</button>
-																)}
-															</div>
-														</div>
-													</div>
+													<ConnectionsCard
+														person={person}
+														included={userConnections.includes(
+															person.username
+														)}
+														handleConnect={
+															handleConnect
+														}
+													/>
 												</div>
 											)
 									)}
 								</div>
+							</div>
+						</div>
+					)}
+					<div className="connections-row">
+						<div className="connections-row-head">
+							<span>Connect with More</span>
+						</div>
+						<div className="connections-row-body">
+							<div className="Row">
+								{connections.map(
+									(person, index) =>
+										!userConnections.includes(
+											person.username
+										) && (
+											<div
+												className="Col-lg-25 Col-md-25 col-lg-30"
+												key={index}
+											>
+												<ConnectionsCard
+													person={person}
+													included={userConnections.includes(
+														person.username
+													)}
+													handleConnect={
+														handleConnect
+													}
+												/>
+											</div>
+										)
+								)}
 							</div>
 						</div>
 					</div>
@@ -303,7 +176,6 @@ const Connections = ({ axiosInstance }) => {
 				<AllConnections
 					userConnections={userConnections}
 					connections={connections}
-					bgs={bgs}
 					close={() => setAllConnectionsBox(false)}
 					save={(a) => setUserConnections(a)}
 				/>
