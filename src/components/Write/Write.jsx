@@ -62,7 +62,7 @@ function Write({load,axiosInstance}) {
                     </div>
                     <div className="write-desc">
                         <label htmlFor="desc"><img src={`${axiosInstance.defaults.baseURL}images/${user.photo}`} alt="" />{user.name}</label>
-                        <textarea value={desc} onChange={(e)=>{setDesc(e.target.value)}} placeholder='Write somethings here' name="desc" id="desc" ></textarea>
+                        <textarea value={desc} onChange={(e)=>{setDesc(e.target.value)}} placeholder='Write something here' name="desc" id="desc" ></textarea>
                     </div>
                     {file && (<div className='media-show'>
                         <img src={URL.createObjectURL(file)} alt="" />

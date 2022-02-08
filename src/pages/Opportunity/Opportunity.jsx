@@ -79,7 +79,7 @@ const Opportunity = ({ axiosInstance, load }) => {
 												</span>
 											</div>
 											<div className="opportunity-job-head-showmore">
-												<a target="_blank" href={job.file}>
+												<a target="_blank" href={job.file} rel="noreferrer">
 													<span className="material-icons">
 														chevron_right
 													</span>
@@ -97,7 +97,7 @@ const Opportunity = ({ axiosInstance, load }) => {
 														target="_blank"
 														rel="noreferrer"
 													>
-														View Deatils
+														View Details
 													</a>
 												</button>
 												<button className="opportunity-btn">

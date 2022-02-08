@@ -6,7 +6,7 @@ function Posts({ posts,axiosInstance }) {
         <div>
            {posts.map((p,index)=>(
          
-          <Post keys={index} post={p} axiosInstance={axiosInstance} />
+          <Post key={index} keys={index} post={p} axiosInstance={axiosInstance} />
       ))}
         </div>
     )
