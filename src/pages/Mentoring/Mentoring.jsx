@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../context/Context";
 import AddMentor from "./AddMentor";
+import Mentor from "./Mentor";
 import "./mentoring.css";
 
 const Mentoring = ({ axiosInstance }) => {
@@ -44,48 +45,11 @@ const Mentoring = ({ axiosInstance }) => {
 								className="Col-lg-50 Col-md-100 Col-sm-100"
 								key={index}
 							>
-								<div className="mentoring-mentor">
-									<div className="mentoring-mentor-head">
-										<div className="mentoring-mentor-head-icon">
-											<img
-												src={`${axiosInstance.defaults.baseURL}images/${mentor.email}`}
-												className="mentoring-mentor-head-icon__img"
-												alt={mentor.name}
-											/>
-										</div>
-										<div className="mentoring-mentor-head-content">
-											<span className="mentoring-mentor-head__name">
-												{mentor.name}
-											</span>
-											<a
-												href={`mailto:${mentor.email}`}
-												className="mentoring-mentor-head__email"
-											>
-												{mentor.email}
-											</a>
-										</div>
-									</div>
-									<div className="mentoring-mentor-body">
-										<div className="mentoring-mentor-interests">
-											{mentor.interests.map(
-												(item, index) => (
-													<span
-														className="mentoring-mentor-interest"
-														key={index}
-													>
-														{item}
-													</span>
-												)
-											)}
-										</div>
-										<div className="mentoring-mentor-current">
-											{`Currenly working in ${mentor.current}`}
-										</div>
-									</div>
-									<div className="mentoring-mentor-tag">
-										{`Prefers to work ${mentor.mode} ${mentor.frequency}`}
-									</div>
-								</div>
+								<Mentor
+									mentor={mentor}
+									axiosInstance={axiosInstance}
+									key={index}
+								/>
 							</div>
 						))}
 					</div>
