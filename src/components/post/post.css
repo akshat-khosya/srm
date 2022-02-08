@@ -83,6 +83,7 @@
     opacity: 0;
     transition: all 0.25s ease-in-out;
 	background-color: var(--bgcolor);
+	color: var(--tcolor);
     overflow: hidden;
 }
 .more-context input:checked + .more-popup {

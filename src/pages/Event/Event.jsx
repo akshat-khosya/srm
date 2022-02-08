@@ -29,12 +29,8 @@ function Event({axiosInstance}) {
 	useEffect(() => {
 		loadData();
 	}, []);
-	const [classname, setClassname] = useState(
-		window.innerWidth > 1200 ? "Col-lg-83" : " Col-lg-83"
-	);
 	return (
 		<div className="home">
-				<div className={classname}>
 					<div className="home-main">
 						<div className="home-container">
 							<div className="event">
@@ -86,7 +82,6 @@ function Event({axiosInstance}) {
 								</div>
 							</div>
 						</div>
-					</div>
 				</div>
 			</div>
 	);
