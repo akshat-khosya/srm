@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AddJob from "./AddJob";
+import Job from "./Job";
 import "./opportunity.css";
 
 const Opportunity = ({ axiosInstance, load }) => {
@@ -37,86 +38,32 @@ const Opportunity = ({ axiosInstance, load }) => {
 	};
 	const [showAddJobBox, setShowAddJobBox] = useState(false);
 	return (
-			<div className="opportunity-container">
-				<div className="opportunity-box">
-					<div className="opportunity-head">
-						<span>All Jobs</span>
-					</div>
-					<div className="opportunity-add">
-						<button
-							className="aavesh-btn"
-							onClick={() => setShowAddJobBox(true)}
-						>
-							<span className="aavesh-btn-text">
-								Add a new job
-							</span>
-						</button>
-					</div>
-					<div className="opportunity-body">
-						<div className="Row">
-							{jobs.map((job, index) => (
-								<div
-									className="Col-lg-50 Col-md-100 Col-sm-100"
-									key={index}
-								>
-									<div className="opportunity-job">
-										<div className="opportunity-job-head">
-											<div className="opportunity-job-head-icon">
-												<img
-													src={job.icon}
-													alt={job.title}
-												/>
-											</div>
-											<div className="opportunity-job-head-content">
-												<span className="opportunity-job-head-content-title">
-													{job.title}
-												</span>
-												<span className="opportunity-job-head-content-field">
-													{job.field}
-												</span>
-												<span className="opportunity-job-head-content-department">
-													{job.department}
-												</span>
-											</div>
-											<div className="opportunity-job-head-showmore">
-												<a target="_blank" href={job.file} rel="noreferrer">
-													<span className="material-icons">
-														chevron_right
-													</span>
-												</a>
-											</div>
-										</div>
-										<div className="opportunity-job-body">
-											<div className="opportunity-job-body-content">
-												{job.content}
-											</div>
-											<div className="opportunity-job-body-actions">
-												<button className="opportunity-btn opportunity-btn-outline">
-													<a
-														href={job.file}
-														target="_blank"
-														rel="noreferrer"
-													>
-														View Details
-													</a>
-												</button>
-												<button className="opportunity-btn">
-													<a
-														href={job.link}
-														target="_blank"
-														rel="noreferrer"
-													>
-														Apply Now
-													</a>
-												</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							))}
-						</div>
+		<div className="opportunity-container">
+			<div className="opportunity-box">
+				<div className="opportunity-head">
+					<span>All Jobs</span>
+				</div>
+				<div className="opportunity-add">
+					<button
+						className="aavesh-btn"
+						onClick={() => setShowAddJobBox(true)}
+					>
+						<span className="aavesh-btn-text">Add a new job</span>
+					</button>
+				</div>
+				<div className="opportunity-body">
+					<div className="Row">
+						{jobs.map((job, index) => (
+							<div
+								className="Col-lg-50 Col-md-100 Col-sm-100"
+								key={index}
+							>
+								<Job job={job} />
+							</div>
+						))}
 					</div>
 				</div>
+			</div>
 			{showAddJobBox && (
 				<AddJob
 					close={() => setShowAddJobBox(false)}
@@ -125,7 +72,7 @@ const Opportunity = ({ axiosInstance, load }) => {
 					load={loadData}
 				/>
 			)}
-			</div>
+		</div>
 	);
 };
 

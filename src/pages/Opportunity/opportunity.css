@@ -11,7 +11,7 @@
 }
 .opportunity-box {
   width: 100%;
-  height: 100%;
+  height: 90%;
   padding: 2rem 0;
   display: flex;
   flex-flow: column;
@@ -85,21 +85,6 @@
   font-size: 0.75rem;
   line-height: 0.875rem;
   color: #505050;
-}
-.opportunity-job-head-showmore {
-  width: 10%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.opportunity-job-head-showmore span {
-  border-radius: 500px;
-  padding: 0.5rem;
-  transition: all var(--transition-time) ease-in-out;
-}
-.opportunity-job-head-showmore span:hover {
-  background-color: rgba(0, 0, 0, 0.05);
 }
 .opportunity-job-body {
   font-size: 0.875rem;
