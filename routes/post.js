@@ -21,5 +21,12 @@ router.post("/", async (req, res) => {
     }
   });
 
-
+router.delete("/", async(req,res)=>{
+  try {
+    Post.findByIdAndDelete({_id:req.body.id});
+    res.send({status:true,message:"Post deleted sucessfully"});
+  } catch (err) {
+    console.log(err);
+  }
+})
 module.exports = router;

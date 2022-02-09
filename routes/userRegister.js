@@ -18,7 +18,7 @@ router.post("/newregister", async (req, res) => {
         phone: req.body.phone,
         username: req.body.username,
         password: hasedPass,
-      
+
         verifcation: false,
       });
       await newUser.save((err, savedUser) => {
@@ -141,7 +141,7 @@ router.patch("/newregister", async (req, res) => {
 router.patch("/profile", async (req, res) => {
   try {
     const { email, ...rest } = req.body;
-   
+
     await UserData.findOneAndUpdate(
       { email: email },
       {
@@ -153,7 +153,6 @@ router.patch("/profile", async (req, res) => {
           res.json({ status: false, message: "err", err: err.keyValue });
         } else {
           if (foundUser) {
-           
             res.send({ status: true, message: "verified", user: req.body });
           } else {
             res.json({ status: false, message: "err", err: err.keyValue });
@@ -171,17 +170,73 @@ router.get("/verifytoken", (req, res) => {
     if (err) {
       console.log(err);
     } else {
-        if(user){
-            UserData.findOne({email:user},(err,founduser)=>{
-                if(err){
-                    console.log(err);
-                }else{
-                    const {password,...others}=founduser._doc;
-                    res.json({ auth: true, user: others });
-                }
-            })
+      if (user) {
+        UserData.findOne({ email: user }, (err, founduser) => {
+          if (err) {
+            console.log(err);
+          } else {
+            const { password, ...others } = founduser._doc;
+            res.json({ auth: true, user: others });
+          }
+        });
+      }
+    }
+  });
+});
+
+router.patch("/connection", (req, res) => {
+  // UserData.findOneAndUpdate(
+  //   { email: req.body.email },
+  //   {
+  //     $push: { following: req.body.userEmail },
+  //   },
+  //   (err, result) => {
+  //     if (result) {
+  //       console.log(result);
+  //       res.send({ satus: true, message: "connection added succesfully" });
+  //     } else {
+  //       console.log(err);
+  //     }
+  //   }
+  // );
+      UserData.updateOne({email:req.body.email},{$push:{following:req.body.userEmail}},(err,result)=>{
+        if(err){
+          console.log(err);
+          res.send(err);
+        }else{
+          console.log(result);
+          res.send(result);
         }
-      
+      })
+});
+router.post("/connection", (req, res) => {
+  const email = req.body.email;
+
+  UserData.findOne({ email: email }, (err, foundUser) => {
+    if (foundUser) {
+      console.log(foundUser.following);
+      const connectionDetails = [];
+      foundUser.following.forEach((element) => {
+        UserData.findOne({ email: element }, (error, User) => {
+          if (User) {
+            connectionDetails.push({
+              Name: User.name,
+              Username: User.username,
+              Role: User.work,
+            });
+          } else {
+            console.log(error);
+          }
+        });
+      });
+      console.log(connectionDetails);
+      res.send({
+        satus: true,
+        message: "connection",
+        array: connectionDetails,
+      });
+    } else {
+      console.log(err);
     }
   });
 });

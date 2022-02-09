@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const UserSchema = new mongoose.Schema({
     phone:{
         type:String,
@@ -64,8 +63,8 @@ const UserSchema = new mongoose.Schema({
         type:Boolean,
         required:true,
         default:false
-    }
-    
+    },
+    following:[{type:String}]
 
 },{timestamps:true});
 

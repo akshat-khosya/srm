@@ -16,7 +16,7 @@ import Connections from "./pages/Connections/Connections";
 
 function App() {
 	const axiosInstance = axios.create({
-		baseURL: "https://tegniescorporation.tech/",
+		baseURL: "http://localhost:4000/",
 	});
   const {user,dispatch,isFetching}=useContext(Context);
   const[num,setNum]=useState(true);
@@ -50,7 +50,7 @@ function App() {
       <Route  path="/register" element={user?(user.verifcation?<Home axiosInstance={axiosInstance} />:<Registration axiosInstance={axiosInstance} />):<Login axiosInstance={axiosInstance} />}/>
       <Route path="/profile" element={user?(user.verifcation ? <Profile axiosInstance={axiosInstance} /> :<Registration axiosInstance={axiosInstance} />):(<Login axiosInstance={axiosInstance} />)} />
       <Route path="/events" element={user?(user.verifcation ? <Event axiosInstance={axiosInstance} /> :<Registration axiosInstance={axiosInstance} />):(<Login axiosInstance={axiosInstance} />)} />
-      <Route path="/connections" element={user?(user.verifcation ? <Fake axiosInstance={axiosInstance} />:<Registration axiosInstance={axiosInstance} />):(<Login axiosInstance={axiosInstance} />)} />
+      <Route path="/connections" element={user?(user.verifcation ? <Connections axiosInstance={axiosInstance} />:<Registration axiosInstance={axiosInstance} />):(<Login axiosInstance={axiosInstance} />)} />
       <Route path="/group" element={user?(user.verifcation ? <Fake axiosInstance={axiosInstance} />:<Registration axiosInstance={axiosInstance} />):(<Login axiosInstance={axiosInstance} />)} />
       <Route path="/opportunity" element={user?(user.verifcation ? <Opportunity load={loadData} axiosInstance={axiosInstance} />:<Registration axiosInstance={axiosInstance} />):(<Login axiosInstance={axiosInstance} />)} />
       <Route path="/resource" element={user?(user.verifcation ? <Fake axiosInstance={axiosInstance} />:<Registration axiosInstance={axiosInstance} />):(<Login axiosInstance={axiosInstance} />)} />
