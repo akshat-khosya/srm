@@ -14,7 +14,13 @@ const oppo=require("./routes/oppo");
 const mentoring=require("./routes/mentoring");
 dotenv.config();
 app.use(express.json());
-app.use(cors());
+const corsOptions ={
+    origin:'*', 
+    credentials:true,            //access-control-allow-credentials:true
+    optionSuccessStatus:200,
+ }
+ 
+ app.use(cors(corsOptions))
 app.use("/images",express.static(path.join(__dirname,"/images")));
 app.use("/pdf",express.static(path.join(__dirname,"/pdf")));
 mongoose.connect(process.env.MONGO_URL,{ useNewUrlParser: true, useUnifiedTopology: true }, function(err) {
