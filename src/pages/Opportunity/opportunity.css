@@ -1,28 +1,13 @@
-.opportunity {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  background-color: rgba(180, 167, 167, 0.342);
-}
 .opportunity-container {
-  width: 80%;
+  width: 100%;
   margin: 0 auto;
-  height: 90vh;
+  height: 100vh;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   flex-flow: column;
   overflow-x: hidden;
   overflow-y: auto;
-  position: relative;
-}
-.opportunity-container .Navbar {
-  position: fixed;
-  z-index: 5;
-  width: 76%;
-  top: 5vh;
-  left: 21.5%;
 }
 .opportunity-box {
   width: 100%;
@@ -30,8 +15,6 @@
   padding: 2rem 0;
   display: flex;
   flex-flow: column;
-  position: absolute;
-  top: 10%;
 }
 .opportunity-head {
   width: 100%;
@@ -102,21 +85,6 @@
   font-size: 0.75rem;
   line-height: 0.875rem;
   color: #505050;
-}
-.opportunity-job-head-showmore {
-  width: 10%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.opportunity-job-head-showmore span {
-  border-radius: 500px;
-  padding: 0.5rem;
-  transition: all var(--transition-time) ease-in-out;
-}
-.opportunity-job-head-showmore span:hover {
-  background-color: rgba(0, 0, 0, 0.05);
 }
 .opportunity-job-body {
   font-size: 0.875rem;

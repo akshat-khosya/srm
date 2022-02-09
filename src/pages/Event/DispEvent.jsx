@@ -1,28 +1,29 @@
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Context } from "../../context/Context";
-import "./post.css";
+import SnackBar from "../../components/Snackbar";
 
-import like from "../../Images/like.png";
-import SnackBar from "../Snackbar";
-function Post({ post, keys, axiosInstance,load }) {
-	const { user } = useContext(Context);
-	const [contextMenu, setContextMenu] = useState(false);
+
+const DispEvent = ({ e, axiosInstance, openEvent,load }) => {
+	const {user}=useContext(Context);
 	const [open,setOpen]=useState(false);
 	const [err,setErr]=useState({
 		text:"",
 		err:"",
 		color:"var(--red)"
 	});
-	const editPost = () => {
-		console.log("Edit the post");
+	
+	const [contextMenu, setContextMenu] = useState(false);
+	const editEvent = () => {
+		console.log("Edit the event");
+		openEvent(e);
 		setContextMenu(false);
 	};
-	const delPost = async() => {
+	const delEvent =async () => {
 		try {
-			console.log(post._id);
+			console.log(e._id);
 			
 
-			const res=await axiosInstance.delete("/api/post/",{data:{id:post._id}});
+			const res=await axiosInstance.delete("/api/event",{data:{id:e._id}});
 			console.log(res);
 			if(res.data.status===true){
 				setOpen(true);
@@ -42,30 +43,25 @@ function Post({ post, keys, axiosInstance,load }) {
 		} catch (err) {
 			
 		}
-		
 	};
-
 	return (
-		<div key={keys} className="Post">
-			<div className="postContainer">
-				<div className="postUser">
-					<div className="postUser-details">
-						<div className="postProfilePhoto">
-							<img
-								src={`${axiosInstance.defaults.baseURL}images/${post.email}`}
-								alt=""
-							/>
-						</div>
-						<div className="postUserName">
-							<h4>{post.author}</h4>
-							<span>
-								{new Date(post.createdAt).toDateString()}
-							</span>
-						</div>
-					</div>
-					<div className="postUser-settings">
-						{user.email===post.email &&<div className="more-context">
-							
+		<div className="post">
+			{e.photo && (
+				<img
+					src={`${axiosInstance.defaults.baseURL}images/${e.photo}`}
+					alt=""
+					className="postImg"
+				/>
+			)}
+
+			<div className="postInfo">
+				<div className="postTile-Date">
+					<span className="postTitle" onClick={() => openEvent(e)}>
+						{e.title}
+					</span>
+					<span className="postDate">
+						{e.date}
+							{user.email===e.email&&<div className="more-context">
 							<button
 								className="icon more-icon"
 								onClick={() => setContextMenu(!contextMenu)}
@@ -80,48 +76,44 @@ function Post({ post, keys, axiosInstance,load }) {
 								name="openContextMenu"
 								onChange={() => console.log("Changed")}
 							/>
+							
 							<div className="more-popup">
 								<ul className="more-list">
-									{/* <li
+									<li
 										className="more-item"
-										onClick={() => editPost()}
+										onClick={() => editEvent()}
 									>
 										<span className="material-icons">
 											edit
 										</span>
 										<span className="more-item-label">
-											Edit Post
+											Edit Event
 										</span>
-									</li> */}
+									</li>
 									<li
 										className="more-item"
-										onClick={() => delPost()}
+										onClick={() => delEvent()}
 									>
 										<span className="material-icons">
 											delete
 										</span>
 										<span className="more-item-label">
-											Delete Post
+											Delete Event
 										</span>
 									</li>
 								</ul>
 							</div>
 						</div> }
 						
-					</div>
+					</span>
 				</div>
-				{post.desc && <div className="postInfo">{post.desc}</div>}
-				{post.media && (
-					<div className="postMedia">
-						<img
-							src={`${axiosInstance.defaults.baseURL}images/${post.media}`}
-							alt=""
-						/>
-					</div>
-				)}
-
-				
+				<div className="postcats">
+					<span className="postCat">{e.category1}</span>
+					<span className="postCat">{e.category2}</span>
+				</div>
+				<h6>Author: {e.author}</h6>
 			</div>
+			<p className="postDesc">{e.desc}</p>
 			{contextMenu && (
 				<div
 					className="context-menu-cover"
@@ -131,6 +123,6 @@ function Post({ post, keys, axiosInstance,load }) {
 			{open && <SnackBar text={err.text}color={err.color} />}
 		</div>
 	);
-}
+};
 
-export default Post;
+export default DispEvent;

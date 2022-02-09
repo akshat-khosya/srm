@@ -44,6 +44,21 @@ router.post("/", async (req, res) => {
       console.log(err);
     }
   });
+  router.delete("/", async(req,res)=>{
+    console.log(req.body.id);
+    try {
+      Mentoring.findByIdAndDelete({_id:req.body.id},(err)=>{
+        if(err){
+          res.send({status:false,error:err});
+        }else{
+          res.send({status:true,message:"Deleted sucessfully"});
+        }
+      });
+      
+    } catch (err) {
+      console.log(err);
+    }
+  })
 
 
 module.exports = router;

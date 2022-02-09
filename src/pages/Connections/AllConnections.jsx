@@ -1,12 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import ConnectionsCard from "./ConnectionsCard";
 
-const AllConnections = ({ close, save, userConnections, connections, bgs }) => {
+const AllConnections = ({ close, save, userConnections, connections }) => {
 	const handleConnect = (username) => {
 		let presentuserConnections = [...userConnections];
 		if (presentuserConnections.includes(username)) {
 			presentuserConnections = presentuserConnections.filter(
-				(a) => a != username
+				(a) => a !== username
 			);
 		} else {
 			presentuserConnections = [...presentuserConnections, username];
@@ -40,65 +40,13 @@ const AllConnections = ({ close, save, userConnections, connections, bgs }) => {
 										className="Col-lg-25 Col-md-25 col-lg-30"
 										key={index}
 									>
-										<div className="connections-card">
-											<div
-												className="connections-card-box"
-												style={{
-													backgroundImage: `url(http://www.transparenttextures.com/patterns/${
-														bgs[index % bgs.length]
-													}.png)`,
-												}}
-											>
-												<div
-													className="connections-card-image"
-													style={{
-														backgroundImage: `url(${person.image})`,
-													}}
-												></div>
-												<div className="connections-card-content">
-													<Link
-														to={`/people/${person.username}`}
-														className="connections-card-content__name"
-													>
-														{person.name}
-													</Link>
-													<Link
-														to={`/people/${person.username}`}
-														className="connections-card-content__username"
-													>
-														{person.username}
-													</Link>
-													<span className="connections-card-content__about">
-														{person.about}
-													</span>
-													{userConnections.includes(
-														person.username
-													) ? (
-														<button
-															className="connections-card-btn"
-															onClick={() =>
-																handleConnect(
-																	person.username
-																)
-															}
-														>
-															Unfollow
-														</button>
-													) : (
-														<button
-															className="connections-card-btn"
-															onClick={() =>
-																handleConnect(
-																	person.username
-																)
-															}
-														>
-															Connect
-														</button>
-													)}
-												</div>
-											</div>
-										</div>
+										<ConnectionsCard
+											person={person}
+											included={userConnections.includes(
+												person.username
+											)}
+											handleConnect={handleConnect}
+										/>
 									</div>
 								)
 						)}

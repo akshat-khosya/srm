@@ -4,6 +4,7 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import { useState,useEffect } from "react";
 import Write from "../../components/Write/Write";
 import Posts from "../../components/posts/Posts";
+import Post from "../../components/post/Post";
 
 function Home({axiosInstance}) {
   const [posts,setPosts]=useState([]);
@@ -34,23 +35,21 @@ useEffect(() => {
   window.addEventListener("scroll", changeClass);
   return (
     <div className="home">
-      <div className="Row">
-        <Sidebar axiosInstance={axiosInstance} />
-        <div className="Col-lg-83 Col-md-100">
           <div className="home-main">
-            <Navbar />
             <div className="home-container">
                 <div className="posts">
                <Write load={loadPost} axiosInstance={axiosInstance} />
-               <Posts posts={posts} axiosInstance={axiosInstance} />
+               {posts.map((p,index)=>(
+
+                 <Post key={index} post={p} axiosInstance={axiosInstance} load={()=>{loadPost()}} />
+               ))}
+               {/* <Posts load={loadPost} posts={posts} axiosInstance={axiosInstance} /> */}
                 </div>
                 <div className="events">
                 
                 </div>
             </div>
           </div>
-        </div>
-      </div>
     </div>
   );
 }

@@ -1,12 +1,12 @@
 import Post from '../post/Post'
 import './posts.css'
 
-function Posts({ posts,axiosInstance }) {
+function Posts({ posts,axiosInstance,load }) {
     return (
         <div>
            {posts.map((p,index)=>(
          
-          <Post keys={index} post={p} axiosInstance={axiosInstance} />
+          <Post load={()=>{load()}} key={index} keys={index} post={p} axiosInstance={axiosInstance} />
       ))}
         </div>
     )

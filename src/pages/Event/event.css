@@ -19,9 +19,9 @@
 }
 .postTile-Date{
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
     width: 100%;
 }
 .postTile-Date .link{
@@ -47,7 +47,11 @@
 }
 .post{
     width:385px;
-    margin:0px 25px 40px 25px;
+	margin: 0 1rem 1rem 1rem;
+	border: 0.5px solid rgba(0, 0, 0, 0.25);
+	padding: 1rem;
+	border-radius: 5px;
+    /* margin:0px 25px 40px 25px; */
 }
 .postImg{
     width: 100%;
@@ -71,7 +75,7 @@
     font-family: 'Josefin Sans', sans-serif;
     font-size: 24px;
     font-weight: 700;
-    margin-top: 15px;
+    margin-top: 0.4rem;
     cursor: pointer;
 }
 .postDate{
@@ -79,7 +83,10 @@
     font-style: italic;
     font-size: 13px;
     color: #999;
-
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 .postDesc{
     font-family: 'Varela Round', sans-serif;

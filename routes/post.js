@@ -22,9 +22,16 @@ router.post("/", async (req, res) => {
   });
 
 router.delete("/", async(req,res)=>{
+  console.log(req.body.id);
   try {
-    Post.findByIdAndDelete({_id:req.body.id});
-    res.send({status:true,message:"Post deleted sucessfully"});
+    Post.findByIdAndDelete({_id:req.body.id},(err)=>{
+      if(err){
+        res.send({status:false,error:err});
+      }else{
+        res.send({status:true,message:"Post deleted sucessfully"});
+      }
+    });
+    
   } catch (err) {
     console.log(err);
   }
