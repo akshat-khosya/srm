@@ -32,7 +32,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "sass": "sass -w src/pages/Scholarship/scholarship.scss src/pages/Scholarship/scholarship.css"
+    "sass": "sass -w src/pages/Resources/resources.scss src/pages/Resources/resources.css"
   },
   "eslintConfig": {
     "extends": [
