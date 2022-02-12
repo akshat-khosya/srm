@@ -1,10 +1,26 @@
 import "./login.css";
 
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import TopBar from "../../components/topbar/TopBar";
 import { Context } from "../../context/Context";
+import bg1 from '../../Images/bg1.jpeg';
+import bg2 from '../../Images/bg2.jpeg';
+import bg3 from '../../Images/bg3.jpeg';
+import bg4 from '../../Images/bg4.jpeg';
+import bg5 from '../../Images/bg5.jpeg';
 import SnackBar from "../../components/Snackbar";
 function Login({axiosInstance}) {
+  const bgImgs=[bg1,bg2,bg3,bg4,bg5];
+  const [bgImg, setBgImg] = useState(bg1)
+  let i=0;
+  useEffect(() => {
+    setInterval(() => {
+      setBgImg(bgImgs[i%5]);
+      ++i;
+    }, 2500);
+  }, [])
+  
+  
   const { dispatch, isFetching } = useContext(Context);
   const [userContact, setUserContact] = useState("");
   const [checkIP, setCheckIP] = useState("tel");
@@ -123,7 +139,9 @@ function Login({axiosInstance}) {
     }
   }>
    <TopBar />
-    <div className="login">
+    <div className="login" style={{
+      backgroundImage: `url(${bgImg})`
+    }}>
      
       <div className="Container">
         <div className="myCard" data-aos="zoom-in">
