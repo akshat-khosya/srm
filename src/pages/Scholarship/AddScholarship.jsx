@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../../context/Context";
 
-const AddScholarship = ({ close, axiosInstance }) => {
+const AddScholarship = ({ close, axiosInstance,load }) => {
 	const {user}=useContext(Context);
 	const [scholarship, setScholarship] = useState({
 		title: "",
@@ -34,7 +34,7 @@ const AddScholarship = ({ close, axiosInstance }) => {
 		sendData.file=filename;
 		console.log(sendData);
 		try {
-			const res = await axiosInstance.post("/api/upload", newFile);
+			const res = await axiosInstance.post("/api/upload/pdf", newFile);
         	console.log(res);
 			if(res.data.status){
 				
@@ -47,6 +47,7 @@ const AddScholarship = ({ close, axiosInstance }) => {
 					  console.log(respond);
 					  if(respond.data.status){
 						  alert("Added");
+						  load();
 						  setScholarship({
 							title: "",
 							type: "",

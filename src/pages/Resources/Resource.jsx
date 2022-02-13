@@ -1,14 +1,26 @@
-import React, { useState } from "react";
 
-const Resource = ({ resource }) => {
+import React, { useContext, useState } from "react";
+import { Context } from "../../context/Context";
+
+const Resource = ({ resource,axiosInstance,load }) => {
+	const {user}=useContext(Context);
 	const [contextMenu, setContextMenu] = useState(false);
 	const editResource = () => {
 		console.log("Edit the Scholarship");
 		setContextMenu(false);
 	};
-	const delResource = () => {
-		console.log("Edit the Scholarship");
-		setContextMenu(false);
+	const delResource = async() => {
+		try {
+			const res=await axiosInstance.delete("/api/resource/",{data:{id:resource._id}});
+			console.log(res);
+			if(res.data.status===true){
+				load();
+				setContextMenu(false);
+			}
+		} catch (err) {
+			
+		}
+		
 	};
 	const getIcon = (a) => {
 		if (a === "pdf") return "picture_as_pdf";
@@ -64,7 +76,7 @@ const Resource = ({ resource }) => {
 									<li className="more-item">
 										<a
 											target="_blank"
-											href={resource.fileLink}
+											href={`${axiosInstance.defaults.baseURL}pdf/${resource.file}`}
 											rel="noreferrer"
 										>
 											<span className="material-icons">
@@ -75,7 +87,7 @@ const Resource = ({ resource }) => {
 											</span>
 										</a>
 									</li>
-									<li
+									{/* <li
 										className="more-item"
 										onClick={() => editResource()}
 									>
@@ -85,8 +97,9 @@ const Resource = ({ resource }) => {
 										<span className="more-item-label">
 											Edit Resource
 										</span>
-									</li>
-									<li
+									</li> */}
+									{user.email===resource.email && (
+										<li
 										className="more-item"
 										onClick={() => delResource()}
 									>
@@ -97,6 +110,8 @@ const Resource = ({ resource }) => {
 											Delete Resource
 										</span>
 									</li>
+									)}
+									
 								</ul>
 							</div>
 						</div>

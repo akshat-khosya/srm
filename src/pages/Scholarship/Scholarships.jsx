@@ -48,6 +48,7 @@ const Scholarships = ({ axiosInstance }) => {
 								<Scholarship
 									axiosInstance={axiosInstance}
 									scholarship={scholarship}
+									load={getScholarships}
 								/>
 							</div>
 						))}
@@ -56,6 +57,7 @@ const Scholarships = ({ axiosInstance }) => {
 			</div>
 			{showAddScholarshipBox && (
 				<AddScholarship
+					load={getScholarships}
 					close={() => setShowAddScholarshipBox(false)}
 					axiosInstance={axiosInstance}
 				/>

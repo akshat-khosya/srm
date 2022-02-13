@@ -11,6 +11,18 @@ const Resources = ({ axiosInstance }) => {
 		setResources([...resources, a]);
 		setShowAddResourceBox(false);
 	};
+	const loadData=async()=>{
+		try {
+			const res = await axiosInstance.get("/api/resource/");
+			console.log(res);
+			setResources(res.data);
+		} catch (err) {
+			console.log(err);
+		}
+	}
+	useEffect(()=>{
+		loadData();
+	},[])
 	return (
 		<div className="resources-container">
 			<div className="resources-box">
@@ -31,7 +43,7 @@ const Resources = ({ axiosInstance }) => {
 					<div className="masonry">
 						{resources.map((resource, index) => (
 							<div className="masonry-content" key={index}>
-								<Resource resource={resource} />
+								<Resource load={loadData} resource={resource} axiosInstance={axiosInstance} />
 							</div>
 						))}
 					</div>
@@ -39,8 +51,10 @@ const Resources = ({ axiosInstance }) => {
 			</div>
 			{showAddResourceBox && (
 				<AddResource
+				axiosInstance={axiosInstance}
 					close={() => setShowAddResourceBox(false)}
 					save={handleNewResource}
+					load={loadData}
 				/>
 			)}
 		</div>

@@ -1,15 +1,19 @@
-import React, { useState } from "react";
 
-const AddResource = ({ close, save }) => {
+
+import React, { useContext, useState } from "react";
+import { Context } from "../../context/Context";
+
+const AddResource = ({ close,axiosInstance,load}) => {
+	const {user}=useContext(Context);
 	const [resource, setResource] = useState({
 		title: "",
 		content: "",
 		fileType: "",
 		fileTitle: "",
-		fileLink: "",
 		date: "",
 		link: "",
 	});
+	const [file,setFile]=useState(null);
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 		setResource({
@@ -17,19 +21,56 @@ const AddResource = ({ close, save }) => {
 			[name]: value,
 		});
 	};
-	const handleSubmit = (e) => {
+
+	const handleSubmit = async(e) => {
 		e.preventDefault();
-		console.log(resource);
-		save(resource);
-		setResource({
-			title: "",
-			content: "",
-			fileType: "",
-			fileTitle: "",
-			fileLink: "",
-			date: "",
-			link: "",
-		});
+		
+		console.log(file.type.split("/")[1]);
+		const sendData={
+			email:user.email,
+			title:resource.title,
+			content:resource.content,
+			fileType:file.type.split("/")[1],
+			fileTitle:resource.fileTitle,
+			date:resource.date,
+			link:resource.link
+		}
+		console.log(sendData);
+		try {
+			const newFile=new FormData();
+			const filename=Date.now()+file.name;
+			newFile.append("name",filename);
+			newFile.append("file",file);
+			sendData.file=filename;
+			const res = await axiosInstance.post("/api/upload/pdf", newFile);
+			console.log(res);
+			if(res.data.status){
+				try {
+					const respond=await axiosInstance.post("/api/resource/",sendData);
+					console.log(respond);
+					if(respond.data.status){
+						alert("Added");
+						load();
+						setResource({
+							title: "",
+							content: "",
+							fileType: "",
+							fileTitle: "",
+							
+							date: "",
+							link: "",
+						});
+						close();
+					}
+				} catch (err) {
+					console.log(err);
+				}
+			}
+		} catch (err) {
+			console.log(err);
+		}
+		
+		
 	};
 	return (
 		<div className="add-resource">
@@ -65,17 +106,7 @@ const AddResource = ({ close, save }) => {
 								rows={4}
 							></textarea>
 						</div>
-						<div className="add-resource-form-group">
-							<label>Attachment type</label>
-							<input
-								type="text"
-								name="fileType"
-								value={resource.fileType}
-								onChange={handleChange}
-								placeholder="Extension of file"
-								required
-							/>
-						</div>
+					
 						<div className="add-resource-form-group">
 							<label>Attachment Name</label>
 							<input
@@ -92,8 +123,8 @@ const AddResource = ({ close, save }) => {
 							<input
 								type="file"
 								name="fileLink"
-								value={resource.fileLink}
-								onChange={handleChange}
+								
+								onChange={(e)=>{setFile(e.target.files[0])}}
 								placeholder="File"
 							/>
 						</div>

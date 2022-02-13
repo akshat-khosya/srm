@@ -1,16 +1,34 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+
+import { Context } from "../../context/Context";
 import favicon from "../../Images/logo.png";
 
-const Scholarship = ({ scholarship,axiosInstance }) => {
+const Scholarship = ({ scholarship,axiosInstance ,load}) => {
+	const {user}=useContext(Context);
 	const [contextMenu, setContextMenu] = useState(false);
 	const editScholarship = () => {
 		console.log("Edit the Scholarship");
 		setContextMenu(false);
 	};
-	const delScholarship = () => {
+	const delScholarship = async() => {
+		console.log(scholarship);
+		try {
+			
+			
+
+			const res=await axiosInstance.delete("/api/scholarship/",{data:{id:scholarship._id}});
+			console.log(res);
+			if(res.data.status===true){
+				load();
+				setContextMenu(false);
+			}
+		} catch (err) {
+			
+		}
 		console.log("Edit the Scholarship");
 		setContextMenu(false);
 	};
+	console.log("ok:"+axiosInstance.defaults.baseURL);
 	return (
 		<div className="scholarships-scholarship">
 			<div className="scholarships-scholarship-head">
@@ -44,7 +62,7 @@ const Scholarship = ({ scholarship,axiosInstance }) => {
 								<li className="more-item">
 									<a
 										target="_blank"
-										href={`${axiosInstance.defaults.baseURL}images/$scholarship.file`}
+										href={axiosInstance.defaults.baseURL+"pdf/"+scholarship.file}
 										rel="noreferrer"
 									>
 										<span className="material-icons">
@@ -55,7 +73,7 @@ const Scholarship = ({ scholarship,axiosInstance }) => {
 										</span>
 									</a>
 								</li>
-								<li
+								{/* <li
 									className="more-item"
 									onClick={() => editScholarship()}
 								>
@@ -63,8 +81,9 @@ const Scholarship = ({ scholarship,axiosInstance }) => {
 									<span className="more-item-label">
 										Edit Scholarship
 									</span>
-								</li>
-								<li
+								</li> */}
+								{user.email===scholarship.email &&
+								(<li
 									className="more-item"
 									onClick={() => delScholarship()}
 								>
@@ -74,7 +93,9 @@ const Scholarship = ({ scholarship,axiosInstance }) => {
 									<span className="more-item-label">
 										Delete Scholarship
 									</span>
-								</li>
+								</li>)
+								}
+								
 							</ul>
 						</div>
 					</div>
@@ -97,7 +118,7 @@ const Scholarship = ({ scholarship,axiosInstance }) => {
 				<div className="scholarships-scholarship-body-actions">
 					<button className="scholarships-btn scholarships-btn-outline">
 						<a
-							href={scholarship.file}
+							href={axiosInstance.defaults.baseURL+"pdf/"+scholarship.file}
 							target="_blank"
 							rel="noreferrer"
 						>

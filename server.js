@@ -13,6 +13,7 @@ const event=require("./routes/event");
 const oppo=require("./routes/oppo");
 const mentoring=require("./routes/mentoring");
 const scholarship= require("./routes/scholarships");
+const resource=require("./routes/resource");
 dotenv.config();
 app.use(express.json());
 const corsOptions ={
@@ -62,6 +63,7 @@ app.post("/api/upload/pdf", uploadpdf.single("file"),(req,res)=>{
     app.use("/api/oppo/",oppo);
     app.use("/api/mentoring/",mentoring);
     app.use("/api/scholarship/",scholarship);
+    app.use("/api/resource",resource);
 // app.use("/api/users",userRoute);
 // app.use("/api/posts",postRoute);
 // app.use("/api/categories",categoryRoute);
