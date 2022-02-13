@@ -15,6 +15,8 @@ import Mentoring from "./pages/Mentoring/Mentoring";
 import Connections from "./pages/Connections/Connections";
 import Sidebar from "./components/sidebar/Sidebar";
 import "./style.css";
+import Scholarships from "./pages/Scholarship/Scholarships";
+import Resources from "./pages/Resources/Resources";
 
 function App() {
 	const axiosInstance = axios.create({
@@ -65,6 +67,12 @@ function App() {
 				break;
 			case "/mentoring":
 				component = <Mentoring axiosInstance={axiosInstance} />;
+				break;
+			case "/scholarships":
+				component = <Scholarships axiosInstance={axiosInstance} />;
+				break;
+			case "/resource":
+				component = <Resources axiosInstance={axiosInstance} />;
 				break;
 			default:
 				component = <Fake axiosInstance={axiosInstance} />;
