@@ -28,9 +28,7 @@ router.post("/newregister", async (req, res) => {
           console.log(savedUser);
           const { password, ...others } = savedUser._doc;
           console.log(others);
-          const token = jwt.sign(savedUser.email, process.env.JWT_SECRET,{
-            expiresIn: "1h",
-          });
+          const token = jwt.sign(savedUser.email, process.env.JWT_SECRET);
           res.json({
             status: true,
             message: "registred",
@@ -51,9 +49,7 @@ router.post("/login", async (req, res) => {
     if (user) {
       const validate = await bcrypt.compare(req.body.password, user.password);
       if (validate) {
-        const token = jwt.sign(user.email, process.env.JWT_SECRET,{
-          expiresIn: "1h",
-        });
+        const token = jwt.sign(user.email, process.env.JWT_SECRET);
         const { password, ...others } = user._doc;
         res.send({
           status: true,
@@ -78,9 +74,7 @@ router.post("/login", async (req, res) => {
       if (user) {
         const validate = await bcrypt.compare(req.body.password, user.password);
         if (validate) {
-          const token = jwt.sign(user.email, process.env.JWT_SECRET,{
-            expiresIn: "1h",
-          });
+          const token = jwt.sign(user.email, process.env.JWT_SECRET );
           const { password, ...others } = user._doc;
           res.send({
             status: true,
@@ -101,9 +95,7 @@ router.post("/login", async (req, res) => {
     if (user) {
       const validate = await bcrypt.compare(req.body.password, user.password);
       if (validate) {
-        const token = jwt.sign(user.email, process.env.JWT_SECRET,{
-          expiresIn: "1h",
-        });
+        const token = jwt.sign(user.email, process.env.JWT_SECRET);
         const { password, ...others } = user._doc;
         res.send({
           status: "true",
