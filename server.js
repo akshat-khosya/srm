@@ -12,6 +12,7 @@ const register= require("./routes/userRegister")
 const event=require("./routes/event");
 const oppo=require("./routes/oppo");
 const mentoring=require("./routes/mentoring");
+const scholarship= require("./routes/scholarships");
 dotenv.config();
 app.use(express.json());
 const corsOptions ={
@@ -41,7 +42,7 @@ const storage=multer.diskStorage({
 });
 const upload= multer({storage:storage});
 app.post("/api/upload", upload.single("file"),(req,res)=>{
-    res.status(200).json("File has been uploaded");
+    res.status(200).json({status:true,message:"File has been uploaded"});
 });
 const pdfStorage=multer.diskStorage({
     destination:(req,file,cb)=>{
@@ -52,7 +53,7 @@ const pdfStorage=multer.diskStorage({
 });
 const uploadpdf= multer({storage:pdfStorage});
 app.post("/api/upload/pdf", uploadpdf.single("file"),(req,res)=>{
-    res.status(200).json("File has been uploaded");
+    res.status(200).json({status:true,message:"File has been uploaded"});
 });
     app.use("/api/auth/",authRoute);
     app.use("/api/post/",post);
@@ -60,6 +61,7 @@ app.post("/api/upload/pdf", uploadpdf.single("file"),(req,res)=>{
     app.use("/api/event/",event);
     app.use("/api/oppo/",oppo);
     app.use("/api/mentoring/",mentoring);
+    app.use("/api/scholarship/",scholarship);
 // app.use("/api/users",userRoute);
 // app.use("/api/posts",postRoute);
 // app.use("/api/categories",categoryRoute);

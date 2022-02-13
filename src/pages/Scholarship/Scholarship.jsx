@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import favicon from "../../Images/logo.png";
 
-const Scholarship = ({ scholarship }) => {
+const Scholarship = ({ scholarship,axiosInstance }) => {
 	const [contextMenu, setContextMenu] = useState(false);
 	const editScholarship = () => {
 		console.log("Edit the Scholarship");
@@ -44,7 +44,7 @@ const Scholarship = ({ scholarship }) => {
 								<li className="more-item">
 									<a
 										target="_blank"
-										href={scholarship.file}
+										href={`${axiosInstance.defaults.baseURL}images/$scholarship.file`}
 										rel="noreferrer"
 									>
 										<span className="material-icons">

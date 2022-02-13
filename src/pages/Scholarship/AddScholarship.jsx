@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { Context } from "../../context/Context";
 
-const AddScholarship = ({ close, save }) => {
+const AddScholarship = ({ close, axiosInstance }) => {
+	const {user}=useContext(Context);
 	const [scholarship, setScholarship] = useState({
 		title: "",
 		type: "",
 		content: "",
-		file: "",
+		
 		openDate: Date(),
 		closeDate: Date(),
 		amount: 0,
 	});
+	const [file,setFile]=useState(null);
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 		setScholarship({
@@ -17,20 +20,60 @@ const AddScholarship = ({ close, save }) => {
 			[name]: value,
 		});
 	};
-	const handleSubmit = (e) => {
+	const handleSubmit = async(e) => {
 		e.preventDefault();
 		console.log(scholarship);
-		save(scholarship);
-		setScholarship({
-			title: "",
-			type: "",
-			link: "",
-			content: "",
-			file: "",
-			openDate: Date(),
-			closeDate: Date(),
-			amount: null,
-		});
+		const sendData={
+			email:user.email,
+			...scholarship
+		};
+		const newFile=new FormData();
+		const filename=Date.now()+file.name;
+		newFile.append("name",filename);
+		newFile.append("file",file);
+		sendData.file=filename;
+		console.log(sendData);
+		try {
+			const res = await axiosInstance.post("/api/upload", newFile);
+        	console.log(res);
+			if(res.data.status){
+				
+				try {
+					console.log("hello");
+					const respond = await axiosInstance.post(
+						"/api/scholarship/",
+						sendData
+					  );
+					  console.log(respond);
+					  if(respond.data.status){
+						  alert("Added");
+						  setScholarship({
+							title: "",
+							type: "",
+							link: "",
+							content: "",
+							
+							openDate: Date(),
+							closeDate: Date(),
+							amount: null,
+						});
+						close();
+						  
+					  }else{
+						  alert("try again");
+					  }
+				} catch (error) {
+					console.log(error);
+				}
+			}else{
+				console.log(res.data.message);
+			}
+		} catch (err) {
+			console.log(err);
+		}
+		
+		
+	
 	};
 	return (
 		<div className="add-scholarship">
@@ -131,8 +174,8 @@ const AddScholarship = ({ close, save }) => {
 								type="file"
 								name="file"
 								placeholder="More Details"
-								value={scholarship.file}
-								onChange={handleChange}
+								required
+								onChange={(e)=>{setFile(e.target.files[0])}}
 							/>
 						</div>
 						<div className="add-scholarship-form-group">
