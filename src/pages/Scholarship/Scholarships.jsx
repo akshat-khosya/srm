@@ -6,22 +6,22 @@ import "./scholarship.css";
 const Scholarships = ({ axiosInstance }) => {
 	const [scholarships, setScholarships] = useState([]);
 	const [showAddScholarshipBox, setShowAddScholarshipBox] = useState(false);
-	const handleNewScholarship =async (a) => {
+	const getScholarships = async () => {
 		try {
-			const res= await axiosInstance.get("/api/scholarship/");
+			const res = await axiosInstance.get("/api/scholarship/");
 			console.log(res);
-	
-				setScholarships(res.data);
-			
+			setScholarships(res.data);
 		} catch (err) {
 			console.log(err);
 		}
+	};
+	const handleNewScholarship = (a) => {
 		setScholarships([...scholarships, a]);
 		setShowAddScholarshipBox(false);
 	};
-	useEffect(()=>{
-		handleNewScholarship();
-	},[])
+	useEffect(() => {
+		getScholarships();
+	}, []);
 	return (
 		<div className="scholarships-container">
 			<div className="scholarships-box">
@@ -29,7 +29,7 @@ const Scholarships = ({ axiosInstance }) => {
 					<span>All Scholarships</span>
 				</div>
 				<div className="scholarships-add">
-				scholarship<button
+					<button
 						className="aavesh-btn"
 						onClick={() => setShowAddScholarshipBox(true)}
 					>
@@ -45,7 +45,10 @@ const Scholarships = ({ axiosInstance }) => {
 								className="Col-lg-50 Col-md-100 Col-sm-100"
 								key={index}
 							>
-								<Scholarship axiosInstance={axiosInstance} scholarship={scholarship} />
+								<Scholarship
+									axiosInstance={axiosInstance}
+									scholarship={scholarship}
+								/>
 							</div>
 						))}
 					</div>
@@ -54,7 +57,6 @@ const Scholarships = ({ axiosInstance }) => {
 			{showAddScholarshipBox && (
 				<AddScholarship
 					close={() => setShowAddScholarshipBox(false)}
-					
 					axiosInstance={axiosInstance}
 				/>
 			)}
