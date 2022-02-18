@@ -12,12 +12,12 @@ import SnackBar from "../../components/Snackbar";
 function Login({axiosInstance}) {
   const bgImgs=[bg1,bg2,bg3,bg4,bg5];
   const [bgImg, setBgImg] = useState(bg1)
-  let i=0;
+  let i=1;
   useEffect(() => {
     setInterval(() => {
       setBgImg(bgImgs[i%5]);
       ++i;
-    }, 2500);
+    }, 5000);
   }, [])
   
   
