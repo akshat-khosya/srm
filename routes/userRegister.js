@@ -74,7 +74,7 @@ router.post("/login", async (req, res) => {
       if (user) {
         const validate = await bcrypt.compare(req.body.password, user.password);
         if (validate) {
-          const token = jwt.sign(user.email, process.env.JWT_SECRET );
+          const token = jwt.sign(user.email, process.env.JWT_SECRET);
           const { password, ...others } = user._doc;
           res.send({
             status: true,
@@ -183,7 +183,23 @@ router.get("/verifytoken", (req, res) => {
     }
   });
 });
+router.post("/reset", async (req, res) => {
+  const email = req.body.email;
+  const salt = await bcrypt.genSalt(10);
 
+  const hasedPass = await bcrypt.hash(req.body.password, salt);
+  UserData.findOneAndUpdate(
+    { email: email },
+    { password: hasedPass },
+    (err, foundUser) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(foundUser);
+      }
+    }
+  );
+});
 router.patch("/connection", (req, res) => {
   // UserData.findOneAndUpdate(
   //   { email: req.body.email },
@@ -199,45 +215,138 @@ router.patch("/connection", (req, res) => {
   //     }
   //   }
   // );
-      UserData.updateOne({email:req.body.email},{$push:{following:req.body.userEmail}},(err,result)=>{
-        if(err){
-          console.log(err);
-          res.send(err);
-        }else{
-          console.log(result);
-          res.send(result);
-        }
-      })
+  console.log(req.body);
+  UserData.updateOne(
+    { email: req.body.email },
+    { $addToSet: { following: req.body.userEmail } },
+    (err, result) => {
+      if (err) {
+        console.log(err);
+        res.send(err);
+      } else {
+        console.log(result);
+        res.send(result);
+      }
+    }
+  );
 });
-router.post("/connection", (req, res) => {
+router.post("/connection", async (req, res) => {
   const email = req.body.email;
+  let connectionDetails = [];
+  let userData = [];
+  const addConnection = async (array) => {
+    let data2 = [];
+    for (const element of array) {
+      const User = await UserData.findOne({ email: element });
 
-  UserData.findOne({ email: email }, (err, foundUser) => {
-    if (foundUser) {
-      console.log(foundUser.following);
-      const connectionDetails = [];
-      foundUser.following.forEach((element) => {
-        UserData.findOne({ email: element }, (error, User) => {
-          if (User) {
-            connectionDetails.push({
-              Name: User.name,
-              Username: User.username,
-              Role: User.work,
-            });
-          } else {
-            console.log(error);
-          }
-        });
-      });
-      console.log(connectionDetails);
+      data2 = [
+        ...data2,
+        {
+          email: User.email,
+          name: User.name,
+          username: User.username,
+          role: User.desgination,
+        },
+      ];
+    }
+    // await array.forEach(async(element) => {
+    //   const User = await UserData.findOne({ email: element });
+
+    //   data2=[...data2,{
+    //     name: User.name,
+    //     username: User.username,
+    //     role: User.desgination,
+    //   }];
+
+    // });
+    console.log(data2);
+
+    return data2;
+  };
+  try {
+    const foundUser = await UserData.findOne({ email });
+    console.log(foundUser);
+    connectionDetails = [...foundUser.following];
+    console.log(connectionDetails);
+
+    userData = await addConnection(connectionDetails);
+    if (userData) {
       res.send({
-        satus: true,
+        status: true,
         message: "connection",
-        array: connectionDetails,
+        array: userData,
       });
     } else {
-      console.log(err);
+      res.send({
+        status: false,
+        message: "err",
+      });
     }
-  });
+  } catch (err) {
+    console.log(err);
+    res.send({
+      status: false,
+      message: err,
+    });
+  }
+});
+router.patch("/unfollow", (req, res) => {
+  UserData.updateOne(
+    { email: req.body.email },
+    { $pull: { following: req.body.userEmail } },
+    (err, result) => {
+      if (err) {
+        console.log(err);
+        res.send(err);
+      } else {
+        console.log(result);
+        res.send(result);
+      }
+    }
+  );
+});
+router.post("/allUser", async (req, res) => {
+  const page = +req.body.page;
+  const pageSize = +req.body.pageSize;
+  let sendData = [];
+  try {
+    const User = await UserData.findOne({ email: req.body.email });
+    const allUser = await UserData.find({})
+      .sort({ name: 1 })
+      .skip(page * pageSize - pageSize)
+      .limit(pageSize);
+    allUser.forEach((element) => {
+      if(element.email!==req.body.email)
+      {sendData = [
+        ...sendData,
+        {
+          name: element.name,
+          email: element.email,
+          role: element.designtion,
+          connected: User.following.includes(element.email),
+        },
+      ];}
+    });
+
+    res.status(200).json(sendData);
+  } catch (err) {
+    res.status(500).json({message:"error"});
+  }
 });
 module.exports = router;
+// foundUser.following.forEach(async(element) => {
+//   console.log(element);
+//   await UserData.findOne({ email: element }, (error, User) => {
+//     if (User) {
+
+//       connectionDetails.push({
+//         Name: User.name,
+//         Username: User.username,
+//         Role: User.desgination,
+//       });
+//       console.log(connectionDetails);
+//     } else {
+//       console.log(error);
+//     }
+//   });
+// });

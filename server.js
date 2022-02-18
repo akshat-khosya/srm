@@ -69,6 +69,6 @@ app.post("/api/upload/pdf", uploadpdf.single("file"),(req,res)=>{
 // app.use("/api/categories",categoryRoute);
 
 
-app.listen(process.env.PORT || "4000",()=>{
+app.listen("4000",()=>{
     console.log("Server started at port 4000");
 })

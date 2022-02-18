@@ -73,9 +73,7 @@ const UserDataSchema = new mongoose.Schema(
     photo:{
         type:String
     },
-    following:{
-        type: Array
-    }
+    following:[String]
   },
   { timestamps: true }
 );
