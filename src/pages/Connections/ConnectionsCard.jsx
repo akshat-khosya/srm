@@ -1,6 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Context } from "../../context/Context";
 
-const ConnectionsCard = ({ person, included, handleConnect }) => {
+const ConnectionsCard = ({ person, included, handleConnect,axiosInstance }) => {
+	console.log(included);
+	const {user}=useContext(Context);
+	const connectionClick=()=>{
+		const cardData={
+			email:user.email,
+			userEmail:person.email,
+			included:included,
+			name:person.name
+		}
+		handleConnect(cardData);
+	}
 	return (
 		<div className="connections-card">
 			<div
@@ -12,28 +24,28 @@ const ConnectionsCard = ({ person, included, handleConnect }) => {
 				<div
 					className="connections-card-image"
 					style={{
-						backgroundImage: `url(${person.image})`,
+						backgroundImage: `url(${axiosInstance.defaults.baseURL}images/${person.email})`,
 					}}
 				></div>
 				<div className="connections-card-content">
 					<span
-						to={`/people/${person.username}`}
+						
 						className="connections-card-content__name"
 					>
 						{person.name}
 					</span>
 					<span
-						to={`/people/${person.username}`}
+						
 						className="connections-card-content__username"
 					>
 						{person.username}
 					</span>
 					<span className="connections-card-content__about">
-						{person.about}
+						{person.role}
 					</span>
 					<button
 						className="connections-card-btn"
-						onClick={() => handleConnect(person.username)}
+						onClick={connectionClick}
 					>
 						{included ? "Unfollow" : "Connect"}
 					</button>

@@ -5,26 +5,32 @@ import ConnectionsCard from "./ConnectionsCard";
 import _ from "lodash";
 import nullGIF from "../../Images/null-lens.png";
 import { Context } from "../../context/Context";
-
+import SnackBar from "../../components/Snackbar";
 const Connections = ({ axiosInstance }) => {
+	const [page,setPage]=useState({
+		page:"1",
+		pageSize:"20"
+	})
   const { user } = useContext(Context);
   const [allConnectionsBox, setAllConnectionsBox] = useState(false);
-  const [userConnections, setUserConnections] = useState([
-    "akshatmittal61",
-    "akshat-khosya",
-    "Mitalijain3",
-  ]);
+  const [userConnections, setUserConnections] = useState([]);
   const [connections, setConnections] = useState([]);
   const [searchStr, setSearchStr] = useState("");
   const [openSearch, setOpenSearch] = useState(false);
+  const [open,setOpen]=useState(false);
+  const [message, setMessage] = useState({
+	  text:"",
+	  color:""
+  })
   const loadAllUser = async () => {
     const allUser = {
       email: user.email,
-      page: 1,
-      pageSize: 10,
+      page: page.page,
+      pageSize: page.pageSize,
     };
     const res = await axiosInstance.post("/api/allUser", allUser);
 	console.log(res.data);
+	setConnections(res.data);
   };
   const loadConnections = async () => {
     const allUser = {
@@ -32,6 +38,7 @@ const Connections = ({ axiosInstance }) => {
     };
     const res = await axiosInstance.post("/api/connection", allUser);
 	console.log("ok");
+	setUserConnections(res.data.array);
 		console.log(res.data);
     
   };
@@ -39,17 +46,62 @@ const Connections = ({ axiosInstance }) => {
     loadConnections();
     loadAllUser();
   }, []);
-  const handleConnect = (username) => {
-    let presentuserConnections = [...userConnections];
-    if (presentuserConnections.includes(username)) {
-      presentuserConnections = presentuserConnections.filter(
-        (a) => a !== username
-      );
-    } else {
-      presentuserConnections = [...presentuserConnections, username];
-    }
-    console.log(presentuserConnections);
-    setUserConnections(presentuserConnections);
+  const handleConnect = async(data) => {
+    if(data.included){
+		const res=await axiosInstance.patch("/api/unfollow",data);
+		if(res.status){
+			
+			setMessage({
+				text: `removed connection ${data.name} succesfully`,
+				color:"var(--green)"
+			});
+			setOpen(true);
+			setTimeout(() => {
+				setOpen(false)
+			}, 2500);
+			
+		}
+		else{
+			setMessage({
+				text: `Error in removing ${data.name} `,
+				color:"var(--red)"
+			});
+			setOpen(true);
+			setTimeout(() => {
+				setOpen(false)
+			}, 2500);
+			
+			console.log(res);
+		}
+		loadConnections();
+		loadAllUser();
+	}else{
+		const res=await axiosInstance.patch("/api/connection",data);
+		if(res.status){
+			setMessage({
+				text: `Added connection ${data.name} succesfully`,
+				color:"var(--green)"
+			});
+			setOpen(true);
+			setTimeout(() => {
+				setOpen(false)
+			}, 2500);
+			
+			loadAllUser();
+			loadConnections();
+		}else{
+			setMessage({
+				text: `Error in adding ${data.name} `,
+				color:"var(--red)"
+			});
+			setOpen(true);
+			setTimeout(() => {
+				setOpen(false)
+			}, 2500);
+			
+		}
+	}
+	
   };
   const searchPeople = (value) => {
     let check = [];
@@ -137,17 +189,18 @@ const Connections = ({ axiosInstance }) => {
               </div>
               <div className="connections-row-body">
                 <div className="Row">
-                  {connections.map(
+                  {userConnections.map(
                     (person, index) =>
-                      userConnections.includes(person.username) &&
-                      userConnections.indexOf(person.username) < 4 && (
+                      
+                      index < 4 && (
                         <div
                           className="Col-lg-25 Col-md-25 col-lg-30"
                           key={index}
                         >
                           <ConnectionsCard
+						  	axiosInstance={axiosInstance}
                             person={person}
-                            included={userConnections.includes(person.username)}
+                            included={true}
                             handleConnect={handleConnect}
                           />
                         </div>
@@ -166,14 +219,15 @@ const Connections = ({ axiosInstance }) => {
                 <div className="Row">
                   {connections.map(
                     (person, index) =>
-                      !userConnections.includes(person.username) && (
+                       (
                         <div
                           className="Col-lg-25 Col-md-25 col-lg-30"
                           key={index}
                         >
                           <ConnectionsCard
+						  	axiosInstance={axiosInstance}
                             person={person}
-                            included={userConnections.includes(person.username)}
+                            included={person.connected}
                             handleConnect={handleConnect}
                           />
                         </div>
@@ -196,11 +250,15 @@ const Connections = ({ axiosInstance }) => {
       {allConnectionsBox && (
         <AllConnections
           userConnections={userConnections}
-          connections={connections}
+         axiosInstance={axiosInstance}
           close={() => setAllConnectionsBox(false)}
           save={(a) => setUserConnections(a)}
         />
       )}
+	  {
+		  open &&
+		  <SnackBar text={message.text} color={message.color} />
+	  }
     </div>
   );
 };

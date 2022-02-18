@@ -222,10 +222,10 @@ router.patch("/connection", (req, res) => {
     (err, result) => {
       if (err) {
         console.log(err);
-        res.send(err);
+        res.send({status:false});
       } else {
         console.log(result);
-        res.send(result);
+        res.send({status:true});
       }
     }
   );
@@ -297,10 +297,10 @@ router.patch("/unfollow", (req, res) => {
     (err, result) => {
       if (err) {
         console.log(err);
-        res.send(err);
+        res.send({status:false});
       } else {
         console.log(result);
-        res.send(result);
+        res.send({status:true});
       }
     }
   );
@@ -321,11 +321,15 @@ router.post("/allUser", async (req, res) => {
         ...sendData,
         {
           name: element.name,
+          username:element.username,
           email: element.email,
-          role: element.designtion,
+          role: element.desgination,
           connected: User.following.includes(element.email),
         },
-      ];}
+      ];
+      console.log(sendData);
+    
+    }
     });
 
     res.status(200).json(sendData);

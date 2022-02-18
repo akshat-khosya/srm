@@ -337,7 +337,7 @@ function Profile({axiosInstance}) {
                           src={
                             file
                               ? URL.createObjectURL(file)
-                              : "/images/" + user.photo
+                              : `${axiosInstance.defaults.baseURL}images/${user.photo}`
                           }
                           alt=""
                         />

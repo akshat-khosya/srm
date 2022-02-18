@@ -1,7 +1,7 @@
 import React from "react";
 import ConnectionsCard from "./ConnectionsCard";
 
-const AllConnections = ({ close, save, userConnections, connections }) => {
+const AllConnections = ({ close, save, userConnections,axiosInstance}) => {
 	const handleConnect = (username) => {
 		let presentuserConnections = [...userConnections];
 		if (presentuserConnections.includes(username)) {
@@ -33,18 +33,17 @@ const AllConnections = ({ close, save, userConnections, connections }) => {
 				</div>
 				<div className="connections-popup-body">
 					<div className="Row">
-						{connections.map(
+						{userConnections.map(
 							(person, index) =>
-								userConnections.includes(person.username) && (
+								 (
 									<div
 										className="Col-lg-25 Col-md-25 col-lg-30"
 										key={index}
 									>
 										<ConnectionsCard
+											axiosInstance={axiosInstance}
 											person={person}
-											included={userConnections.includes(
-												person.username
-											)}
+											included={true}
 											handleConnect={handleConnect}
 										/>
 									</div>
