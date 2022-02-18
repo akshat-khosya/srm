@@ -20,7 +20,7 @@ import Resources from "./pages/Resources/Resources";
 
 function App() {
 	const axiosInstance = axios.create({
-		baseURL: "http://localhost:4000/",
+		baseURL: "https://tegniescorporation.tech/",
 	});
 	// https://tegniescorporation.tech/
 	const { user, dispatch, isFetching } = useContext(Context);
