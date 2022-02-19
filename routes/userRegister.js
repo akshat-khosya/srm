@@ -337,6 +337,11 @@ router.post("/allUser", async (req, res) => {
     res.status(500).json({message:"error"});
   }
 });
+router.get("/count",async(req,res)=>{
+  const count=await UserData.find({}).count();
+  console.log(count);
+  res.send({count:count});
+})
 module.exports = router;
 // foundUser.following.forEach(async(element) => {
 //   console.log(element);
