@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { Context } from "../../context/Context";
+import favicon from '../../Images/logo.png';
 
 const ConnectionsCard = ({ person, included, handleConnect,axiosInstance }) => {
 	const {user}=useContext(Context);
@@ -23,7 +24,7 @@ const ConnectionsCard = ({ person, included, handleConnect,axiosInstance }) => {
 				<div
 					className="connections-card-image"
 					style={{
-						backgroundImage: `url(${axiosInstance.defaults.baseURL}images/${person.email})`,
+						backgroundImage: `url(${axiosInstance.defaults.baseURL}images/${person.email})`||favicon,
 					}}
 				></div>
 				<div className="connections-card-content">

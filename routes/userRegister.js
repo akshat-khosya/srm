@@ -259,7 +259,6 @@ router.post("/connection", async (req, res) => {
     //   }];
 
     // });
-    console.log(data2);
 
     return data2;
   };

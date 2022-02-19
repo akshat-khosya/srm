@@ -11,7 +11,7 @@ const Connections = ({ axiosInstance }) => {
 		page: 1,
 		pageSize: 20,
 	});
-	let totalPeople = 50;
+	const [totalPeople, setTotalPeople] = useState(0);
 	const { user } = useContext(Context);
 	const [allConnectionsBox, setAllConnectionsBox] = useState(false);
 	const [userConnections, setUserConnections] = useState([]);
@@ -39,9 +39,14 @@ const Connections = ({ axiosInstance }) => {
 		const res = await axiosInstance.post("/api/connection", allUser);
 		setUserConnections(res.data.array);
 	};
+	const loadCount = async () => {
+		const res = await axiosInstance.get("/api/count/");
+		setTotalPeople(res.data.count);
+	};
 	useEffect(() => {
 		loadConnections();
 		loadAllUser();
+		loadCount();
 	}, [page.page]);
 	const handleConnect = async (data) => {
 		if (data.included) {
@@ -100,7 +105,6 @@ const Connections = ({ axiosInstance }) => {
 			return;
 		}
 		let check = [];
-		const allConnections = [];
 		connections.forEach((person) => {
 			const searchName = _.lowerCase(_.camelCase(person.name));
 			const searchUserName = _.lowerCase(_.camelCase(person.username));
@@ -316,6 +320,7 @@ const Connections = ({ axiosInstance }) => {
 					axiosInstance={axiosInstance}
 					close={() => setAllConnectionsBox(false)}
 					save={(a) => setUserConnections(a)}
+					handleConnect={handleConnect}
 				/>
 			)}
 			{open && <SnackBar text={message.text} color={message.color} />}

@@ -1,19 +1,12 @@
 import React from "react";
 import ConnectionsCard from "./ConnectionsCard";
 
-const AllConnections = ({ close, save, userConnections,axiosInstance}) => {
-	const handleConnect = (username) => {
-		let presentuserConnections = [...userConnections];
-		if (presentuserConnections.includes(username)) {
-			presentuserConnections = presentuserConnections.filter(
-				(a) => a !== username
-			);
-		} else {
-			presentuserConnections = [...presentuserConnections, username];
-		}
-		console.log(presentuserConnections);
-		save(presentuserConnections);
-	};
+const AllConnections = ({
+	close,
+	handleConnect,
+	userConnections,
+	axiosInstance,
+}) => {
 	return (
 		<div className="connections-popup">
 			<div
@@ -33,22 +26,19 @@ const AllConnections = ({ close, save, userConnections,axiosInstance}) => {
 				</div>
 				<div className="connections-popup-body">
 					<div className="Row">
-						{userConnections.map(
-							(person, index) =>
-								 (
-									<div
-										className="Col-lg-25 Col-md-25 col-lg-30"
-										key={index}
-									>
-										<ConnectionsCard
-											axiosInstance={axiosInstance}
-											person={person}
-											included={true}
-											handleConnect={handleConnect}
-										/>
-									</div>
-								)
-						)}
+						{userConnections.map((person, index) => (
+							<div
+								className="Col-lg-25 Col-md-25 col-lg-30"
+								key={index}
+							>
+								<ConnectionsCard
+									axiosInstance={axiosInstance}
+									person={person}
+									included={true}
+									handleConnect={handleConnect}
+								/>
+							</div>
+						))}
 					</div>
 				</div>
 			</div>
