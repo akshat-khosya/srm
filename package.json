@@ -32,7 +32,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "sass": "sass -w src/pages/Resources/resources.scss src/pages/Resources/resources.css"
+    "sass": "sass -w src/pages/Connections/connections.scss src/pages/Connections/connections.css"
   },
   "eslintConfig": {
     "extends": [

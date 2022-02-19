@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { Context } from "../../context/Context";
 
 const ConnectionsCard = ({ person, included, handleConnect,axiosInstance }) => {
-	console.log(included);
 	const {user}=useContext(Context);
 	const connectionClick=()=>{
 		const cardData={
