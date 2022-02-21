@@ -36,4 +36,42 @@ router.delete("/", async(req,res)=>{
     console.log(err);
   }
 })
+
+router.patch("/like", async(req,res)=>{
+   Post.updateOne({_id:req.body.id},
+    {
+      $addToSet:{likes:req.body.userEmail}
+
+    },
+    (err,result)=>{
+      if(err){
+        console.log(err);
+        res.send({status:false});
+      }else{
+        console.log(result);
+        res.send({status:true});
+      }
+    }
+    )
+});
+
+router.patch("/unlike", async(req,res)=>{
+   Post.updateOne(
+    {
+      _id:req.body.id
+    },
+    {
+      $pull:{likes:req.body.userEmail}
+    },
+    (err,result)=>{
+      if(err){
+        console.log(err);
+        res.send({status:false});
+      }else{
+        console.log(result);
+        res.send({status:true});
+      }
+    }
+  )
+})
 module.exports = router;

@@ -341,7 +341,30 @@ router.get("/count",async(req,res)=>{
   console.log(count);
   res.send({count:count});
 })
-module.exports = router;
+
+router.post("/search",async(req,res)=>{
+  const User = await UserData.findOne({ email: req.body.email });
+  let search= await UserData.find({ $or: [{name:{$regex: new RegExp('^'+req.body.text+'.*','i')}},{username:{$regex: new RegExp('^'+req.body.text+'.*','i')}}]}).exec();
+  let sendData = [];
+  if(search.length===0){
+    res.send({status:false})
+  }else{
+    search.forEach((element)=>{
+      if(element.email!==req.body.email){
+        sendData=[...sendData,{
+          name: element.name,
+          username:element.username,
+          email: element.email,
+          role: element.desgination,
+          connected: User.following.includes(element.email),
+        }]
+      }
+    })
+    res.send({status:true,array:sendData});
+  }
+  
+})
+module.exports = router;  
 // foundUser.following.forEach(async(element) => {
 //   console.log(element);
 //   await UserData.findOne({ email: element }, (error, User) => {
@@ -356,5 +379,6 @@ module.exports = router;
 //     } else {
 //       console.log(error);
 //     }
+
 //   });
 // });
