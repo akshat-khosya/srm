@@ -98,21 +98,20 @@ const Connections = ({ axiosInstance }) => {
 			}
 		}
 	};
-	const searchPeople = (value) => {
+	const searchPeople = async (value) => {
 		if (value === "") {
 			loadConnections();
 			loadAllUser();
 			return;
 		}
-		let check = [];
-		connections.forEach((person) => {
-			const searchName = _.lowerCase(_.camelCase(person.name));
-			const searchUserName = _.lowerCase(_.camelCase(person.username));
-			if (searchName.includes(value) || searchUserName.includes(value))
-				check = [...check, person];
+		const resOfSearch = await axiosInstance.post("/api/search", {
+			email: user.email,
+			text: value,
 		});
-		setConnections(check);
-		// console.log(connections);
+		if (resOfSearch.data.status) {
+			setConnections(resOfSearch.data.array);
+			return;
+		} else setConnections([]);
 	};
 	const handleSearch = (e) => {
 		e.preventDefault();
