@@ -2,12 +2,14 @@ import { useContext, useState } from "react";
 import { Context } from "../../context/Context";
 import "./post.css";
 
-import like from "../../Images/like.png";
 import SnackBar from "../Snackbar";
 function Post({ post, keys, axiosInstance, load }) {
 	const { user } = useContext(Context);
 	const [contextMenu, setContextMenu] = useState(false);
-	const [liked, setLiked] = useState(false);
+	const [liked, setLiked] = useState({
+		state: false,
+		count: 0,
+	});
 	const [open, setOpen] = useState(false);
 	const [err, setErr] = useState({
 		text: "",
@@ -43,7 +45,11 @@ function Post({ post, keys, axiosInstance, load }) {
 		} catch (err) {}
 	};
 	const handleLike = () => {
-		setLiked(!liked);
+		setLiked({
+			...liked,
+			state: !liked.state,
+			count: liked.state ? liked.count - 1 : liked.count + 1,
+		});
 	};
 
 	return (
@@ -124,7 +130,7 @@ function Post({ post, keys, axiosInstance, load }) {
 					<button
 						className="post-addons-like"
 						style={{
-							color: liked
+							color: liked.state
 								? "rgb(237, 73, 86)"
 								: "rgba(0, 0, 0, 0.75)",
 						}}
@@ -132,11 +138,13 @@ function Post({ post, keys, axiosInstance, load }) {
 					>
 						<span className="post-addons__icon">
 							<span className="material-icons">
-								{liked ? "favorite" : "favorite_border"}
+								{liked.state ? "favorite" : "favorite_border"}
 							</span>
 						</span>
 						<span className="post-addons__text">
-							{liked ? "Unlike" : "Like"}
+							{`${liked.count >= 1 ? liked.count : ""} Like${
+								liked.count > 1 ? "s" : ""
+							}`}
 						</span>
 					</button>
 					<button className="post-addons-comment">
