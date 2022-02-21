@@ -1,63 +1,87 @@
 .Post {
-	margin-top: 50px;
-	background-color: #fff;
-	border-radius: 10px;
-	padding: 20px 20px;
-	margin-bottom: 25px;
+  margin-top: 50px;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px 20px;
+  margin-bottom: 25px;
+}
+.Post .postUser {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.Post .postUser-details {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.Post .postProfilePhoto > img {
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.Post .postUserName {
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+}
+.Post .postInfo {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.Post .postMedia {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.Post .postMedia > img {
+  height: 300px;
+  max-width: 100%;
+  object-fit: cover;
+}
+.Post .postLike {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.Post .post-addons {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.Post .post-addons button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0.2rem;
+  padding: 0.7rem 0.6rem;
+  transition: all 0.1s ease-in-out;
+  border-radius: 500px;
+  color: rgba(0, 0, 0, 0.75);
+}
+.Post .post-addons button:hover {
+  background-color: var(--back-shadow-light);
+}
+.Post .post-addons button > span {
+  margin: 0 0.25rem;
 }
 
-.postUser {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-}
-.postUser-details {
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
-}
-.postProfilePhoto > img {
-	height: 60px;
-	width: 60px;
-	border-radius: 50%;
-	object-fit: cover;
-}
-.postUserName {
-	margin-left: 20px;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-around;
-	align-items: flex-start;
-}
-.postInfo {
-	padding-top: 20px;
-	padding-bottom: 20px;
-}
-
-.postMedia {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-.postMedia > img {
-	height: 300px;
-	max-width: 100%;
-	object-fit: cover;
-}
-.postLike {
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
-}
 .icon {
-	border-radius: 500px;
-	width: 2.5rem;
-	height: 2.5rem;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	transition: all 0.25s ease-in-out;
+  border-radius: 500px;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.25s ease-in-out;
 }
+
 .icon:hover {
-	background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.1);
 }
+
+/*# sourceMappingURL=post.css.map */
