@@ -2,18 +2,22 @@ import { useContext, useEffect, useState } from "react";
 import { Context } from "../../context/Context";
 import "./post.css";
 
-import like from "../../Images/like.png";
 import SnackBar from "../Snackbar";
 function Post({ posts, keys, axiosInstance, load }) {
+	const {user}=useContext(Context);
 	const loadData=async()=>{
 		try {
 			const sendData={
 				id:posts
 			}
-			console.log(sendData);
+			
 			const res=await axiosInstance.post('/api/post/singlepost',sendData);
-			console.log(res);
+			console.log(res.data);
 			setPost(res.data);
+			setLiked({
+				state:res.data.likes.includes(user.email),
+				count:res.data.likes.length
+			})
 		} catch (err) {
 			
 		}
@@ -21,9 +25,12 @@ function Post({ posts, keys, axiosInstance, load }) {
 	useEffect(()=>{
 		loadData();
 	},[])
-	const { user } = useContext(Context);
+	
 	const [contextMenu, setContextMenu] = useState(false);
-	const [liked, setLiked] = useState();
+	const [liked, setLiked] = useState({
+		state: false,
+		count: 0,
+	});
 	const [open, setOpen] = useState(false);
 	const [post,setPost]=useState({});
 	const [err, setErr] = useState({
@@ -59,8 +66,26 @@ function Post({ posts, keys, axiosInstance, load }) {
 			}
 		} catch (err) {}
 	};
-	const handleLike = () => {
-		setLiked(!liked);
+	const handleLike = async() => {
+		if(liked.state){
+			const sendData={
+				id:posts,
+				userEmail:user.email
+			}
+			const res = await axiosInstance.patch("/api/post/unlike",sendData);
+			if(res.data.status){
+				loadData();
+			}
+		}else{
+			const sendData={
+				id:posts,
+				userEmail:user.email
+			}
+			const res = await axiosInstance.patch("/api/post/like",sendData);
+			if(res.data.status){
+				loadData();
+			}
+		}
 	};
 
 	return (
@@ -141,7 +166,7 @@ function Post({ posts, keys, axiosInstance, load }) {
 					<button
 						className="post-addons-like"
 						style={{
-							color: liked
+							color: liked.state
 								? "rgb(237, 73, 86)"
 								: "rgba(0, 0, 0, 0.75)",
 						}}
@@ -149,11 +174,13 @@ function Post({ posts, keys, axiosInstance, load }) {
 					>
 						<span className="post-addons__icon">
 							<span className="material-icons">
-								{liked ? "favorite" : "favorite_border"}
+								{liked.state ? "favorite" : "favorite_border"}
 							</span>
 						</span>
 						<span className="post-addons__text">
-							{liked ? "Unlike" : "Like"}
+							{`${liked.count >= 1 ? liked.count : ""} Like${
+								liked.count > 1 ? "s" : ""
+							}`}
 						</span>
 					</button>
 					<button className="post-addons-comment">
