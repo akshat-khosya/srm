@@ -41,7 +41,7 @@ useEffect(() => {
                <Write load={loadPost} axiosInstance={axiosInstance} />
                {posts.map((p,index)=>(
 
-                 <Post key={index} post={p} axiosInstance={axiosInstance} load={()=>{loadPost()}} />
+                 <Post key={index} posts={p} axiosInstance={axiosInstance} load={()=>{loadPost()}} />
                ))}
                {/* <Posts load={loadPost} posts={posts} axiosInstance={axiosInstance} /> */}
                 </div>

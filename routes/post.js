@@ -14,13 +14,26 @@ router.post("/", async (req, res) => {
   router.get("/", async (req, res) => {
     try {
       const posts=await Post.find().sort({createdAt:-1});
-     
-      res.send(posts);
+      let sendData=[];
+      posts.forEach((element)=>{
+        sendData=[...sendData,element._id]
+      });
+      
+      res.send(sendData);
     } catch (err) {
       console.log(err);
     }
   });
-
+router.post("/singlepost",async(req,res)=>{
+ 
+  try {
+    const post=await Post.findById(req.body.id);
+    console.log(post);
+    res.send(post);
+  } catch (err) {
+    console.log(err);
+  }
+})
 router.delete("/", async(req,res)=>{
   console.log(req.body.id);
   try {

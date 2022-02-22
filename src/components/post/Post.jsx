@@ -1,14 +1,31 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Context } from "../../context/Context";
 import "./post.css";
 
 import like from "../../Images/like.png";
 import SnackBar from "../Snackbar";
-function Post({ post, keys, axiosInstance, load }) {
+function Post({ posts, keys, axiosInstance, load }) {
+	const loadData=async()=>{
+		try {
+			const sendData={
+				id:posts
+			}
+			console.log(sendData);
+			const res=await axiosInstance.post('/api/post/singlepost',sendData);
+			console.log(res);
+			setPost(res.data);
+		} catch (err) {
+			
+		}
+	}
+	useEffect(()=>{
+		loadData();
+	},[])
 	const { user } = useContext(Context);
 	const [contextMenu, setContextMenu] = useState(false);
-	const [liked, setLiked] = useState(false);
+	const [liked, setLiked] = useState();
 	const [open, setOpen] = useState(false);
+	const [post,setPost]=useState({});
 	const [err, setErr] = useState({
 		text: "",
 		err: "",
