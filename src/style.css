@@ -1,7 +1,8 @@
-*{
+* {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	transition: all 0.25s ease-in-out;
 }
 :root {
 	--back-color: #f0f0f0;
@@ -34,7 +35,8 @@ button {
 	cursor: pointer;
 	user-select: none;
 }
-ul,ol{
+ul,
+ol {
 	margin: 0;
 	padding: 0;
 }
@@ -57,16 +59,16 @@ ul,ol{
 	display: flex;
 	justify-content: center;
 	align-items: center;
-    width: 0;
-    opacity: 0;
-    transition: all 0.25s ease-in-out;
+	width: 0;
+	opacity: 0;
+	transition: all 0.25s ease-in-out;
 	background-color: var(--bgcolor);
 	color: var(--tcolor);
-    overflow: hidden;
+	overflow: hidden;
 }
 .more-context input:checked + .more-popup {
-    width: 11.5rem;
-    opacity: 1;
+	width: 11.5rem;
+	opacity: 1;
 }
 .more-list {
 	list-style: none;
@@ -86,12 +88,12 @@ ul,ol{
 	border-radius: 5px;
 	cursor: pointer;
 }
-.more-item span{
-    white-space: nowrap;
+.more-item span {
+	white-space: nowrap;
 }
-.more-item a{
-    width: 100%;
-    display: flex;
+.more-item a {
+	width: 100%;
+	display: flex;
 }
 .more-item:hover {
 	background-color: rgba(0, 0, 0, 0.1);

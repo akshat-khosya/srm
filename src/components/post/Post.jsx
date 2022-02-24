@@ -3,36 +3,55 @@ import { Context } from "../../context/Context";
 import "./post.css";
 
 import SnackBar from "../Snackbar";
+import CommentBox from "./CommentBox";
 function Post({ posts, keys, axiosInstance, load }) {
-	const {user}=useContext(Context);
-	const loadData=async()=>{
+	const { user } = useContext(Context);
+	const loadData = async () => {
 		try {
-			const sendData={
-				id:posts
-			}
-			
-			const res=await axiosInstance.post('/api/post/singlepost',sendData);
+			const sendData = {
+				id: posts,
+			};
+
+			const res = await axiosInstance.post(
+				"/api/post/singlepost",
+				sendData
+			);
 			console.log(res.data);
 			setPost(res.data);
 			setLiked({
-				state:res.data.likes.includes(user.email),
-				count:res.data.likes.length
-			})
-		} catch (err) {
-			
-		}
-	}
-	useEffect(()=>{
+				state: res.data.likes.includes(user.email),
+				count: res.data.likes.length,
+			});
+		} catch (err) {}
+	};
+	useEffect(() => {
 		loadData();
-	},[])
-	
+	}, []);
+
 	const [contextMenu, setContextMenu] = useState(false);
 	const [liked, setLiked] = useState({
 		state: false,
 		count: 0,
 	});
+	const [showCommentBox, setShowCommentBox] = useState(false);
+	const [comments, setComments] = useState([
+		{
+			name: "Akshat Mittal",
+			username: "",
+			email: "",
+			photo: "https://avatars.githubusercontent.com/u/84612609?v=4",
+			text: "Nice comment",
+		},
+		{
+			name: "Akshat Mittal",
+			username: "",
+			email: "",
+			photo: "https://avatars.githubusercontent.com/u/84612609?v=4",
+			text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+		},
+	]);
 	const [open, setOpen] = useState(false);
-	const [post,setPost]=useState({});
+	const [post, setPost] = useState({});
 	const [err, setErr] = useState({
 		text: "",
 		err: "",
@@ -66,23 +85,23 @@ function Post({ posts, keys, axiosInstance, load }) {
 			}
 		} catch (err) {}
 	};
-	const handleLike = async() => {
-		if(liked.state){
-			const sendData={
-				id:posts,
-				userEmail:user.email
-			}
-			const res = await axiosInstance.patch("/api/post/unlike",sendData);
-			if(res.data.status){
+	const handleLike = async () => {
+		if (liked.state) {
+			const sendData = {
+				id: posts,
+				userEmail: user.email,
+			};
+			const res = await axiosInstance.patch("/api/post/unlike", sendData);
+			if (res.data.status) {
 				loadData();
 			}
-		}else{
-			const sendData={
-				id:posts,
-				userEmail:user.email
-			}
-			const res = await axiosInstance.patch("/api/post/like",sendData);
-			if(res.data.status){
+		} else {
+			const sendData = {
+				id: posts,
+				userEmail: user.email,
+			};
+			const res = await axiosInstance.patch("/api/post/like", sendData);
+			if (res.data.status) {
 				loadData();
 			}
 		}
@@ -183,7 +202,10 @@ function Post({ posts, keys, axiosInstance, load }) {
 							}`}
 						</span>
 					</button>
-					<button className="post-addons-comment">
+					<button
+						className="post-addons-comment"
+						onClick={() => setShowCommentBox(true)}
+					>
 						<span className="post-addons__icon">
 							<span className="material-icons">comment</span>
 						</span>
@@ -191,6 +213,14 @@ function Post({ posts, keys, axiosInstance, load }) {
 					</button>
 				</div>
 			</div>
+			{showCommentBox && (
+				<CommentBox
+					liked={liked}
+					handleLike={handleLike}
+					comments={comments}
+					close={() => setShowCommentBox(false)}
+				/>
+			)}
 			{contextMenu && (
 				<div
 					className="context-menu-cover"
