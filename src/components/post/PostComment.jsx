@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 
 const PostComment = ({ comment }) => {
+	const delComment = () => {
+		console.log("delete comment");
+	};
 	const [readMore, setReadMore] = useState(false);
 	return (
 		<div className="post-comment-popup-comment">
@@ -10,6 +13,9 @@ const PostComment = ({ comment }) => {
 			<div className="post-comment-popup-comment-content">
 				<span className="post-comment-popup-comment-content__name">
 					{comment.name}
+					<button className="icon" onClick={delComment}>
+						<span className="material-icons">delete</span>
+					</button>
 				</span>
 				<span className="post-comment-popup-comment-content__text">
 					{comment.text.length > 100 ? (
