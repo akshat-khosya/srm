@@ -106,6 +106,9 @@ function Post({ posts, keys, axiosInstance, load }) {
 			}
 		}
 	};
+	const handleNewComment = (a) => {
+		setComments([...comments, a]);
+	};
 
 	return (
 		<div key={keys} className="Post">
@@ -219,6 +222,7 @@ function Post({ posts, keys, axiosInstance, load }) {
 					handleLike={handleLike}
 					comments={comments}
 					close={() => setShowCommentBox(false)}
+					addComment={handleNewComment}
 				/>
 			)}
 			{contextMenu && (

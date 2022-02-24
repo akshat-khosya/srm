@@ -135,6 +135,78 @@
   padding: 0.5rem 1.5rem;
   flex-flow: column;
 }
+.Post .post-comment-popup-body-form {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  padding: 0 1.5rem;
+}
+.Post .post-comment-popup-body-form-image {
+  width: 3.75rem;
+  height: 3.75rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.Post .post-comment-popup-body-form-image img {
+  object-fit: cover;
+  max-width: 85%;
+  max-height: 85%;
+  border-radius: 500px;
+}
+.Post .post-comment-popup-body-form-form {
+  width: calc(100% - 5rem);
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-flow: column;
+}
+.Post .post-comment-popup-body-form-form form {
+  width: 100%;
+}
+.Post .post-comment-popup-body-form-form form .buttons {
+  margin: 0.5rem 0;
+}
+.Post .post-comment-popup textarea {
+  width: 75%;
+  border: 0;
+  outline: 2px solid transparent;
+  margin: 0 0.5rem;
+  padding: 0.4rem 0.5rem;
+  border-radius: 5px;
+  resize: none;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+.Post .post-comment-popup textarea::placeholder {
+  font-size: 0.875rem;
+}
+.Post .post-comment-popup textarea:active, .Post .post-comment-popup textarea:focus {
+  outline: 2px solid rgba(0, 0, 0, 0.04);
+}
+.Post .post-comment-popup form .btn {
+  border: 0;
+  outline: 0;
+  border: 1px solid #0f6fff;
+  margin: 0 0.5rem;
+  padding: 0.4rem 1rem;
+  border-radius: 5px;
+  resize: none;
+  transition: all var(--transition-time) ease-in-out;
+  background-color: #0f6fff;
+  color: #f0f0f0;
+}
+.Post .post-comment-popup form .btn:hover {
+  background-color: #0a6cff;
+}
+.Post .post-comment-popup form .btn-outline {
+  background-color: #f0f0f0;
+  color: #0f6fff;
+}
+.Post .post-comment-popup form .btn-outline:hover {
+  background-color: #0a6cff;
+  color: #f0f0f0;
+}
 .Post .post-comment-popup-comment {
   width: 100%;
   display: flex;
@@ -153,6 +225,7 @@
   object-fit: cover;
   max-width: 100%;
   max-height: 100%;
+  border-radius: 500px;
 }
 .Post .post-comment-popup-comment-content {
   width: calc(100% - 3.65rem);
@@ -163,6 +236,7 @@
   flex-flow: column;
   border-radius: 5px;
   padding: 0.25rem 0;
+  overflow: hidden;
   background-color: rgba(0, 0, 0, 0.05);
   border: 2px solid rgba(0, 0, 0, 0.1);
 }

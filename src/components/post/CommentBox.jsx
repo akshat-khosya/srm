@@ -1,7 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import PostComment from "./PostComment";
 
-const CommentBox = ({ liked, comments, handleLike, close }) => {
+const CommentBox = ({ liked, comments, handleLike, close, addComment }) => {
+	const [commentText, setCommentText] = useState("");
+	const [showAddComment, setShowAddComment] = useState(false);
+	const handleChange = (e) => {
+		setCommentText(e.target.value);
+	};
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		const newComment = {
+			name: "Jane Doe",
+			username: "jane",
+			email: "jane@gmail.com",
+			photo: "https://avatars.githubusercontent.com/u/84612609?v=4",
+			text: commentText,
+		};
+		console.log(newComment);
+		addComment(newComment);
+		setShowAddComment(false);
+		setCommentText("");
+	};
 	return (
 		<section className="post-comment-popup">
 			<div className="post-comment-popup-box" data-aos="zoom-in">
@@ -38,7 +57,12 @@ const CommentBox = ({ liked, comments, handleLike, close }) => {
 									} Like${liked.count > 1 ? "s" : ""}`}
 								</span>
 							</button>
-							<button className="post-addons-comment">
+							<button
+								className="post-addons-comment"
+								onClick={() =>
+									setShowAddComment(!showAddComment)
+								}
+							>
 								<span className="post-addons__icon">
 									<span className="material-icons">
 										comment
@@ -50,6 +74,41 @@ const CommentBox = ({ liked, comments, handleLike, close }) => {
 							</button>
 						</div>
 					</div>
+					{showAddComment && (
+						<div className="post-comment-popup-body-form">
+							<div className="post-comment-popup-body-form-image">
+								<img
+									src="https://pbs.twimg.com/profile_images/1456999448710504454/b4rjNopn_400x400.jpg"
+									alt="Akshat Mittal"
+								/>
+							</div>
+							<div className="post-comment-popup-body-form-form">
+								<form onSubmit={handleSubmit}>
+									<textarea
+										value={commentText}
+										onChange={handleChange}
+										rows="5"
+										placeholder="Your comment here"
+									></textarea>
+									<div className="buttons">
+										<button className="btn btn-outline">
+											Cancel
+										</button>
+										<button
+											type="submit"
+											className={`btn ${
+												commentText.length > 0
+													? ""
+													: "btn-outline"
+											}`}
+										>
+											Post
+										</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					)}
 					<div className="post-comment-popup-body-content">
 						{comments.map((comment) => (
 							<PostComment comment={comment} />
