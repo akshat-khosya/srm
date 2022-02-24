@@ -91,7 +91,12 @@ const CommentBox = ({ liked, comments, handleLike, close, addComment }) => {
 										placeholder="Your comment here"
 									></textarea>
 									<div className="buttons">
-										<button className="btn btn-outline">
+										<button
+											className="btn btn-outline"
+											onClick={() =>
+												setShowAddComment(false)
+											}
+										>
 											Cancel
 										</button>
 										<button
@@ -101,6 +106,7 @@ const CommentBox = ({ liked, comments, handleLike, close, addComment }) => {
 													? ""
 													: "btn-outline"
 											}`}
+											disabled={commentText.length <= 0}
 										>
 											Post
 										</button>
