@@ -22,6 +22,7 @@ function Post({ posts, keys, axiosInstance, load }) {
 				state: res.data.likes.includes(user.email),
 				count: res.data.likes.length,
 			});
+			setComments(res.data.comments)
 		} catch (err) {}
 	};
 	useEffect(() => {
@@ -34,22 +35,7 @@ function Post({ posts, keys, axiosInstance, load }) {
 		count: 0,
 	});
 	const [showCommentBox, setShowCommentBox] = useState(false);
-	const [comments, setComments] = useState([
-		{
-			name: "Akshat Mittal",
-			username: "",
-			email: "",
-			photo: "https://avatars.githubusercontent.com/u/84612609?v=4",
-			text: "Nice comment",
-		},
-		{
-			name: "Akshat Mittal",
-			username: "",
-			email: "",
-			photo: "https://avatars.githubusercontent.com/u/84612609?v=4",
-			text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-		},
-	]);
+	const [comments, setComments] = useState([]);
 	const [open, setOpen] = useState(false);
 	const [post, setPost] = useState({});
 	const [err, setErr] = useState({
@@ -218,6 +204,9 @@ function Post({ posts, keys, axiosInstance, load }) {
 			</div>
 			{showCommentBox && (
 				<CommentBox
+					load={loadData}
+					id={post._id}
+					axiosInstance={axiosInstance}
 					liked={liked}
 					handleLike={handleLike}
 					comments={comments}

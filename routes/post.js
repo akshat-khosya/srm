@@ -88,10 +88,31 @@ router.patch("/unlike", async(req,res)=>{
   )
 });
 router.patch("/comments", async(req,res)=>{
+  console.log(req.body.userComment);
   Post.updateOne({_id:req.body.id},
    {
-     $addToSet:{likes:req.body.userComment}
+     $push:{comments:req.body.userComment}
 
+   },
+   (err,result)=>{
+     if(err){
+       console.log(err);
+       res.send({status:false});
+     }else{
+       console.log(result);
+       res.send({status:true,res:result});
+     }
+   }
+   )
+});
+router.patch("/uncomments", async(req,res)=>{
+  
+  Post.updateOne(
+   {
+     _id:req.body.id
+   },
+   {
+     $pull:{comments:req.body.userComment}
    },
    (err,result)=>{
      if(err){
@@ -102,6 +123,6 @@ router.patch("/comments", async(req,res)=>{
        res.send({status:true});
      }
    }
-   )
+ )
 });
 module.exports = router;

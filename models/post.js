@@ -18,7 +18,7 @@ const PostSchema = new mongoose.Schema({
         type:String
     },
     likes:[String],
-    comments:[]
+    comments:[Object]
 
 },{timestamps:true});
 
