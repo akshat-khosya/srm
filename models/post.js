@@ -17,7 +17,8 @@ const PostSchema = new mongoose.Schema({
     author:{
         type:String
     },
-    likes:[String]
+    likes:[String],
+    comments:[]
 
 },{timestamps:true});
 
