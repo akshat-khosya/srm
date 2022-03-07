@@ -1,12 +1,7 @@
 import "./navbar.css";
-import { useState } from "react";
 import home from '../../Images/home_black_24dp.svg'
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 function Navbar() {
-    const location = useLocation();
-    
-   
-    
   return (
     <div className="Navbar Navbaractive" data-aos="fade-down">
       <div className="Navbar-container ">
@@ -14,7 +9,7 @@ function Navbar() {
           <div className="navigation-group">
             <div className="naviagtion-home">
                 <Link className="link" to="/">
-              <img src={home} alt="" />
+              <img src={home} alt="Logo of SRM, logo of SRMNCR" />
               </Link>
             </div>
          
@@ -29,9 +24,7 @@ function Navbar() {
             <form>
                 <div className="navbar-input">
                 <input className="navbarInput" type="text" id="search" placeholder="Search"  />
-                {/* <label className="navbarLabel" htmlFor="search">Search</label> */}
                 </div>
-                
             </form>
             <div className="navbar-user__icons">
             <i className="far fa-envelope"></i>
@@ -39,8 +32,6 @@ function Navbar() {
             <div className="navbar-user__icons">
             <i className="far fa-bell"></i>
             </div>
-            
-            
         </div>
       </div>
     </div>

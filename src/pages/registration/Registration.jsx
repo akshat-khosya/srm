@@ -3,7 +3,6 @@ import "./registration.css";
 import { useState, useContext } from "react";
 import { Context } from "../../context/Context";
 import SnackBar from "../../components/Snackbar";
-import axios from "axios";
 import userLogo from "../../Images/user.svg";
 function Registration({axiosInstance}) {
   const { user, dispatch } = useContext(Context);
@@ -82,7 +81,7 @@ function Registration({axiosInstance}) {
               <img
                 className="regisImg"
                 src={file ? URL.createObjectURL(file) : userLogo}
-                alt=""
+                alt={user.email}
               />
             </label>
             <input
@@ -291,7 +290,6 @@ function Registration({axiosInstance}) {
                             type="number"
                             name="pyear"
                             id="pyear"
-                            type="number"
                             min="1997"
                             max="2050"
                             step="1"

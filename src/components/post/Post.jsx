@@ -104,7 +104,7 @@ function Post({ posts, keys, axiosInstance, load }) {
 						<div className="postProfilePhoto">
 							<img
 								src={`${axiosInstance.defaults.baseURL}images/${post.email}`}
-								alt=""
+								alt={post.email}
 							/>
 						</div>
 						<div className="postUserName">
@@ -166,7 +166,7 @@ function Post({ posts, keys, axiosInstance, load }) {
 					<div className="postMedia">
 						<img
 							src={`${axiosInstance.defaults.baseURL}images/${post.media}`}
-							alt=""
+							alt={post.media}
 						/>
 					</div>
 				)}

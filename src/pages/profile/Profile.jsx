@@ -122,7 +122,7 @@ function Profile({axiosInstance}) {
                         <img
                           className="regisImg"
                           src={`${axiosInstance.defaults.baseURL}images/${user.photo}`}
-                          alt=""
+                          alt={user.email}
                         />
                       </label>
                       <input
@@ -339,7 +339,7 @@ function Profile({axiosInstance}) {
                               ? URL.createObjectURL(file)
                               : `${axiosInstance.defaults.baseURL}images/${user.photo}`
                           }
-                          alt=""
+                          alt={user.email}
                         />
                       </label>
                       <input

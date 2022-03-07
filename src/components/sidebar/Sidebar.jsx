@@ -32,7 +32,7 @@ function Sidebar({ axiosInstance }) {
 						<li className="Sidebar-li Sidebar-logo-1 ">
 							<div className="logo-group Row">
 								<div className="Sidebar-logo Col-lg-30">
-									<img src={logo} alt="" />
+									<img src={logo} alt="Logo of SRM, logo of SRMNCR" />
 								</div>
 								<div className="Sidebar-content Col-lg-70">
 									SRM Alumni
@@ -50,7 +50,7 @@ function Sidebar({ axiosInstance }) {
 								<div className="Sidebar-profile Col-lg-20">
 									<img
 										src={`${axiosInstance.defaults.baseURL}images/${user.photo}`}
-										alt=""
+										alt={user.email}
 										style={{
 											marginLeft: "11px",
 										}}
@@ -122,7 +122,7 @@ function Sidebar({ axiosInstance }) {
 						<li className="Sidebar-li ">
 							<div className="profile-group Row">
 								<div className="Sidebar-profile Col-lg-20">
-									<img src={dashboard} alt="" />
+									<img src={dashboard} alt={user.email} />
 								</div>
 								<div className="Sidebar-profile-content Col-lg-70">
 									Dashboard

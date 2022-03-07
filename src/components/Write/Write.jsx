@@ -2,7 +2,6 @@ import {useState, useContext } from 'react'
 import { Context } from '../../context/Context'
 import './write.css'
 import photo from '../../Images/photo.png'
-import axios from 'axios'
 function Write({load,axiosInstance}) {
     const [file,setFile]=useState(null);
     const [desc,setDesc]=useState("");
@@ -61,15 +60,15 @@ function Write({load,axiosInstance}) {
                     <h3 className="writeheading">Create Post</h3>
                     </div>
                     <div className="write-desc">
-                        <label htmlFor="desc"><img src={`${axiosInstance.defaults.baseURL}images/${user.photo}`} alt="" />{user.name}</label>
+                        <label htmlFor="desc"><img src={`${axiosInstance.defaults.baseURL}images/${user.photo}`} alt={user.email} />{user.name}</label>
                         <textarea value={desc} onChange={(e)=>{setDesc(e.target.value)}} placeholder='Write something here' name="desc" id="desc" ></textarea>
                     </div>
                     {file && (<div className='media-show'>
-                        <img src={URL.createObjectURL(file)} alt="" />
+                        <img src={URL.createObjectURL(file)} alt={user.email} />
                     </div>) }
                     <div className="write-media">
                         <div className="media-group">
-                        <label htmlFor="media"><img src={photo} alt="" />Photo/Video</label>
+                        <label htmlFor="media"><img src={photo} alt={user.email} />Photo/Video</label>
                         <input onChange={(e)=>{setFile(e.target.files[0]);}} type="file" id="media" name="media" />
                         </div>
                         <div className="post-group">
