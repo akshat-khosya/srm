@@ -49,7 +49,7 @@ const DispEvent = ({ e, axiosInstance, openEvent,load }) => {
 			{e.photo && (
 				<img
 					src={`${axiosInstance.defaults.baseURL}images/${e.photo}`}
-					alt=""
+					alt={user.email}
 					className="postImg"
 				/>
 			)}

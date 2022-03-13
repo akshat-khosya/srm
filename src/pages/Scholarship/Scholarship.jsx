@@ -6,10 +6,6 @@ import favicon from "../../Images/logo.png";
 const Scholarship = ({ scholarship,axiosInstance ,load}) => {
 	const {user}=useContext(Context);
 	const [contextMenu, setContextMenu] = useState(false);
-	const editScholarship = () => {
-		console.log("Edit the Scholarship");
-		setContextMenu(false);
-	};
 	const delScholarship = async() => {
 		console.log(scholarship);
 		try {
