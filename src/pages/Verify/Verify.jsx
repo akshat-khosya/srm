@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import ResetPopup from "./ResetPopup/ResetPopup";
 import "./verify.css";
 
 const Verify = ({ axiosInstance }) => {
 	const [users, setUsers] = useState([]);
+	const [openResetPswdBox, setOpenResetPswdBox] = useState(false);
 	const handleStatus = (id) => {
 		setUsers(
 			users.map((user, index) =>
@@ -24,6 +26,7 @@ const Verify = ({ axiosInstance }) => {
 						<button
 							className="verify-status-btn verify-status-btn-blue"
 							style={{ margin: "0 auto", fontSize: "1.25rem" }}
+							onClick={() => setOpenResetPswdBox(true)}
 						>
 							<span className="material-icons">restart_alt</span>
 							<span>Reset Password</span>
@@ -77,6 +80,9 @@ const Verify = ({ axiosInstance }) => {
 					</table>
 				</div>
 			</div>
+			{openResetPswdBox && (
+				<ResetPopup close={() => setOpenResetPswdBox(false)} />
+			)}
 		</div>
 	);
 };

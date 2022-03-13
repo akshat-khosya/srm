@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const SnackBar = ({ text, err, color = "var(--red)" }) => {
+const SnackBar = ({ text, err = false, color = "var(--red)" }) => {
 	const [open, setOpen] = useState(true);
 	if (err) {
 		setOpen(!err);
