@@ -7,7 +7,7 @@
   align-items: center;
   flex-flow: column;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: hidden;
 }
 .access-denied-box {
   width: 100%;

@@ -1,10 +1,23 @@
 import React, { useState } from "react";
 import ResetPopup from "./ResetPopup/ResetPopup";
+import UserProfile from "./UserProfile/UserProfile";
 import "./verify.css";
 
 const Verify = ({ axiosInstance }) => {
-	const [users, setUsers] = useState([]);
+	const [users, setUsers] = useState([
+		{
+			name: "Akshat Mittal",
+			email: "akshatmittal2506@gmail.com",
+			status: true,
+		},
+		{
+			name: "Akshat Khosya",
+			email: "akshatdps12@gmail.com",
+			status: false,
+		},
+	]);
 	const [openResetPswdBox, setOpenResetPswdBox] = useState(false);
+	const [openUserProfilePopup, setOpenUserProfilePopup] = useState(false);
 	const handleStatus = (id) => {
 		setUsers(
 			users.map((user, index) =>
@@ -16,6 +29,9 @@ const Verify = ({ axiosInstance }) => {
 					: user
 			)
 		);
+	};
+	const openUser = () => {
+		setOpenUserProfilePopup(true);
 	};
 	return (
 		<div className="verify-container">
@@ -47,8 +63,8 @@ const Verify = ({ axiosInstance }) => {
 							{users.map((user, index) => (
 								<tr className="verify-table-tr">
 									<td>{index + 1}</td>
-									<td>{user.name}</td>
-									<td>{user.email}</td>
+									<td onClick={openUser}>{user.name}</td>
+									<td onClick={openUser}>{user.email}</td>
 									<td>
 										<div className="verify-status">
 											<button
@@ -82,6 +98,12 @@ const Verify = ({ axiosInstance }) => {
 			</div>
 			{openResetPswdBox && (
 				<ResetPopup close={() => setOpenResetPswdBox(false)} />
+			)}
+			{openUserProfilePopup && (
+				<UserProfile
+					axiosInstance={axiosInstance}
+					close={() => setOpenUserProfilePopup(false)}
+				/>
 			)}
 		</div>
 	);

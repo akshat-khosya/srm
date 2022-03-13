@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { admin } from "../../globalVariable.js";
 import deniedSvg from "../../Images/denied.svg";
 import "./access-denied.css";
@@ -12,6 +13,9 @@ const AccessDenied = () => {
 			</div>
 			<div className="access-denied-foot">
 				<span>You're not an admin</span>
+				<span>
+					To update your profile: <Link to='/profile'>Click Here</Link>
+				</span>
 				<span>
 					Contact the admin for any changes to your account
 					credentials at <a href={`mailto:${admin}`}>{admin}</a>.

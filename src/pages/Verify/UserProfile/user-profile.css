@@ -1,0 +1,59 @@
+.user-profile {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.user-profile-box {
+  background-color: var(--bgcolor);
+  width: 75%;
+  height: 95%;
+  border-radius: 8px;
+  overflow: auto;
+}
+@media (max-width: 900px) {
+  .user-profile-box {
+    width: 95%;
+  }
+}
+.user-profile-head {
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 2.75rem;
+}
+.user-profile-head-close {
+  border: 0;
+  outline: 0;
+  border-radius: 500px;
+  padding: 0.35rem;
+  margin: 0.5rem 1rem;
+  background: transparent;
+  transition: all var(--transition-time) ease-in-out;
+}
+.user-profile-head-close:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.user-profile-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0;
+}
+.user-profile-body .regisWrapper {
+  padding-bottom: 0;
+}
+.user-profile-body .regis-inputgroup img {
+  object-fit: cover;
+  max-width: 10rem;
+  max-height: 10rem;
+}
+
+/*# sourceMappingURL=user-profile.css.map */
