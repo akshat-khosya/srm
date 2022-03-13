@@ -32,7 +32,10 @@ function Sidebar({ axiosInstance }) {
 						<li className="Sidebar-li Sidebar-logo-1 ">
 							<div className="logo-group Row">
 								<div className="Sidebar-logo Col-lg-30">
-									<img src={logo} alt="Logo of SRM, logo of SRMNCR" />
+									<img
+										src={logo}
+										alt="Logo of SRM, logo of SRMNCR"
+									/>
 								</div>
 								<div className="Sidebar-content Col-lg-70">
 									SRM Alumni
@@ -89,7 +92,7 @@ function Sidebar({ axiosInstance }) {
 									</div>
 								</li>
 							</Link>
-							<Link className="link" to="/profile">
+							<Link className="link" to="/settings">
 								<li className="dropdownItem Row">
 									<div className="dropdown-icon Col-lg-20">
 										<i className="fas fa-cog"></i>

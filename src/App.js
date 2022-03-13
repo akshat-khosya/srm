@@ -17,6 +17,7 @@ import Sidebar from "./components/sidebar/Sidebar";
 import "./style.css";
 import Scholarships from "./pages/Scholarship/Scholarships";
 import Resources from "./pages/Resources/Resources";
+import Verify from "./pages/Verify/Verify";
 
 function App() {
 	const axiosInstance = axios.create({
@@ -78,6 +79,9 @@ function App() {
 			case "/resource":
 				component = <Resources axiosInstance={axiosInstance} />;
 				break;
+			case "/settings":
+				component = <Verify axiosInstance={axiosInstance} />;
+				break;
 			default:
 				component = <Fake axiosInstance={axiosInstance} />;
 				break;
@@ -126,6 +130,7 @@ function App() {
 						element={getPage("/scholarships")}
 					/>
 					<Route path="/mentoring" element={getPage("/mentoring")} />
+					<Route path="/settings" element={getPage("/settings")} />
 					<Route path="*" element={getPage("*")} />
 				</Routes>
 			</main>
