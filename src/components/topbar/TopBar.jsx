@@ -6,7 +6,7 @@ function TopBar() {
         <section id="" className='Menu-section' data-aos="fade-down">
         <div className="menu-bar">
           <nav className="Navbar Navbar-light Navbar-dark">
-            <Link className="Navbar-brand sizing" href="/profile">
+            <Link className="Navbar-brand sizing" to="/profile">
               <img
                 className="Navclass"
                 src={logo}
