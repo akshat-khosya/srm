@@ -131,7 +131,7 @@ function App() {
 						element={getPage("/scholarships")}
 					/>
 					<Route path="/mentoring" element={getPage("/mentoring")} />
-					<Route path="/settings" element={user && (user.verifcation && (user.email===admin&&<Profile axiosInstance={axiosInstance} />))} />
+					<Route path="/settings" element={user && (user.verifcation && (user.email===admin&&<Verify axiosInstance={axiosInstance} />))} />
 					<Route path="*" element={getPage("*")} />
 				</Routes>
 			</main>

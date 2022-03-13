@@ -93,7 +93,7 @@ function Sidebar({ axiosInstance }) {
 									</div>
 								</li>
 							</Link>
-							{user.email===admin && <Link className="link" to="/setting">
+							{user.email===admin && <Link className="link" to="/settings">
 								<li className="dropdownItem Row">
 									<div className="dropdown-icon Col-lg-20">
 										<i className="fas fa-cog"></i>

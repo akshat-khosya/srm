@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./verify.css";
 
-const Verify = () => {
+const Verify = ({ axiosInstance }) => {
 	const [users, setUsers] = useState([]);
 	const handleStatus = (id) => {
 		setUsers(
@@ -19,6 +19,17 @@ const Verify = () => {
 		<div className="verify-container">
 			<div className="verify-box">
 				<div className="verify-head">Verify Users</div>
+				<div className="verify-body">
+					<div className="verify-status">
+						<button
+							className="verify-status-btn verify-status-btn-blue"
+							style={{ margin: "0 auto", fontSize: "1.25rem" }}
+						>
+							<span className="material-icons">restart_alt</span>
+							<span>Reset Password</span>
+						</button>
+					</div>
+				</div>
 				<div className="verify-body">
 					<table className="verify-table">
 						<thead className="verify-table-head">
