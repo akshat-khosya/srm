@@ -195,7 +195,7 @@ router.post("/reset", async (req, res) => {
       if (err) {
         console.log(err);
       } else {
-        res.send(foundUser);
+        res.send({ password: req.body.password, status: true });
       }
     }
   );
@@ -222,10 +222,10 @@ router.patch("/connection", (req, res) => {
     (err, result) => {
       if (err) {
         console.log(err);
-        res.send({status:false});
+        res.send({ status: false });
       } else {
         console.log(result);
-        res.send({status:true});
+        res.send({ status: true });
       }
     }
   );
@@ -296,10 +296,10 @@ router.patch("/unfollow", (req, res) => {
     (err, result) => {
       if (err) {
         console.log(err);
-        res.send({status:false});
+        res.send({ status: false });
       } else {
         console.log(result);
-        res.send({status:true});
+        res.send({ status: true });
       }
     }
   );
@@ -315,56 +315,62 @@ router.post("/allUser", async (req, res) => {
       .skip(page * pageSize - pageSize)
       .limit(pageSize);
     allUser.forEach((element) => {
-      if(element.email!==req.body.email)
-      {sendData = [
-        ...sendData,
-        {
-          name: element.name,
-          username:element.username,
-          email: element.email,
-          role: element.desgination,
-          connected: User.following.includes(element.email),
-        },
-      ];
-      console.log(sendData);
-    
-    }
+      if (element.email !== req.body.email) {
+        sendData = [
+          ...sendData,
+          {
+            name: element.name,
+            username: element.username,
+            email: element.email,
+            role: element.desgination,
+            connected: User.following.includes(element.email),
+          },
+        ];
+        console.log(sendData);
+      }
     });
 
     res.status(200).json(sendData);
   } catch (err) {
-    res.status(500).json({message:"error"});
+    res.status(500).json({ message: "error" });
   }
 });
-router.get("/count",async(req,res)=>{
-  const count=await UserData.find({}).count();
+router.get("/count", async (req, res) => {
+  const count = await UserData.find({}).count();
   console.log(count);
-  res.send({count:count});
-})
+  res.send({ count: count });
+});
 
-router.post("/search",async(req,res)=>{
+router.post("/search", async (req, res) => {
   const User = await UserData.findOne({ email: req.body.email });
-  let search= await UserData.find({ $or: [{name:{$regex: new RegExp('^'+req.body.text+'.*','i')}},{username:{$regex: new RegExp('^'+req.body.text+'.*','i')}}]}).exec();
+  let search = await UserData.find({
+    $or: [
+      { name: { $regex: new RegExp("^" + req.body.text + ".*", "i") } },
+      { username: { $regex: new RegExp("^" + req.body.text + ".*", "i") } },
+    ],
+  }).exec();
   let sendData = [];
-  if(search.length===0){
-    res.send({status:false})
-  }else{
-    search.forEach((element)=>{
-      if(element.email!==req.body.email){
-        sendData=[...sendData,{
-          name: element.name,
-          username:element.username,
-          email: element.email,
-          role: element.desgination,
-          connected: User.following.includes(element.email),
-        }]
+  if (search.length === 0) {
+    res.send({ status: false });
+  } else {
+    search.forEach((element) => {
+      if (element.email !== req.body.email) {
+        sendData = [
+          ...sendData,
+          {
+            name: element.name,
+            username: element.username,
+            email: element.email,
+            role: element.desgination,
+            connected: User.following.includes(element.email),
+          },
+        ];
       }
-    })
-    res.send({status:true,array:sendData});
+    });
+    res.send({ status: true, array: sendData });
   }
-  
-})
-module.exports = router;  
+});
+module.exports = router;
 // foundUser.following.forEach(async(element) => {
 //   console.log(element);
 //   await UserData.findOne({ email: element }, (error, User) => {

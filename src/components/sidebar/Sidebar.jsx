@@ -4,6 +4,7 @@ import dashboard from "../../Images/dashboard_white_24dp.svg";
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../../context/Context";
 import { Link, useLocation } from "react-router-dom";
+import { admin } from "../../globalVariable";
 function Sidebar({ axiosInstance }) {
 	const { user, dispatch } = useContext(Context);
 	const [icon, setIcon] = useState("fas fa-caret-down");
@@ -92,7 +93,7 @@ function Sidebar({ axiosInstance }) {
 									</div>
 								</li>
 							</Link>
-							<Link className="link" to="/settings">
+							{user.email===admin && <Link className="link" to="/setting">
 								<li className="dropdownItem Row">
 									<div className="dropdown-icon Col-lg-20">
 										<i className="fas fa-cog"></i>
@@ -101,7 +102,7 @@ function Sidebar({ axiosInstance }) {
 										Settings
 									</div>
 								</li>
-							</Link>
+							</Link>}
 							<Link
 								onClick={() => {
 									dispatch({ type: "LOGIN_FAILURE" });
