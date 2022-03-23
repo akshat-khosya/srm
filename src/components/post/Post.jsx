@@ -43,17 +43,6 @@ function Post({ posts, keys, axiosInstance, load }) {
 	useEffect(() => {
 		loadData();
 	}, []);
-	/* useEffect(() => {
-		setErr({
-			text: "Comment posted successfuly",
-			color: "var(--green)",
-		});
-		setOpen(true);
-		setTimeout(() => {
-			setOpen(false);
-		}, 2500);
-	}, [noOfComments]); */
-
 	const delPost = async () => {
 		try {
 			console.log(post._id);

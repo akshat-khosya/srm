@@ -1,24 +1,22 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../../context/Context";
-import SnackBar from "../Snackbar";
 
-const PostComment = ({ id, comment, axiosInstance, load }) => {
+const PostComment = ({ id, comment, axiosInstance, load, snackOnDel }) => {
 	const { user } = useContext(Context);
-	console.log(comment);
 	const delComment = async () => {
 		const sendData = {
 			id: id,
 			userComment: comment,
 		};
-		console.log(comment);
 		const res = await axiosInstance.patch(
 			"/api/post/uncomments/",
 			sendData
 		);
 		if (res.data.status) {
 			load();
+			snackOnDel(true);
 		} else {
-			console.log("Failed");
+			snackOnDel(false);
 		}
 	};
 	const [readMore, setReadMore] = useState(false);

@@ -36,8 +36,6 @@ const CommentBox = ({
 		};
 		const res = await axiosInstance.patch("/api/post/comments/", sendData);
 		if (res.data.status) {
-			console.log(res);
-
 			load();
 			setShowAddComment(false);
 			setCommentText("");
@@ -52,6 +50,27 @@ const CommentBox = ({
 			}, 2500);
 		} else {
 			console.log(res);
+		}
+	};
+	const snackOnDel = (status) => {
+		if (status) {
+			setSnack({
+				text: "Comment deleted successfuly",
+				color: "var(--green)",
+			});
+			setOpen(true);
+			setTimeout(() => {
+				setOpen(false);
+			}, 2500);
+		} else {
+			setSnack({
+				text: "Couldn't delete comment",
+				color: "var(--red)",
+			});
+			setOpen(true);
+			setTimeout(() => {
+				setOpen(false);
+			}, 2500);
 		}
 	};
 	return (
@@ -156,6 +175,7 @@ const CommentBox = ({
 								index={index}
 								axiosInstance={axiosInstance}
 								comment={comment}
+								snackOnDel={snackOnDel}
 							/>
 						))}
 					</div>

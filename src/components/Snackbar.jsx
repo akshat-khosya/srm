@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 
 const SnackBar = ({ text, err = false, color = "var(--red)" }) => {
-	const [open, setOpen] = useState(true);
-	if (err) {
-		setOpen(!err);
-	}
+	const [transform, setTransform] = useState(-100);
+	setInterval(() => {
+		setTransform(0);
+	}, 1);
 	return (
-		<>
-			{open && (
-				<div className="snackbar" style={{ backgroundColor: color }}>
-					<span className="snackbar-text">{text}</span>
-				</div>
-			)}
-		</>
+		<div
+			className="snackbar"
+			style={{
+				backgroundColor: color,
+				transition: "all 0.2s ease-in-out",
+				transform: `translateX(${transform}%)`,
+			}}
+		>
+			<span className="snackbar-text">{text}</span>
+		</div>
 	);
 };
 
