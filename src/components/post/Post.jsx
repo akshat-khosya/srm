@@ -5,6 +5,21 @@ import "./post.css";
 import SnackBar from "../Snackbar";
 import CommentBox from "./CommentBox";
 function Post({ posts, keys, axiosInstance, load }) {
+	const [contextMenu, setContextMenu] = useState(false);
+	const [liked, setLiked] = useState({
+		state: false,
+		count: 0,
+	});
+	const [showCommentBox, setShowCommentBox] = useState(false);
+	const [comments, setComments] = useState([]);
+	const [noOfComments, setNoOfComments] = useState(0);
+	const [open, setOpen] = useState(false);
+	const [post, setPost] = useState({});
+	const [err, setErr] = useState({
+		text: "",
+		err: "",
+		color: "var(--red)",
+	});
 	const { user } = useContext(Context);
 	const loadData = async () => {
 		try {
@@ -16,37 +31,29 @@ function Post({ posts, keys, axiosInstance, load }) {
 				"/api/post/singlepost",
 				sendData
 			);
-			console.log(res.data);
 			setPost(res.data);
 			setLiked({
 				state: res.data.likes.includes(user.email),
 				count: res.data.likes.length,
 			});
-			setComments(res.data.comments)
+			setComments(res.data.comments);
+			setNoOfComments(res.data.comments.length);
 		} catch (err) {}
 	};
 	useEffect(() => {
 		loadData();
 	}, []);
+	/* useEffect(() => {
+		setErr({
+			text: "Comment posted successfuly",
+			color: "var(--green)",
+		});
+		setOpen(true);
+		setTimeout(() => {
+			setOpen(false);
+		}, 2500);
+	}, [noOfComments]); */
 
-	const [contextMenu, setContextMenu] = useState(false);
-	const [liked, setLiked] = useState({
-		state: false,
-		count: 0,
-	});
-	const [showCommentBox, setShowCommentBox] = useState(false);
-	const [comments, setComments] = useState([]);
-	const [open, setOpen] = useState(false);
-	const [post, setPost] = useState({});
-	const [err, setErr] = useState({
-		text: "",
-		err: "",
-		color: "var(--red)",
-	});
-	const editPost = () => {
-		console.log("Edit the post");
-		setContextMenu(false);
-	};
 	const delPost = async () => {
 		try {
 			console.log(post._id);
@@ -69,7 +76,10 @@ function Post({ posts, keys, axiosInstance, load }) {
 					setOpen(false);
 				}, 2000);
 			}
-		} catch (err) {}
+		} catch (err) {
+			console.log(err);
+		}
+		load();
 	};
 	const handleLike = async () => {
 		if (liked.state) {
@@ -94,6 +104,7 @@ function Post({ posts, keys, axiosInstance, load }) {
 	};
 	const handleNewComment = (a) => {
 		setComments([...comments, a]);
+		load();
 	};
 
 	return (
@@ -198,7 +209,11 @@ function Post({ posts, keys, axiosInstance, load }) {
 						<span className="post-addons__icon">
 							<span className="material-icons">comment</span>
 						</span>
-						<span className="post-addons__text">Comment</span>
+						<span className="post-addons__text">
+							{`${noOfComments >= 1 ? noOfComments : ""} Comment${
+								noOfComments > 1 ? "s" : ""
+							}`}
+						</span>
 					</button>
 				</div>
 			</div>

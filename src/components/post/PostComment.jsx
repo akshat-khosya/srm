@@ -1,40 +1,43 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../../context/Context";
+import SnackBar from "../Snackbar";
 
-const PostComment = ({ id,comment,axiosInstance,load }) => {
-	const {user}=useContext(Context);
+const PostComment = ({ id, comment, axiosInstance, load }) => {
+	const { user } = useContext(Context);
 	console.log(comment);
-	const delComment =async () => {
-		
-		const sendData={
-			id:id,
-			userComment:comment
-		}
+	const delComment = async () => {
+		const sendData = {
+			id: id,
+			userComment: comment,
+		};
 		console.log(comment);
-		const res =await axiosInstance.patch('/api/post/uncomments/',sendData);
-		if(res.data.status){
-			
+		const res = await axiosInstance.patch(
+			"/api/post/uncomments/",
+			sendData
+		);
+		if (res.data.status) {
 			load();
-		}else{
-			
+		} else {
+			console.log("Failed");
 		}
 	};
 	const [readMore, setReadMore] = useState(false);
 	return (
 		<div className="post-comment-popup-comment">
 			<div className="post-comment-popup-comment-photo">
-				<img src={`${axiosInstance.defaults.baseURL}images/${comment.email}`} alt={comment.name} />
+				<img
+					src={`${axiosInstance.defaults.baseURL}images/${comment.email}`}
+					alt={comment.name}
+				/>
 			</div>
 			<div className="post-comment-popup-comment-content">
 				<span className="post-comment-popup-comment-content__name">
 					{comment.name}
-					{comment.email===user.email && 
-					(
+					{comment.email === user.email && (
 						<button className="icon" onClick={delComment}>
-						<span className="material-icons">delete</span>
-					</button>
+							<span className="material-icons">delete</span>
+						</button>
 					)}
-					
 				</span>
 				<span className="post-comment-popup-comment-content__text">
 					{comment.text.length > 100 ? (
