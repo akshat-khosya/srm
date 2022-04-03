@@ -269,7 +269,7 @@ function Login({axiosInstance}) {
                             name="username"
                             onChange={registerChange}
                             value={register.username}
-                            id="username"
+                          
                             placeholder="Username"
                           />
                         </div>

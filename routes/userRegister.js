@@ -45,69 +45,43 @@ router.post("/newregister", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   try {
-    const user = await UserData.findOne({ email: req.body.auth });
+    const user = await UserData.findOne(
+      
+      { $or: [{ email: req.body.auth }, { username: req.body.auth }] }
+    );
     if (user) {
       const validate = await bcrypt.compare(req.body.password, user.password);
       if (validate) {
-        const token = jwt.sign(user.email, process.env.JWT_SECRET);
-        const { password, ...others } = user._doc;
-        res.send({
-          status: true,
-          messgae: "Succesfully Login",
-          user: others,
-          token: token,
-        });
-      } else {
-        res.send({ status: false, message: "Incorrect Credintials" });
-      }
-    }
-  } catch (err) {
-    console.log(err);
-  }
-
-  function isNum(val) {
-    return !isNaN(val);
-  }
-  if (isNum(req.body.auth)) {
-    try {
-      const user = await UserData.findOne({ phone: req.body.auth });
-      if (user) {
-        const validate = await bcrypt.compare(req.body.password, user.password);
-        if (validate) {
+        if (user.verifcation === true) {
+          if (user.verifyStatus === true) {
+            const token = jwt.sign(user.email, process.env.JWT_SECRET);
+            const { password, ...others } = user._doc;
+            res.send({
+              status: true,
+              message: "Succesfully Login",
+              user: others,
+              token: token,
+            });
+          } else {
+            res.send({
+              status: false,
+              message: "Wait for verifaction by admin",
+            });
+          }
+        } else {
           const token = jwt.sign(user.email, process.env.JWT_SECRET);
           const { password, ...others } = user._doc;
           res.send({
             status: true,
-            messgae: "Succesfully Login",
+            message: "Succesfully Login",
             user: others,
             token: token,
           });
-        } else {
-          res.send({ status: false, message: "Incorrect Credintials" });
         }
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }
-  try {
-    const user = await UserData.findOne({ username: req.body.auth });
-    if (user) {
-      const validate = await bcrypt.compare(req.body.password, user.password);
-      if (validate) {
-        const token = jwt.sign(user.email, process.env.JWT_SECRET);
-        const { password, ...others } = user._doc;
-        res.send({
-          status: "true",
-          messgae: "Succesfully Login",
-          user: others,
-          token: token,
-        });
       } else {
         res.send({ status: false, message: "Incorrect Credintials" });
       }
     }
-    res.send({ status: false, message: "Not Registered" });
   } catch (err) {
     console.log(err);
   }
@@ -175,8 +149,20 @@ router.get("/verifytoken", (req, res) => {
           if (err) {
             console.log(err);
           } else {
-            const { password, ...others } = founduser._doc;
-            res.json({ auth: true, user: others });
+            if (founduser.verifcation === true) {
+              if (founduser.verifyStatus === true) {
+                const { password, ...others } = founduser._doc;
+                res.json({ auth: true, user: others });
+              } else {
+                res.json({
+                  status: false,
+                  message: "Wait for verifaction by admin",
+                });
+              }
+            } else {
+              const { password, ...others } = founduser._doc;
+              res.json({ auth: true, user: others });
+            }
           }
         });
       }
@@ -370,6 +356,7 @@ router.post("/search", async (req, res) => {
     res.send({ status: true, array: sendData });
   }
 });
+
 module.exports = router;
 // foundUser.following.forEach(async(element) => {
 //   console.log(element);

@@ -3,28 +3,26 @@ const mongoose = require("mongoose");
 const UserDataSchema = new mongoose.Schema(
   {
     name: {
-        type:String,
-        required:true
+      type: String,
+      required: true,
     },
     email: {
-        type: String,
-        required:true,
-        unique:true
-      },
+      type: String,
+      required: true,
+      unique: true,
+    },
     phone: {
       type: Number,
-      required:true,
-      unique:true
-
-      
+      required: true,
+      unique: true,
     },
-    username:{
-        type:String,
-        required:true,
-        unique:true
+    username: {
+      type: String,
+      required: true,
+      unique: true,
     },
-    pyear:{
-        type:String
+    pyear: {
+      type: String,
     },
     password: {
       type: String,
@@ -35,45 +33,42 @@ const UserDataSchema = new mongoose.Schema(
       required: true,
       default: false,
     },
-    batch:{
-        type:String,
-
+    verifyStatus: {
+      type: Boolean,
+      required: true,
+      default: false,
     },
-    bio:{
-        type:String,
-
+    batch: {
+      type: String,
     },
-    currentoriginaztion:{
-        type:String,
-
+    bio: {
+      type: String,
     },
-    desgination:{
-        type:String,
-
+    currentoriginaztion: {
+      type: String,
     },
-    dob:{
-        type:String,
-
+    desgination: {
+      type: String,
     },
-    fname:{
-        type:String
-    } ,
-    gender:{
-        type:String,
-
-    }, 
-    mname:{
-        type:String,
-
+    dob: {
+      type: String,
     },
-    program:{
-        type:String,
-
+    fname: {
+      type: String,
     },
-    photo:{
-        type:String
+    gender: {
+      type: String,
     },
-    following:[String]
+    mname: {
+      type: String,
+    },
+    program: {
+      type: String,
+    },
+    photo: {
+      type: String,
+    },
+    following: [String],
   },
   { timestamps: true }
 );
