@@ -15,14 +15,14 @@ const mentoring=require("./routes/mentoring");
 const scholarship= require("./routes/scholarships");
 const resource=require("./routes/resource");
 dotenv.config();
+app.use(cors())
 app.use(express.json());
-const corsOptions ={
+/* const corsOptions ={
     origin:'*', 
     credentials:true,            //access-control-allow-credentials:true
     optionSuccessStatus:200,
- }
+ } */
  
- app.use(cors(corsOptions))
 app.use("/images",express.static(path.join(__dirname,"/images")));
 app.use("/pdf",express.static(path.join(__dirname,"/pdf")));
 mongoose.connect(process.env.MONGO_URL,{ useNewUrlParser: true, useUnifiedTopology: true }, function(err) {
