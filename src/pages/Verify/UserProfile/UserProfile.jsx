@@ -1,9 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../../profile/profile.css";
 import "./user-profile.css";
 
-const UserProfile = ({ close, axiosInstance }) => {
-	const user = {
+const UserProfile = ({ close, axiosInstance,userEmail }) => {
+	console.log(userEmail);
+	const [user, setUser] = useState({
+		email:userEmail
+	});
+	const loadData=async()=>{
+		const data={
+			email:userEmail
+		};
+		try {
+			const res = await axiosInstance.post("/api/adminprofile/",data);
+			if(res.data.status){
+				setUser(res.data.profile);
+				console.log(res.data.profile);
+				console.log(user);
+			}else{
+				alert("err");
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	}
+	useEffect(() => {
+		loadData();
+	}, [])
+	
+	/* const user = {
 		_id: "61f55f3e21bf1cad717a4b5f",
 		name: "Akshat Mittal",
 		email: "akshatmittal2506@gmail.com",
@@ -35,7 +60,7 @@ const UserProfile = ({ close, axiosInstance }) => {
 			"mannsinha1902@gmail.com",
 		],
 		verifyStatus: false,
-	};
+	}; */
 	return (
 		<div className="user-profile">
 			<div className="user-profile-box" data-aos="zoom-in">

@@ -1,37 +1,43 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ResetPopup from "./ResetPopup/ResetPopup";
 import UserProfile from "./UserProfile/UserProfile";
 import "./verify.css";
 
 const Verify = ({ axiosInstance }) => {
-	const [users, setUsers] = useState([
-		{
-			name: "Akshat Mittal",
-			email: "akshatmittal2506@gmail.com",
-			status: true,
-		},
-		{
-			name: "Akshat Khosya",
-			email: "akshatdps12@gmail.com",
-			status: false,
-		},
-	]);
+	useEffect(()=>{
+		loadData();
+	},[])
+	const [openUserProfileEmail, setOpenUserProfileEmail] = useState("");
+	const loadData=async()=>{
+		try {
+			const res=await axiosInstance.get("/api/userstatus/");
+			setUsers(res.data.users);
+		} catch (err) {
+			console.log(err);
+		}
+	}
+	const [users, setUsers] = useState([]);
 	const [openResetPswdBox, setOpenResetPswdBox] = useState(false);
 	const [openUserProfilePopup, setOpenUserProfilePopup] = useState(false);
-	const handleStatus = (id) => {
-		setUsers(
-			users.map((user, index) =>
-				index === id
-					? {
-							...user,
-							status: !user.status,
-					  }
-					: user
-			)
-		);
+	const handleStatus = async(id) => {
+		try {
+			const data={
+				email:users[id].email,
+				status:!users[id].status
+			};
+			const res=await axiosInstance.post("/api/verifystatus/",data);
+			if(res.data.status){
+				loadData();
+			}else{
+				alert("err");
+			}
+		} catch (err) {
+			console.log(err);
+		}
 	};
-	const openUser = () => {
+	const openUser = (emailId) => {
 		setOpenUserProfilePopup(true);
+		setOpenUserProfileEmail(emailId);
 	};
 	return (
 		<div className="verify-container">
@@ -61,10 +67,16 @@ const Verify = ({ axiosInstance }) => {
 						</thead>
 						<tbody className="verify-table-body">
 							{users.map((user, index) => (
-								<tr className="verify-table-tr">
+								<tr className="verify-table-tr" key={index}>
 									<td>{index + 1}</td>
-									<td onClick={openUser}>{user.name}</td>
-									<td onClick={openUser}>{user.email}</td>
+									<td onClick={()=>{
+										setOpenUserProfilePopup(true);
+										setOpenUserProfileEmail(user.email);
+									}}>{user.name}</td>
+									<td onClick={()=>{
+										setOpenUserProfilePopup(true);
+										setOpenUserProfileEmail(user.email);
+									}}>{user.email}</td>
 									<td>
 										<div className="verify-status">
 											<button
@@ -97,12 +109,13 @@ const Verify = ({ axiosInstance }) => {
 				</div>
 			</div>
 			{openResetPswdBox && (
-				<ResetPopup close={() => setOpenResetPswdBox(false)} />
+				<ResetPopup axiosInstance={axiosInstance} close={() => setOpenResetPswdBox(false)} />
 			)}
 			{openUserProfilePopup && (
 				<UserProfile
 					axiosInstance={axiosInstance}
 					close={() => setOpenUserProfilePopup(false)}
+					userEmail={openUserProfileEmail}
 				/>
 			)}
 		</div>

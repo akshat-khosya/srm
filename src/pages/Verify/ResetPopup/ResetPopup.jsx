@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import SnackBar from "../../../components/Snackbar";
 import "./reset-popup.css";
 
-const ResetPopup = ({ close }) => {
+const ResetPopup = ({ close,axiosInstance }) => {
 	const [newUser, setNewUser] = useState({
 		email: "",
 		password: "",
@@ -17,7 +17,7 @@ const ResetPopup = ({ close }) => {
 			[name]: value,
 		});
 	};
-	const handleSubmit = (e) => {
+	const handleSubmit = async(e) => {
 		e.preventDefault();
 		console.log(newUser);
 		const { email, password, confirmPassword } = newUser;
@@ -29,6 +29,17 @@ const ResetPopup = ({ close }) => {
 				setOpen(false);
 			}, 3500);
 		} else {
+			try {
+				const res=await axiosInstance.post("/api/reset/" ,newUser)
+				if(res.data.status){
+					alert(res.data.password);
+				}else{
+					alert("err");
+				}
+				
+			} catch (err) {
+				
+			}
 			setNewUser({
 				email: "",
 				password: "",

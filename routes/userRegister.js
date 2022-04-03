@@ -3,6 +3,7 @@ const UserData = require("../models/userData");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
+const userData = require("../models/userData");
 router.post("/newregister", async (req, res) => {
   try {
     const user = await UserData.findOne({ email: req.body.email });
@@ -44,6 +45,7 @@ router.post("/newregister", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
+	
   try {
     const user = await UserData.findOne(
       
@@ -355,6 +357,43 @@ router.post("/search", async (req, res) => {
     });
     res.send({ status: true, array: sendData });
   }
+});
+router.get("/userstatus", async(req,res)=>{
+	try {
+		const users=await UserData.find({}).sort({ name: 1 });
+		let allUser=[];
+		users.forEach((element)=>{
+			if(element.email==="admin@srm.com"){
+
+			}else{
+				allUser=[...allUser, {
+					email:element.email,
+					name:element.name,
+					status:element.verifyStatus
+				}];
+			}
+		})
+		res.send({users:allUser});
+	} catch (err) {
+		console.log(err);
+	}
+})
+router.post("/verifystatus",async(req,res)=>{
+	try {
+		console.log(req.body);
+		const resp=await userData.findOneAndUpdate({email:req.body.email},{verifyStatus:req.body.status});
+		res.send({status: true})
+	} catch (err) {
+		console.log(err);
+	}
+});
+router.post("/adminprofile",async(req,res)=>{
+	try {
+		const result=await userData.findOne({email:req.body.email});
+		res.send({status: true, profile:result})
+	} catch (err) {
+		console.log(err);
+	}
 });
 
 module.exports = router;
