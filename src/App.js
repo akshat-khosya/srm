@@ -17,7 +17,9 @@ import Sidebar from "./components/sidebar/Sidebar";
 import "./style.css";
 import Scholarships from "./pages/Scholarship/Scholarships";
 import Resources from "./pages/Resources/Resources";
+import Verify from "./pages/Verify/Verify";
 import { admin } from "./globalVariable";
+import AccessDenied from "./pages/AccessDenied/AccessDenied";
 
 function App() {
 	const axiosInstance = axios.create({
@@ -79,7 +81,9 @@ function App() {
 			case "/resource":
 				component = <Resources axiosInstance={axiosInstance} />;
 				break;
-			
+			case "/settings":
+				component = <Verify axiosInstance={axiosInstance} />;
+				break;
 			default:
 				component = <Fake axiosInstance={axiosInstance} />;
 				break;
@@ -128,7 +132,18 @@ function App() {
 						element={getPage("/scholarships")}
 					/>
 					<Route path="/mentoring" element={getPage("/mentoring")} />
-					<Route path="/setting" element={user && (user.verifcation && (user.email===admin&&<Profile axiosInstance={axiosInstance} />))} />
+					<Route
+						path="/settings"
+						element={
+							user &&
+							user.verifcation &&
+							(user.email === admin ? (
+								<Verify axiosInstance={axiosInstance} />
+							) : (
+								<AccessDenied />
+							))
+						}
+					/>
 					<Route path="*" element={getPage("*")} />
 				</Routes>
 			</main>

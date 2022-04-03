@@ -33,7 +33,10 @@ function Sidebar({ axiosInstance }) {
 						<li className="Sidebar-li Sidebar-logo-1 ">
 							<div className="logo-group Row">
 								<div className="Sidebar-logo Col-lg-30">
-									<img src={logo} alt="Logo of SRM, logo of SRMNCR" />
+									<img
+										src={logo}
+										alt="Logo of SRM, logo of SRMNCR"
+									/>
 								</div>
 								<div className="Sidebar-content Col-lg-70">
 									SRM Alumni
@@ -77,7 +80,11 @@ function Sidebar({ axiosInstance }) {
 							className="dropdown"
 							style={{
 								transition: "height 0.25s ease-in",
-								height: dropdown ? "0" : "125px",
+								height: dropdown
+									? "0"
+									: user.email === admin
+									? "125px"
+									: "85px",
 							}}
 						>
 							<Link className="link" to="/profile">
@@ -90,16 +97,18 @@ function Sidebar({ axiosInstance }) {
 									</div>
 								</li>
 							</Link>
-							{user.email===admin && <Link className="link" to="/setting">
-								<li className="dropdownItem Row">
-									<div className="dropdown-icon Col-lg-20">
-										<i className="fas fa-cog"></i>
-									</div>
-									<div className="dropdown-Content Col-lg-70">
-										Settings
-									</div>
-								</li>
-							</Link>}
+							{user.email === admin && (
+								<Link className="link" to="/settings">
+									<li className="dropdownItem Row">
+										<div className="dropdown-icon Col-lg-20">
+											<i className="fas fa-cog"></i>
+										</div>
+										<div className="dropdown-Content Col-lg-70">
+											Settings
+										</div>
+									</li>
+								</Link>
+							)}
 							<Link
 								onClick={() => {
 									dispatch({ type: "LOGIN_FAILURE" });
