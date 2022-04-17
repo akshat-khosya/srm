@@ -118,7 +118,7 @@ router.patch("/profile", async (req, res) => {
   try {
     const { email, ...rest } = req.body;
 
-    await UserData.findOneAndUpdate(
+    await UserData.updateOne(
       { email: email },
       {
         $set: rest,
@@ -151,20 +151,24 @@ router.get("/verifytoken", (req, res) => {
           if (err) {
             console.log(err);
           } else {
-            if (founduser.verifcation === true) {
-              if (founduser.verifyStatus === true) {
-                const { password, ...others } = founduser._doc;
-                res.json({ auth: true, user: others });
-              } else {
-                res.json({
-                  status: false,
-                  message: "Wait for verifaction by admin",
-                });
-              }
-            } else {
-              const { password, ...others } = founduser._doc;
-              res.json({ auth: true, user: others });
-            }
+            console.log(founduser);
+            console.log("100");
+            // if (founduser.verifcation === true) {
+            //   if (founduser.verifyStatus === true) {
+            //     console.log("verified");
+            //     const { password, ...others } = founduser._doc;
+            //     res.json({ auth: true, user: others });
+            //   } else {
+            //     console.log("not verifiedd")
+            //     res.json({
+            //       status: false,
+            //       message: "Wait for verifaction by admin",
+            //     });
+            //   }
+            // } else {
+            //   const { password, ...others } = founduser._doc;
+            //   res.json({ auth: true, user: others });
+            // }
           }
         });
       }
@@ -381,7 +385,7 @@ router.get("/userstatus", async(req,res)=>{
 router.post("/verifystatus",async(req,res)=>{
 	try {
 		console.log(req.body);
-		const resp=await userData.findOneAndUpdate({email:req.body.email},{verifyStatus:req.body.status});
+		await userData.findOneAndUpdate({email:req.body.email},{verifyStatus:req.body.status});
 		res.send({status: true})
 	} catch (err) {
 		console.log(err);

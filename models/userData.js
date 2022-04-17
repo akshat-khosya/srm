@@ -38,6 +38,9 @@ const UserDataSchema = new mongoose.Schema(
       required: true,
       default: false,
     },
+    groupOwns:{
+      type: [String]
+    },
     batch: {
       type: String,
     },
