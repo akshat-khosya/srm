@@ -4,6 +4,7 @@ import { useState, useContext } from "react";
 import { Context } from "../../context/Context";
 import SnackBar from "../../components/Snackbar";
 import userLogo from "../../Images/user.svg";
+import  { Redirect } from 'react-router-dom'
 function Registration({axiosInstance}) {
   const { user, dispatch } = useContext(Context);
   const [err, setErr] = useState({
@@ -51,18 +52,27 @@ function Registration({axiosInstance}) {
       try {
         const res = await axiosInstance.post("/api/upload", image);
         console.log(res);
-      } catch (err) {}
-      try {
-        const res = await axiosInstance.patch(
-          "/api/newregister",
-          allPersonal
-        );
-        if (res.data.status) {
-          dispatch({ type: "LOGIN_SUCCESS", payload: res.data.user });
+        if(res.data.status){
+          try {
+            const resp = await axiosInstance.patch(
+              "/api/newregister",
+              allPersonal
+            );
+            if (resp.data.status) {
+              <Redirect to="/" />
+
+            }
+          } catch (err) {
+            console.log(err);
+          }
+        }else{
+          alert("error");
         }
+        
       } catch (err) {
         console.log(err);
       }
+     
     } else {
       setErr({ status: true, message: "Please Select Image" });
     }
