@@ -20,6 +20,7 @@ import Resources from "./pages/Resources/Resources";
 import Verify from "./pages/Verify/Verify";
 import { admin } from "./globalVariable";
 import AccessDenied from "./pages/AccessDenied/AccessDenied";
+import Groups from "./pages/Groups/Groups";
 
 function App() {
 	const axiosInstance = axios.create({
@@ -84,6 +85,9 @@ function App() {
 			case "/settings":
 				component = <Verify axiosInstance={axiosInstance} />;
 				break;
+			case "/groups":
+				component = <Groups axiosInstance={axiosInstance} />;
+				break;
 			default:
 				component = <Fake axiosInstance={axiosInstance} />;
 				break;
@@ -120,7 +124,7 @@ function App() {
 						path="/connections"
 						element={getPage("/connections")}
 					/>
-					<Route path="/group" element={getPage("/group")} />
+					<Route path="/groups" element={getPage("/groups")} />
 					<Route
 						path="/opportunity"
 						element={getPage("/opportunity")}
