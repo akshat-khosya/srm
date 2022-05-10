@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import AddGroup from "./AddGroup";
 import Group from "./Group";
 import "./groups.css";

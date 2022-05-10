@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../../context/Context";
 import favicon from "../../Images/logo.png";
-import SnackBar from "../../components/Snackbar";
 const Group = ({ job, axiosInstance, load }) => {
 	const [contextMenu, setContextMenu] = useState(false);
 	const { user } = useContext(Context);
@@ -21,9 +20,6 @@ const Group = ({ job, axiosInstance, load }) => {
 					<span className="groups-group-head-content-field">
 						{job.subtitle}
 					</span>
-					{/* <span className="groups-group-head-content-department">
-						{job.department}
-					</span> */}
 				</div>
 				<div className="groups-group-head-showmore">
 					{user.email === job.email && (
@@ -78,14 +74,10 @@ const Group = ({ job, axiosInstance, load }) => {
 				</div>
 				<div className="groups-group-body-actions">
 					<button className="opportunity-btn opportunity-btn-outline">
-						{/* <a href={job.file} target="_blank" rel="noreferrer"> */}
 						View Details
-						{/* </a> */}
 					</button>
 					<button className="opportunity-btn">
-						{/* <a href={job.link} target="_blank" rel="noreferrer"> */}
 						Join Group
-						{/* </a> */}
 					</button>
 				</div>
 			</div>
@@ -95,7 +87,6 @@ const Group = ({ job, axiosInstance, load }) => {
 					onClick={() => setContextMenu(false)}
 				></div>
 			)}
-			{/* {open && <SnackBar text={err.text} color={err.color} />} */}
 		</div>
 	);
 };
