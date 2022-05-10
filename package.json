@@ -32,6 +32,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "sass": "sass -w src/pages/Groups/groups.scss src/pages/Groups/groups.css",
+    "Sass": "sass -w src/components/ProfilePopup/profile-popup.scss src/components/ProfilePopup/profile-popup.css",
     "server": "nodemon server.js"
   },
   "eslintConfig": {
