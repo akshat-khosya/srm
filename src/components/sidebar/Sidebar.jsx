@@ -191,13 +191,13 @@ function Sidebar({ axiosInstance }) {
 							height: coddropdown ? "0" : "85px",
 						}}
 					>
-						<Link className="link" to="/addgroup">
+						<Link className="link" to="/groups">
 							<li className="dropdownItem Row">
 								<div className="dropdown-icon Col-lg-20">
 									<i className="far fa-user"></i>
 								</div>
 								<div className="dropdown-Content Col-lg-70">
-									Add group
+									All Groups
 								</div>
 							</li>
 						</Link>

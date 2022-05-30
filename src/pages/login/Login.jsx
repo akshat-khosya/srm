@@ -227,7 +227,7 @@ function Login({axiosInstance}) {
                       </div>
                       <div className="Col-lg-33 Col-md-2 Col-sm-1">
                         <div className="form-group">
-                          <i class="far fa-envelope"></i>
+                          <i className="far fa-envelope"></i>
 
                           <input
                             className="myInput IP"
@@ -243,7 +243,7 @@ function Login({axiosInstance}) {
                       </div>
                       <div className="Col-lg-33 Col-md-2 Col-sm-1">
                         <div className="form-group">
-                          <i class="fas fa-phone"></i>
+                          <i className="fas fa-phone"></i>
 
                           <input
                             className="myInput IP"
