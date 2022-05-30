@@ -9,7 +9,6 @@ function Sidebar({ axiosInstance }) {
 	const { user, dispatch } = useContext(Context);
 	const [icon, setIcon] = useState("fas fa-caret-down");
 	const [dropdown, setDropdown] = useState(true);
-	const [coddropdown, setCoddropdown] = useState(true);
 	const location = useLocation();
 	const handleIcon = () => {
 		if (icon === "fas fa-caret-down") {
@@ -22,7 +21,6 @@ function Sidebar({ axiosInstance }) {
 	};
 	useEffect(() => {
 		setDropdown(true);
-		setCoddropdown(true);
 	}, [location.pathname]);
 
 	return (

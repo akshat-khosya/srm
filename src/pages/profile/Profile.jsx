@@ -160,9 +160,20 @@ function Profile({ axiosInstance }) {
 									/>
 								</div>
 								<div className="regis-inputgroup regis-inputgroup-profile Col-lg-33 Col-md-50 Col-sm-100">
-									<label htmlFor="name">
-										Phone Number
-										<span className="requiredLabel">*</span>
+									<label htmlFor="phone">
+										Phone Number{" "}
+										<span className="requiredLabel">*</span>{" "}
+										<span
+											style={{
+												opacity: 1,
+												fontSize: "1rem",
+												display: "inline",
+											}}
+											className="material-icons"
+											title="Your phone number is public. To keep it private, leave the field empty"
+										>
+											info_outline
+										</span>{" "}
 									</label>
 									<input
 										disabled
@@ -398,13 +409,20 @@ function Profile({ axiosInstance }) {
 									<div className="regis-inputgroup Col-lg-33 Col-md-50 Col-sm-100">
 										<label htmlFor="name">
 											Phone Number
-											<span className="requiredLabel">
-												*
-											</span>
+											<span
+												style={{
+													opacity: 1,
+													fontSize: "1rem",
+													display: "inline",
+												}}
+												className="material-icons"
+												title="Your phone number is public. To keep it private, leave the field empty"
+											>
+												info_outline
+											</span>{" "}
 										</label>
 										<input
 											onChange={handelChange}
-											required
 											value={personal.phone}
 											type="text"
 											id="phone"
