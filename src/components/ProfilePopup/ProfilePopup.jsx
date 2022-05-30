@@ -85,6 +85,18 @@ const ProfilePopup = ({ axiosInstance, close, userEmail }) => {
 											name="email"
 										/>
 									</div>
+									{user.phone !== "" && (
+										<div className="regis-inputgroup Col-lg-33 Col-md-50 Col-sm-100">
+											<label htmlFor="phone">Phone No.</label>
+											<input
+												disabled
+												value={user.phone}
+												type="email"
+												id="phone"
+												name="phone"
+											/>
+										</div>
+									)}
 									<div className="regis-inputgroup Col-lg-33 Col-md-50 Col-sm-100">
 										<label htmlFor="username">
 											Username
