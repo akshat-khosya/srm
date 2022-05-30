@@ -1,22 +1,33 @@
 const mongoose = require('mongoose');
 const userData = require('./userData');
+const groupchat = require('./groupchat');
+
 const groupSchema = new mongoose.Schema({
     group_name:{
         type: String,
     },
 
+    group_description:{
+        type: String,
+    },
+    group_tags:{
+        type: [String],
+    },
     group_image:{
         type: String,
     },
-
+    group_status:{
+        type: String,
+        default: 'public'
+    },
     group_owner:{
         type: mongoose.Schema.Types.ObjectId,
-        ref:userData,
+        ref: 'userData',
     },
 
     members: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'UserData'
+        ref: 'userData'
     }],
 
     group_chat:[{
@@ -25,7 +36,8 @@ const groupSchema = new mongoose.Schema({
     }],
 
     invites:[{
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'userData'
     }]
 },
     {

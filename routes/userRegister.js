@@ -4,6 +4,17 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 const userData = require("../models/userData");
+
+// Get all users
+router.get("/allusers", async (req, res) => {
+  try{
+    await userData.select("_id", "username", "photo");
+  }
+  catch(err){
+    console.log(err);
+  }
+});
+
 router.post("/newregister", async (req, res) => {
   try {
     const user = await UserData.findOne({ email: req.body.email });

@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+require('./group');
+// s
 
 const UserDataSchema = new mongoose.Schema(
   {
@@ -39,8 +41,20 @@ const UserDataSchema = new mongoose.Schema(
       default: false,
     },
     groupOwns:{
-      type: [String]
+      type: [String],
     },
+    group_joined:[
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Group'
+      }
+    ],
+    invite_requests:[
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Group'
+      }
+    ],
     batch: {
       type: String,
     },

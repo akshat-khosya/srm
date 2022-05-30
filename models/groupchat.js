@@ -1,15 +1,16 @@
 const mongoose = require('mongoose');
+const group = require('./group');
 const groupChatSchema = new mongoose.Schema({
     groupID:{
         type: mongoose.Schema.Types.ObjectId,
+        ref: 'group'
     },
     content:{
         type: String,
     },
-    // file:[{
-    //     type:String,
-    //     unique: true
-    // }],
+    file: {
+        type: String,
+    },
     links:[{
         type:String
     }]

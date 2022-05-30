@@ -15,7 +15,7 @@ const mentoring = require("./routes/mentoring");
 const scholarship = require("./routes/scholarships");
 const resource = require("./routes/resource");
 const Group = require("./routes/group");
-const GroupChat = require("./routes/groupchat");
+const groupchat = require("./routes/groupchat");
 dotenv.config();
 
 const corsOptions = {
@@ -77,7 +77,7 @@ app.use("/api/mentoring/", mentoring);
 app.use("/api/scholarship/", scholarship);
 app.use("/api/resource/", resource);
 app.use("/api/group/", Group);
-app.use("/api/chat/", GroupChat);
+app.use("/api/chat/", groupchat);
 
 // app.use("/api/users",userRoute);
 // app.use("/api/posts",postRoute);

@@ -4,7 +4,7 @@ import { useState, useContext } from "react";
 import { Context } from "../../context/Context";
 import SnackBar from "../../components/Snackbar";
 import userLogo from "../../Images/user.svg";
-import  { Redirect } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 function Registration({axiosInstance}) {
   const { user, dispatch } = useContext(Context);
   const [err, setErr] = useState({
@@ -36,6 +36,7 @@ function Registration({axiosInstance}) {
       };
     });
   };
+  const navigate = useNavigate();
   const handelSubmit = async (e) => {
     e.preventDefault();
     if (file) {
@@ -59,7 +60,9 @@ function Registration({axiosInstance}) {
               allPersonal
             );
             if (resp.data.status) {
-              <Redirect to="/" />
+              // <Navigate to="/" />
+              
+              navigate('/');
 
             }
           } catch (err) {
