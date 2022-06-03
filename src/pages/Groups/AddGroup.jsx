@@ -1,17 +1,21 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../../context/Context";
 
-const AddGroup = ({ close, save }) => {
+const AddGroup = ({ close, save, axiosInstance }) => {
 	const { user } = useContext(Context);
+	// console.log(user);
+	const [group_image, setgroup_image] = useState("");
 	const [group, setGroup] = useState({
-		title: "",
-		subtitle: "",
-		icon: "",
-		admin: user.email,
-		description: "",
+		group_name: "",
+		group_tags: "",
+		group_image: "",
+		group_owner: user._id,
+		group_description: "",
 	});
 	const [file, setFile] = useState(null);
-	const [icon, setIcon] = useState(null);
+	
+	
+	console.log(group_image);
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 		setGroup({
@@ -21,15 +25,33 @@ const AddGroup = ({ close, save }) => {
 	};
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		save(group);
+		
 		console.log(group);
+		save(group);
+		
 		setGroup({
-			title: "",
-			subtitle: "",
-			icon: "",
-			admin: user.email,
-			description: "",
+			group_name: "",
+			group_tags: "",
+			group_image: group_image,
+			group_owner: user._id,
+			group_description: "",
 		});
+		
+		console.log(group.group_image);
+		console.log(group_image);
+
+		try{
+			console.log("first");
+			const res = await axiosInstance.post("/api/group/creategroup",group);
+			console.log("second");
+			console.log(res);
+			if (res.data.status) {
+				window.location.reload();
+			}
+		}catch (err) {
+			console.log(err);
+		}
+
 	};
 	return (
 		<div className="add-group">
@@ -45,30 +67,30 @@ const AddGroup = ({ close, save }) => {
 							<label>Group Title</label>
 							<input
 								type="text"
-								name="title"
-								placeholder="Enter Group Title"
-								value={group.title}
+								name="group_name"
+								placeholder="Enter Group Name"
+								value={group.group_name}
 								onChange={handleChange}
 								required
 							/>
 						</div>
 						<div className="add-group-form-group">
-							<label>Group Subtitle</label>
+							<label>Group Tags</label>
 							<input
 								type="text"
-								name="subtitle"
-								placeholder="Enter Group Subtitle"
-								value={group.subtitle}
+								name="group_tags"
+								placeholder="Enter Group Tags"
+								value={group.group_tags}
 								onChange={handleChange}
 								required
 							/>
 						</div>
 						<div className="add-group-form-group">
-							<label>Group Admin</label>
+							<label>Group Owner</label>
 							<input
 								type="text"
-								name="admin"
-								placeholder="Group Admin"
+								name="group_owner"
+								placeholder="Group Owner"
 								value={user.name}
 								required
 								disabled
@@ -78,10 +100,11 @@ const AddGroup = ({ close, save }) => {
 							<label>Company Icon</label>
 							<input
 								type="file"
-								name="icon"
+								name="group_image"
 								placeholder="Icon"
 								onChange={(e) => {
-									setIcon(e.target.files[0]);
+									setgroup_image(e.target.files[0]);
+									group.group_image=e.target.files[0].name;
 								}}
 							/>
 						</div>
@@ -91,9 +114,9 @@ const AddGroup = ({ close, save }) => {
 							</label>
 							<textarea
 								type="text"
-								name="description"
+								name="group_description"
 								placeholder="Group Description"
-								value={group.description}
+								value={group.group_description}
 								onChange={handleChange}
 								rows={4}
 								required

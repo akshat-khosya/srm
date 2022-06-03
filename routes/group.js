@@ -13,9 +13,9 @@ router.post("/creategroup", async (req, res) => {
             group_tags: req.body.group_tags,
             group_image: req.body.group_image,
             group_owner: req.body.group_owner,
-            members: req.body.members
+            // members: req.body.members
         });
-
+        console.log(req.body,"09");
         await groupInfo.save(async (err, savedGroup) => {
             if(err){
                 res.json({status: false, message: err.keyValue})

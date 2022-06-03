@@ -8,7 +8,8 @@ const userData = require("../models/userData");
 // Get all users
 router.get("/allusers", async (req, res) => {
   try{
-    await userData.select("_id", "username", "photo");
+    await userData.select('_id username photo');
+    // await userData.select("_id username photo");
   }
   catch(err){
     console.log(err);

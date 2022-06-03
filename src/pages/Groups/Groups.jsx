@@ -45,6 +45,7 @@ const Groups = ({ axiosInstance, load }) => {
 				<AddGroup
 					close={() => setShowAddGroupBox(false)}
 					save={handlegroups}
+					axiosInstance = {axiosInstance}
 				/>
 			)}
 		</div>
