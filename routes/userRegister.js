@@ -8,8 +8,8 @@ const userData = require("../models/userData");
 // Get all users
 router.get("/allusers", async (req, res) => {
   try{
-    await userData.select('_id username photo');
-    // await userData.select("_id username photo");
+    let all_users = await userData.find({},"_id username photo");
+    res.send(all_users);
   }
   catch(err){
     console.log(err);

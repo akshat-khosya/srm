@@ -1,21 +1,19 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../../context/Context";
+import {v1} from "uuid";
 
 const AddGroup = ({ close, save, axiosInstance }) => {
 	const { user } = useContext(Context);
 	// console.log(user);
-	const [group_image, setgroup_image] = useState("");
 	const [group, setGroup] = useState({
 		group_name: "",
 		group_tags: "",
-		group_image: "",
+		group_image: v1(),
 		group_owner: user._id,
 		group_description: "",
 	});
 	const [file, setFile] = useState(null);
 	
-	
-	console.log(group_image);
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 		setGroup({
@@ -28,25 +26,30 @@ const AddGroup = ({ close, save, axiosInstance }) => {
 		
 		console.log(group);
 		save(group);
-		
+		// ask not working?
 		setGroup({
 			group_name: "",
 			group_tags: "",
-			group_image: group_image,
+			group_image: v1(),
 			group_owner: user._id,
 			group_description: "",
 		});
 		
-		console.log(group.group_image);
-		console.log(group_image);
+		// console.log(group.group_image);
 
 		try{
 			console.log("first");
 			const res = await axiosInstance.post("/api/group/creategroup",group);
+			
 			console.log("second");
 			console.log(res);
+				const image = new FormData();
+				const filename = group.group_image;
+				image.append("name", filename);
+				image.append("file", file);
 			if (res.data.status) {
-				window.location.reload();
+				let imgPost = await axiosInstance.post("/api/upload", image);
+				console.log(imgPost);
 			}
 		}catch (err) {
 			console.log(err);
@@ -103,8 +106,8 @@ const AddGroup = ({ close, save, axiosInstance }) => {
 								name="group_image"
 								placeholder="Icon"
 								onChange={(e) => {
-									setgroup_image(e.target.files[0]);
-									group.group_image=e.target.files[0].name;
+									setFile(e.target.files[0]);
+									// group.group_image=e.target.files[0].name;
 								}}
 							/>
 						</div>

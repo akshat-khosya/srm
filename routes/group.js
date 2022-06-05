@@ -21,24 +21,24 @@ router.post("/creategroup", async (req, res) => {
                 res.json({status: false, message: err.keyValue})
             }   else{
                 console.log(savedGroup);
-
+                console.log("in back else");
                 // [.] group own command added to add owns in user db.
                 // [.] groups owner id to push to owns and joined
-                await userData.find({_id: req.body._id}).update({
-                    $push:{
+                await userData.find({_id: req.body.group_owner}).updateOne({
+                    $addToSet:{
                         groupOwns: savedGroup._id,
                         group_joined: savedGroup._id
                     }
-                })
+                });
 
                 // [.] pushes group joined to user added initially to the group
-                req.body.members.map(async(memberid)=>{
-                    await userData.find({_id:memberid}).update({
-                        $push:{
-                            group_joined: savedGroup._id
-                        }
-                    });
-                });
+                // req.body.members.map(async(memberid)=>{
+                //     await userData.find({_id:memberid}).update({
+                //         $push:{
+                //             group_joined: savedGroup._id
+                //         }
+                //     });
+                // });
 
                 res.send({
                     status: true,
@@ -70,10 +70,15 @@ router.get("/publicgroups", async(req, res) => {
 
 
 // [.] GET all joined groups
-router.get("/joined", async(req, res) => {
+router.post("/joined", async(req, res) => {
     try{
-        const joinedgroups = await userData.find({_id: req.body.id}).populate('group_joined',{_id:1, group_name:1, group_description:1, group_tags:1, group_image:1});
-        res.send(joinedgroups);
+        const joinedgroups = await userData.find({_id: req.body.id}, "group_joined").populate('group_joined',{_id:1});
+        let arrId = [];
+        joinedgroups[0].group_joined.map((element) => {
+          arrId.push(element._id);
+        });
+        console.log(arrId);
+        res.send(arrId);
     }
     catch(err){
         console.log(err);
@@ -86,13 +91,14 @@ router.post("/addmember", async(req, res) => {
     try{
         // CHECK COMMAND -=-=-=-=-=-=-=-=-=-
         // let alreadyjoined = await group.find({members: req.body.id});
+        // console.log(alreadyjoined);
         // POST add to member in group
         await group.find({_id: req.body.groupid}).update({
             $push:{
                 members: req.body.id
             }
         });
-        // POST add to joined group
+        // // POST add to joined group
         await userData.find({_id: req.body.id}).update({
             $push:{
                 group_joined: req.body.groupid

@@ -1,13 +1,35 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { Context } from "../../context/Context";
 import AddGroup from "./AddGroup";
 import Group from "./Group";
 import "./groups.css";
 
+// 180 to rishi
+
 const Groups = ({ axiosInstance, load }) => {
+	const {user} = useContext(Context);
 	const [groups, setGroups] = useState([]);
-	const handlegroups = (item) => {
+	const [joinedgroups, setJoinedGroups] = useState([]);
+	console.log(groups);
+	console.log(user._id);
+	const groupjoined = {
+		id: user._id
+	}
+	console.log(groupjoined.id);
+	useEffect(async () => {
+		const res = await axiosInstance.get("/api/group/publicgroups");
+		const res2 = await axiosInstance.post("/api/group/joined",groupjoined);
+		setGroups(res.data);
+		setJoinedGroups(res2.data);
+		console.log(res2.data);
+		console.log(res.data);
+	},[]);
+
+	const handlegroups = async(item) => {
 		setGroups([...groups, item]);
 		console.log(item);
+		
+		// setGroups(res);
 		setShowAddGroupBox(false);
 	};
 	const [showAddGroupBox, setShowAddGroupBox] = useState(false);
@@ -34,6 +56,7 @@ const Groups = ({ axiosInstance, load }) => {
 							>
 								<Group
 									job={job}
+									joinedgroups={joinedgroups}
 									axiosInstance={axiosInstance}
 								/>
 							</div>

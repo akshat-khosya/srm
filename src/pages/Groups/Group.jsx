@@ -1,24 +1,49 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../context/Context";
 import favicon from "../../Images/logo.png";
-const Group = ({ job, axiosInstance, load }) => {
+const Group = ({ job, joinedgroups, axiosInstance, load, groups }) => {
 	const [contextMenu, setContextMenu] = useState(false);
 	const { user } = useContext(Context);
+	console.log(job);
+
+	const isJoined = joinedgroups.includes(job._id);
+	console.log(isJoined);
+
+	// useEffect(()=>{
+	// 	setsource(`${axiosInstance.defaults.baseURL}images/${job.group_image}`);
+	// 	console.log(source);
+	// },[`${axiosInstance.defaults.baseURL}images/${job.group_image}`]);
+
+	let joinParam = {
+		groupid: job._id,
+		id: user._id
+	}
+
+	const joinGroup = async () => {
+
+		const res = await axiosInstance.post("/api/group/addmember",joinParam);
+		console.log(res);
+
+	}
+
+	console.log(job, typeof(job.group_tags));
 	return (
-		<div className="groups-group">
+		<div className="groups-group" key={job._id}>
 			<div className="groups-group-head">
 				<div className="groups-group-head-icon">
 					<img
-						src={job.icon === "" ? favicon : job.icon}
-						alt={job.title}
+						// src={job.icon === "" ? favicon : job.icon}
+						// alt={job.title}
+						src={`${axiosInstance.defaults.baseURL}images/${job.group_image}`}
+						alt={job.group_image}
 					/>
 				</div>
 				<div className="groups-group-head-content">
 					<span className="groups-group-head-content-title">
-						{job.title}
+						{job.group_name}
 					</span>
 					<span className="groups-group-head-content-field">
-						{job.subtitle}
+						{job.group_tags}
 					</span>
 				</div>
 				<div className="groups-group-head-showmore">
@@ -70,16 +95,27 @@ const Group = ({ job, axiosInstance, load }) => {
 			</div>
 			<div className="groups-group-body">
 				<div className="groups-group-body-content">
-					{job.description}
+					{job.group_description}
 				</div>
-				<div className="groups-group-body-actions">
-					<button className="opportunity-btn opportunity-btn-outline">
-						View Details
-					</button>
-					<button className="opportunity-btn">
-						Join Group
-					</button>
-				</div>
+				{
+					isJoined 
+					? 
+					<div className="groups-group-body-actions">
+						<button className="opportunity-btn opportunity-btn-outline">
+							Open
+						</button>
+					</div>
+					:
+					<div className="groups-group-body-actions">
+						<button className="opportunity-btn opportunity-btn-outline">
+							View Details
+						</button>
+						<button className="opportunity-btn" onClick={() => joinGroup()}>
+							Join Group
+						</button>
+					</div>
+				}
+				
 			</div>
 			{contextMenu && (
 				<div
