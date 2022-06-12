@@ -1,21 +1,22 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../context/Context";
 import groupFallbackIcon from "../../Images/group_icon.svg";
+import AddUsers from "./AddUsers";
 
 const Group = ({ group, axiosInstance, load }) => {
 	const [contextMenu, setContextMenu] = useState(false);
 	const { user } = useContext(Context);
-	const [groupIcon, setGroupIcon] = useState(group.icon);
-	useEffect(() => {
-		console.log(group.icon);
-	}, []);
+	const [openAddUsers, setOpenAddUsers] = useState(false);
+	const [groupIcon, setGroupIcon] = useState(
+		`${axiosInstance.defaults.baseURL}images/${group.icon}`
+	);
 
 	return (
 		<div className="groups-group">
 			<div className="groups-group-head">
 				<div className="groups-group-head-icon">
 					<img
-						src={`${axiosInstance.defaults.baseURL}images/${groupIcon}`}
+						src={groupIcon}
 						alt={group.title}
 						onError={() => {
 							setGroupIcon(groupFallbackIcon);
@@ -29,6 +30,14 @@ const Group = ({ group, axiosInstance, load }) => {
 					<span className="groups-group-head-content-field">
 						{group.subtitle}
 					</span>
+				</div>
+				<div className="groups-group-head-add">
+					<button
+						className="icon"
+						onClick={() => setOpenAddUsers(true)}
+					>
+						<span className="material-icons">person_add</span>
+					</button>
 				</div>
 				<div className="groups-group-head-showmore">
 					{user.email === group.email && (
@@ -94,6 +103,7 @@ const Group = ({ group, axiosInstance, load }) => {
 					onClick={() => setContextMenu(false)}
 				></div>
 			)}
+			{openAddUsers && <AddUsers close={() => setOpenAddUsers(false)} />}
 		</div>
 	);
 };

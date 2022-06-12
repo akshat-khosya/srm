@@ -4,7 +4,17 @@ import Group from "./Group";
 import "./groups.css";
 
 const Groups = ({ axiosInstance, load }) => {
-	const [groups, setGroups] = useState([]);
+	const [groups, setGroups] = useState([
+		{
+			title: "Developers",
+			subtitle: "The group of web devs",
+			icon: "akshatmittal61-group-developers.jpg",
+			admin: "akshatmittal2506@gmail.com",
+			description:
+				"This is a group of all developers which mainly focuses on Web development but an open source community always welcomes everyone",
+			members: [],
+		},
+	]);
 	const handlegroups = (item) => {
 		setGroups([...groups, item]);
 		console.log(item);

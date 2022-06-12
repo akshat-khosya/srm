@@ -62,7 +62,7 @@
   max-height: 75%;
 }
 .groups-group-head-content {
-  width: 80%;
+  width: 70%;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -86,6 +86,13 @@
   line-height: 0.875rem;
   color: #505050;
 }
+.groups-group-head-add {
+  width: 10%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .groups-group-body {
   font-size: 0.875rem;
   padding: 0.5rem 0.3rem;
@@ -104,6 +111,196 @@
 }
 .groups-group:hover {
   box-shadow: 0 0 1px rgba(0, 20, 32, 0.4), 0 2px 6px rgba(3, 25, 38, 0.2);
+}
+.groups-add-users {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.groups-add-users-box {
+  background-color: var(--bgcolor);
+  width: 50%;
+  height: 75%;
+  border-radius: 8px;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+@media (max-width: 880px) {
+  .groups-add-users-box {
+    width: 75%;
+  }
+}
+.groups-add-users-head {
+  width: 100%;
+  height: 3rem;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.groups-add-users-head-close {
+  border: 0;
+  outline: 0;
+  border-radius: 500px;
+  padding: 0.35rem;
+  margin: 0.5rem 1rem;
+  background: transparent;
+  transition: all var(--transition-time) ease-in-out;
+}
+.groups-add-users-head-close:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.groups-add-users-body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-flow: column;
+  padding: 0 0.5rem;
+}
+.groups-add-users-body form {
+  position: relative;
+}
+.groups-add-users-form {
+  width: 100%;
+  height: 5rem;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 1rem 0;
+}
+.groups-add-users-form label {
+  width: 0;
+  height: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.groups-add-users-form label .material-icons {
+  transform: translateX(2rem);
+  font-size: 1.25rem;
+}
+.groups-add-users-form input {
+  width: 90%;
+  padding: 0.5rem 0.25rem 0.5rem 2.75rem;
+  border: 0;
+  outline: 0;
+  background-color: rgba(0, 0, 0, 0.075);
+  border-radius: 500px;
+  position: relative;
+}
+.groups-add-users-form input::before {
+  content: "o";
+  width: 1rem;
+  height: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.groups-add-users-form button {
+  border-radius: 500px;
+  background-color: rgba(0, 0, 0, 0.075);
+  padding: 0.5rem;
+}
+.groups-add-users-people {
+  width: 100%;
+  position: absolute;
+  top: 8rem;
+  left: 0;
+  height: calc(78vh - 9rem);
+  overflow-y: auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-flow: column;
+}
+.groups-add-users-person {
+  width: 100%;
+  height: 5rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  cursor: pointer;
+}
+.groups-add-users-person:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+.groups-add-users-person-select {
+  margin: 0 1rem 0 0.5rem;
+}
+.groups-add-users-person-image {
+  width: 3.5rem;
+  height: 3.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.groups-add-users-person-image img {
+  object-fit: cover;
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 500px;
+}
+.groups-add-users-person-content {
+  width: calc(100% - 3.5rem);
+  height: 100%;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-flow: column;
+  user-select: none;
+}
+.groups-add-users-buttons {
+  width: 50vw;
+  height: 4rem;
+  position: absolute;
+  bottom: 0;
+  left: 25vw;
+  z-index: 4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--bgcolor);
+  overflow: hidden;
+  box-shadow: 0px -5px 15px -3px rgba(0, 0, 0, 0.1);
+}
+.groups-add-users-buttons button {
+  border: 0;
+  outline: 0;
+  background-color: #0f6fff;
+  border: 1px solid #0f6fff;
+  color: #ffffff;
+  margin: 0 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 5px;
+  transition: all var(--transition-time) ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.groups-add-users-buttons button:hover {
+  background-color: #287bf7;
+}
+@media (max-width: 880px) {
+  .groups-add-users-buttons {
+    width: 75vw;
+    left: 0;
+  }
 }
 .groups-btn {
   background-color: #0f6fff;
