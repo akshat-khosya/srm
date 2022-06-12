@@ -78,7 +78,6 @@ function Profile({ axiosInstance }) {
 				console.log(err);
 			}
 		}
-
 		try {
 			const res = await axiosInstance.patch("/api/profile", allPersonal);
 			if (res.data.status) {

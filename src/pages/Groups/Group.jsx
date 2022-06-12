@@ -1,28 +1,37 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../context/Context";
-import favicon from "../../Images/logo.png";
-const Group = ({ job, axiosInstance, load }) => {
+import groupFallbackIcon from "../../Images/group_icon.svg";
+
+const Group = ({ group, axiosInstance, load }) => {
 	const [contextMenu, setContextMenu] = useState(false);
 	const { user } = useContext(Context);
+	const [groupIcon, setGroupIcon] = useState(group.icon);
+	useEffect(() => {
+		console.log(group.icon);
+	}, []);
+
 	return (
 		<div className="groups-group">
 			<div className="groups-group-head">
 				<div className="groups-group-head-icon">
 					<img
-						src={job.icon === "" ? favicon : job.icon}
-						alt={job.title}
+						src={`${axiosInstance.defaults.baseURL}images/${groupIcon}`}
+						alt={group.title}
+						onError={() => {
+							setGroupIcon(groupFallbackIcon);
+						}}
 					/>
 				</div>
 				<div className="groups-group-head-content">
 					<span className="groups-group-head-content-title">
-						{job.title}
+						{group.title}
 					</span>
 					<span className="groups-group-head-content-field">
-						{job.subtitle}
+						{group.subtitle}
 					</span>
 				</div>
 				<div className="groups-group-head-showmore">
-					{user.email === job.email && (
+					{user.email === group.email && (
 						<div className="more-context">
 							<button
 								className="icon more-icon"
@@ -43,7 +52,7 @@ const Group = ({ job, axiosInstance, load }) => {
 									<li className="more-item">
 										<a
 											target="_blank"
-											href={job.file}
+											href={group.file}
 											rel="noreferrer"
 										>
 											<span className="material-icons">
@@ -59,7 +68,7 @@ const Group = ({ job, axiosInstance, load }) => {
 											delete
 										</span>
 										<span className="more-item-label">
-											Delete Job
+											Delete group
 										</span>
 									</li>
 								</ul>
@@ -70,15 +79,13 @@ const Group = ({ job, axiosInstance, load }) => {
 			</div>
 			<div className="groups-group-body">
 				<div className="groups-group-body-content">
-					{job.description}
+					{group.description}
 				</div>
 				<div className="groups-group-body-actions">
 					<button className="opportunity-btn opportunity-btn-outline">
 						View Details
 					</button>
-					<button className="opportunity-btn">
-						Join Group
-					</button>
+					<button className="opportunity-btn">Join Group</button>
 				</div>
 			</div>
 			{contextMenu && (

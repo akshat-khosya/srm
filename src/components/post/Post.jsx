@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../../context/Context";
 import "./post.css";
+import userFallback from "../../Images/user.svg";
 
 import SnackBar from "../Snackbar";
 import CommentBox from "./CommentBox";
@@ -15,6 +16,9 @@ function Post({ posts, keys, axiosInstance, load }) {
 	const [noOfComments, setNoOfComments] = useState(0);
 	const [open, setOpen] = useState(false);
 	const [post, setPost] = useState({});
+	const [userImage, setUserImage] = useState(
+		`${axiosInstance.defaults.baseURL}images/${post.email}`
+	);
 	const [err, setErr] = useState({
 		text: "",
 		err: "",
@@ -32,6 +36,9 @@ function Post({ posts, keys, axiosInstance, load }) {
 				sendData
 			);
 			setPost(res.data);
+			setUserImage(
+				`${axiosInstance.defaults.baseURL}images/${res.data.email}`
+			);
 			setLiked({
 				state: res.data.likes.includes(user.email),
 				count: res.data.likes.length,
@@ -41,6 +48,7 @@ function Post({ posts, keys, axiosInstance, load }) {
 		} catch (err) {}
 	};
 	useEffect(() => {
+		console.log(`${axiosInstance.defaults.baseURL}images/${post.email}`);
 		loadData();
 	}, []);
 	const delPost = async () => {
@@ -103,8 +111,11 @@ function Post({ posts, keys, axiosInstance, load }) {
 					<div className="postUser-details">
 						<div className="postProfilePhoto">
 							<img
-								src={`${axiosInstance.defaults.baseURL}images/${post.email}`}
+								src={userImage}
 								alt={post.email}
+								onError={() => {
+									setUserImage(userFallback);
+								}}
 							/>
 						</div>
 						<div className="postUserName">

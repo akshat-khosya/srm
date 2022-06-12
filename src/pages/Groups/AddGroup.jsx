@@ -1,8 +1,10 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../../context/Context";
+import _ from "lodash";
+import groupIcon from "../../Images/group_icon.svg";
 
 const AddGroup = ({ close, save }) => {
-	const { user } = useContext(Context);
+	const { user, axiosInstance } = useContext(Context);
 	const [group, setGroup] = useState({
 		title: "",
 		subtitle: "",
@@ -11,7 +13,7 @@ const AddGroup = ({ close, save }) => {
 		description: "",
 	});
 	const [file, setFile] = useState(null);
-	const [icon, setIcon] = useState(null);
+	const [icon, setIcon] = useState(groupIcon);
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 		setGroup({
@@ -21,15 +23,39 @@ const AddGroup = ({ close, save }) => {
 	};
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		save(group);
-		console.log(group);
-		setGroup({
-			title: "",
-			subtitle: "",
-			icon: "",
-			admin: user.email,
-			description: "",
+		const images = new FormData();
+		const fileName = `${user.username}-group-${_.kebabCase(
+			group.title
+		)}.jpg`;
+		images.append("name", fileName);
+		images.append("file", icon);
+		setGroup((prev) => {
+			return {
+				...prev,
+				icon: fileName,
+			};
 		});
+		try {
+			const res = await axiosInstance.post("/api/upload", icon);
+			console.log(res);
+			console.log({
+				...group,
+				icon: fileName,
+			});
+			save({
+				...group,
+				icon: fileName,
+			});
+			setGroup({
+				title: "",
+				subtitle: "",
+				icon: "",
+				admin: user.email,
+				description: "",
+			});
+		} catch (err) {
+			console.log(err);
+		}
 	};
 	return (
 		<div className="add-group">
