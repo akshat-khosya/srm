@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Context } from "../../context/Context";
 import groupFallbackIcon from "../../Images/group_icon.svg";
 import AddUsers from "./AddUsers";
