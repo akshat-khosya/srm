@@ -46,8 +46,16 @@ const Group = ({ job, joinedgroups, axiosInstance, load, groups }) => {
 						{job.group_tags}
 					</span>
 				</div>
+				<div className="groups-group-head-add">
+					<button
+						className="icon"
+						onClick={() => setOpenAddUsers(true)}
+					>
+						<span className="material-icons">person_add</span>
+					</button>
+				</div>
 				<div className="groups-group-head-showmore">
-					{user.email === job.email && (
+					{user.email === group.email && (
 						<div className="more-context">
 							<button
 								className="icon more-icon"
@@ -68,7 +76,7 @@ const Group = ({ job, joinedgroups, axiosInstance, load, groups }) => {
 									<li className="more-item">
 										<a
 											target="_blank"
-											href={job.file}
+											href={group.file}
 											rel="noreferrer"
 										>
 											<span className="material-icons">
@@ -84,7 +92,7 @@ const Group = ({ job, joinedgroups, axiosInstance, load, groups }) => {
 											delete
 										</span>
 										<span className="more-item-label">
-											Delete Job
+											Delete group
 										</span>
 									</li>
 								</ul>
@@ -123,6 +131,7 @@ const Group = ({ job, joinedgroups, axiosInstance, load, groups }) => {
 					onClick={() => setContextMenu(false)}
 				></div>
 			)}
+			{openAddUsers && <AddUsers close={() => setOpenAddUsers(false)} />}
 		</div>
 	);
 };

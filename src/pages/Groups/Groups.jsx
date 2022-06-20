@@ -49,7 +49,7 @@ const Groups = ({ axiosInstance, load }) => {
 				</div>
 				<div className="groups-body">
 					<div className="Row">
-						{groups.map((job, index) => (
+						{groups.map((group, index) => (
 							<div
 								className="Col-lg-50 Col-md-100 Col-sm-100"
 								key={index}

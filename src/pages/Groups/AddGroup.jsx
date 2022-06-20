@@ -100,7 +100,7 @@ const AddGroup = ({ close, save, axiosInstance }) => {
 							/>
 						</div>
 						<div className="add-group-form-group">
-							<label>Company Icon</label>
+							<label>Group Icon</label>
 							<input
 								type="file"
 								name="group_image"
