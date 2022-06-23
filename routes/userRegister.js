@@ -8,7 +8,7 @@ const userData = require("../models/userData");
 // Get all users
 router.get("/allusers", async (req, res) => {
   try{
-    let all_users = await userData.find({},"_id username photo");
+    let all_users = await userData.find({},"_id name username photo group_joined");
     res.send(all_users);
   }
   catch(err){

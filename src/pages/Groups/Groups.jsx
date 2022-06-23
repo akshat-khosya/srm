@@ -9,20 +9,22 @@ import "./groups.css";
 const Groups = ({ axiosInstance, load }) => {
 	const {user} = useContext(Context);
 	const [groups, setGroups] = useState([]);
-	const [joinedgroups, setJoinedGroups] = useState([]);
 	console.log(groups);
 	console.log(user._id);
 	const groupjoined = {
 		id: user._id
 	}
 	console.log(groupjoined.id);
-	useEffect(async () => {
+
+	async function fetchGroups(){
 		const res = await axiosInstance.get("/api/group/publicgroups");
-		const res2 = await axiosInstance.post("/api/group/joined",groupjoined);
+		console.log(res);
 		setGroups(res.data);
-		setJoinedGroups(res2.data);
-		console.log(res2.data);
-		console.log(res.data);
+		return res
+	}
+	
+	useEffect(() => {
+		fetchGroups();
 	},[]);
 
 	const handlegroups = async(item) => {
@@ -55,8 +57,7 @@ const Groups = ({ axiosInstance, load }) => {
 								key={index}
 							>
 								<Group
-									job={job}
-									joinedgroups={joinedgroups}
+									job={group}
 									axiosInstance={axiosInstance}
 								/>
 							</div>

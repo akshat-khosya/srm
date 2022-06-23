@@ -1,13 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../context/Context";
 import favicon from "../../Images/logo.png";
-const Group = ({ job, joinedgroups, axiosInstance, load, groups }) => {
+import AddUsers from "./AddUsers";
+const Group = ({ job, axiosInstance, load, groups }) => {
 	const [contextMenu, setContextMenu] = useState(false);
+	const [openAddUsers, setOpenAddUsers] = useState(false);
 	const { user } = useContext(Context);
-	console.log(job);
+	// console.log(job);
 
-	const isJoined = joinedgroups.includes(job._id);
-	console.log(isJoined);
+	// const isJoined = joinedgroups.includes(job._id);
+	// console.log(isJoined);
+	console.log(user);
+	console.log(user.group_joined.includes(job._id));
+	console.log(user.groupOwns.includes(job._id));
 
 	// useEffect(()=>{
 	// 	setsource(`${axiosInstance.defaults.baseURL}images/${job.group_image}`);
@@ -26,7 +31,7 @@ const Group = ({ job, joinedgroups, axiosInstance, load, groups }) => {
 
 	}
 
-	console.log(job, typeof(job.group_tags));
+	// console.log(job, typeof(job.group_tags));
 	return (
 		<div className="groups-group" key={job._id}>
 			<div className="groups-group-head">
@@ -46,15 +51,10 @@ const Group = ({ job, joinedgroups, axiosInstance, load, groups }) => {
 						{job.group_tags}
 					</span>
 				</div>
-				<div className="groups-group-head-add">
-					<button
-						className="icon"
-						onClick={() => setOpenAddUsers(true)}
-					>
-						<span className="material-icons">person_add</span>
-					</button>
-				</div>
-				<div className="groups-group-head-showmore">
+				{/* <div className="groups-group-head-add">
+					
+				</div> */}
+				{/* <div className="groups-group-head-showmore">
 					{user.email === group.email && (
 						<div className="more-context">
 							<button
@@ -99,19 +99,28 @@ const Group = ({ job, joinedgroups, axiosInstance, load, groups }) => {
 							</div>
 						</div>
 					)}
-				</div>
+				</div> */}
 			</div>
 			<div className="groups-group-body">
 				<div className="groups-group-body-content">
 					{job.group_description}
 				</div>
 				{
-					isJoined 
+					user.group_joined.includes(job._id)
 					? 
 					<div className="groups-group-body-actions">
 						<button className="opportunity-btn opportunity-btn-outline">
 							Open
 						</button>
+						{
+							user.groupOwns.includes(job._id)
+							?
+							<button className="opportunity-btn" onClick={() => setOpenAddUsers(true)}>
+								Add Member
+							</button>
+							:
+							<></>
+						}
 					</div>
 					:
 					<div className="groups-group-body-actions">
@@ -131,7 +140,7 @@ const Group = ({ job, joinedgroups, axiosInstance, load, groups }) => {
 					onClick={() => setContextMenu(false)}
 				></div>
 			)}
-			{openAddUsers && <AddUsers close={() => setOpenAddUsers(false)} />}
+			{openAddUsers && <AddUsers jobId = {job._id} axiosInstancee = {axiosInstance} close={() => setOpenAddUsers(false)} />}
 		</div>
 	);
 };

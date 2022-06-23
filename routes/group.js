@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const mongoose = require("mongoose");
 const group = require("../models/group");
 const Group = require("../models/group");
 const userData = require("../models/userData");
@@ -13,7 +14,7 @@ router.post("/creategroup", async (req, res) => {
             group_tags: req.body.group_tags,
             group_image: req.body.group_image,
             group_owner: req.body.group_owner,
-            // members: req.body.members
+            members: req.body.group_owner
         });
         console.log(req.body,"09");
         await groupInfo.save(async (err, savedGroup) => {
@@ -92,21 +93,78 @@ router.post("/addmember", async(req, res) => {
         // CHECK COMMAND -=-=-=-=-=-=-=-=-=-
         // let alreadyjoined = await group.find({members: req.body.id});
         // console.log(alreadyjoined);
-        // POST add to member in group
+
+
+        // POST add to member in group (worked)
         await group.find({_id: req.body.groupid}).update({
-            $push:{
-                members: req.body.id
+            $set:{
+                members: req.body.userData
             }
         });
-        // // POST add to joined group
-        await userData.find({_id: req.body.id}).update({
-            $push:{
-                group_joined: req.body.groupid
+
+        
+        // Removes groupID from group_joined where req userData user id not present
+        const ok = await userData.find({},"_id").where({group_joined:req.body.groupid})
+        .then( res1 => res1.map(function(item){
+            return item._id.toString().replace(/ObjectId\("(.*)"\)/, "$1");
+        }))
+        .then(res2 => res2.filter((item)=>{
+            return !req.body.userData.includes(item);
+        }))
+        .then(res3 => {
+            return userData.find({'_id':{ $in: res3}}).where({'group_joined':req.body.groupid})
+            .updateMany({_id:{ $in: res3}},
+                {
+                    $pull:{
+                        group_joined: mongoose.Types.ObjectId(req.body.groupid)
+                    }
+                }
+            );
+        });
+
+        // const exist = await userData.find({'_id':{ $in: req.body.userData}}).where('group_joined').ne(req.body.groupid)
+        // .updateMany({_id:{ $in: req.body.userData}},
+        //     {
+        //         $pull:{
+        //             group_joined: mongoose.Types.ObjectId(req.body.groupid)
+        //         }
+        //     }
+        // );
+
+
+        // Update only id have not already joined
+        const exist = await userData.find({'_id':{ $in: req.body.userData}}).where('group_joined').ne(req.body.groupid)
+        .updateMany({_id:{ $in: req.body.userData}},
+            {
+                $push:{
+                    group_joined: mongoose.Types.ObjectId(req.body.groupid)
+                }
             }
-        })
+        );
+
+        // this fuckin query doesnt make sense as we have to pass whole data
+        
+
+    //     const exist = await userData.find({'_id':{ $in: req.body.userData},
+    //         'groupid': {$in: req.body.groupid} 
+
+    // });
+        // console.log(exist,"106");   
+        
+        // POST add to joined group (worked)
+        console.log(typeof(req.body.userData))
+        // await userData.updateMany({_id:{ $in: req.body.userData}},
+        //     {
+        //         $set:{
+        //             group_joined: mongoose.Types.ObjectId(req.body.groupid)
+        //         }
+        //     }
+        // );
 
         res.send({
             status: true,
+            ok,
+            exist,
             msg: "User added"
         });
     }
