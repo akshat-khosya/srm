@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import ProfilePopup from "../../components/ProfilePopup/ProfilePopup";
 import { Context } from "../../context/Context";
-import favicon from "../../Images/logo.png";
+import userFallback from "../../Images/user.svg";
 
 const ConnectionsCard = ({
 	person,
@@ -31,9 +31,7 @@ const ConnectionsCard = ({
 				<div
 					className="connections-card-image"
 					style={{
-						backgroundImage:
-							`url(${axiosInstance.defaults.baseURL}images/${person.email})` ||
-							favicon,
+						backgroundImage: `url(${axiosInstance.defaults.baseURL}images/${person.email}), url(${userFallback})`,
 					}}
 					onClick={() => setOpenProfilePopup(true)}
 				></div>
