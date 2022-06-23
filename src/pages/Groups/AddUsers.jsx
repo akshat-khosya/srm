@@ -4,7 +4,6 @@ const AddUsers = ({ close }) => {
 	const [search, setSearch] = useState("");
 	let originalUsers = [];
 	const [users, setUsers] = useState([...originalUsers]);
-	const [showButton, setShowButton] = useState(false);
 	const selectUsers = (a) => {
 		let newUsers = [];
 		users.forEach((u, id) => {
@@ -21,9 +20,6 @@ const AddUsers = ({ close }) => {
 	const handleChange = (e) => {
 		const { value } = e.target;
 		setSearch(value);
-	};
-	const handleSelection = () => {
-		setShowButton(users.some((e) => e.selected));
 	};
 	const joinToGroup = () => {
 		let usersToJoin = [];
@@ -46,15 +42,6 @@ const AddUsers = ({ close }) => {
 		});
 		close();
 	};
-	useEffect(() => {
-		handleSelection();
-	}, [users]);
-
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		console.log(search);
-		setSearch("");
-	};
 	return (
 		<div className="groups-add-users">
 			<div className="groups-add-users-box" data-aos="zoom-in">
@@ -68,7 +55,7 @@ const AddUsers = ({ close }) => {
 				</div>
 				<div className="groups-add-users-body">
 					<form
-						onSubmit={handleSubmit}
+						onSubmit={joinToGroup}
 						className="groups-add-users-form"
 					>
 						<label>
@@ -81,7 +68,7 @@ const AddUsers = ({ close }) => {
 							autoFocus
 						/>
 						<button type="submit">
-							<span className="material-icons">search</span>
+							<span className="material-icons">add</span>
 						</button>
 					</form>
 					<div className="groups-add-users-people">
@@ -93,7 +80,6 @@ const AddUsers = ({ close }) => {
 										className="groups-add-users-person"
 										onClick={() => {
 											selectUsers(person);
-											handleSelection();
 										}}
 									>
 										<div className="groups-add-users-person-select">
@@ -124,21 +110,6 @@ const AddUsers = ({ close }) => {
 							)
 						)}
 					</div>
-					{showButton && (
-						<div className="groups-add-users-buttons">
-							<button
-								className="groups-add-users-send"
-								onClick={joinToGroup}
-							>
-								<span className="material-icons">
-									add_circle
-								</span>
-								<span style={{ marginLeft: "0.25rem" }}>
-									Join to Group
-								</span>
-							</button>
-						</div>
-					)}
 				</div>
 			</div>
 		</div>
