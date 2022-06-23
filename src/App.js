@@ -21,6 +21,7 @@ import Verify from "./pages/Verify/Verify";
 import { admin } from "./globalVariable";
 import AccessDenied from "./pages/AccessDenied/AccessDenied";
 import Groups from "./pages/Groups/Groups";
+import Chat from "./pages/Chat/Chat";
 
 function App() {
 	const axiosInstance = axios.create({
@@ -30,7 +31,7 @@ function App() {
 				: "http://localhost:4000/",
 	});
 	// https://tegniescorporation.tech/
-	const { user, dispatch, isFetching } = useContext(Context);
+	const { user, dispatch } = useContext(Context);
 	const [num, setNum] = useState(true);
 	const loadData = async () => {
 		try {
@@ -88,6 +89,9 @@ function App() {
 			case "/groups":
 				component = <Groups axiosInstance={axiosInstance} />;
 				break;
+			case "/group":
+				component = <Chat />;
+				break;
 			default:
 				component = <Fake axiosInstance={axiosInstance} />;
 				break;
@@ -125,6 +129,7 @@ function App() {
 						element={getPage("/connections")}
 					/>
 					<Route path="/groups" element={getPage("/groups")} />
+					<Route path="/group/:groupName" element={getPage("/group")} />
 					<Route
 						path="/opportunity"
 						element={getPage("/opportunity")}

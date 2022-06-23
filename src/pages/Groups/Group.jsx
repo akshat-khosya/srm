@@ -1,14 +1,17 @@
 import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../../context/Context";
 import groupFallbackIcon from "../../Images/group_icon.svg";
 import AddUsers from "./AddUsers";
+import _ from "lodash";
 
 const Group = ({ group, axiosInstance, load }) => {
+	const navigate = useNavigate();
 	const [contextMenu, setContextMenu] = useState(false);
 	const { user } = useContext(Context);
 	const [openAddUsers, setOpenAddUsers] = useState(false);
 	const [groupIcon, setGroupIcon] = useState(
-		`${axiosInstance.defaults.baseURL}images/${group.icon}`
+		`https://tegniescorporation.tech/images/${group.icon}`
 	);
 
 	return (
@@ -21,12 +24,18 @@ const Group = ({ group, axiosInstance, load }) => {
 						onError={() => {
 							setGroupIcon(groupFallbackIcon);
 						}}
+						onClick={() =>
+							navigate(`/group/${_.kebabCase(group.title)}`)
+						}
 					/>
 				</div>
 				<div className="groups-group-head-content">
-					<span className="groups-group-head-content-title">
+					<Link
+						to={`/group/${_.kebabCase(group.title)}`}
+						className="groups-group-head-content-title"
+					>
 						{group.title}
-					</span>
+					</Link>
 					<span className="groups-group-head-content-field">
 						{group.subtitle}
 					</span>
