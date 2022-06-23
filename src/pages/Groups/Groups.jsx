@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../context/Context";
 import AddGroup from "./AddGroup";
 import Group from "./Group";
+import allGroups from "./all-groups.js";
 import "./groups.css";
 
 // 180 to rishi

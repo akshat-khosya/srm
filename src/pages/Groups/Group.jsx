@@ -1,12 +1,22 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../../context/Context";
 import favicon from "../../Images/logo.png";
 import AddUsers from "./AddUsers";
+import _ from "lodash";
+
 const Group = ({ job, axiosInstance, load, groups }) => {
+
+
+// const Group = ({ group, axiosInstance, load }) => {
+	const navigate = useNavigate();
 	const [contextMenu, setContextMenu] = useState(false);
 	const [openAddUsers, setOpenAddUsers] = useState(false);
 	const { user } = useContext(Context);
 	// console.log(job);
+	const [groupIcon, setGroupIcon] = useState(
+		`https://tegniescorporation.tech/images/${group.icon}`
+	);
 
 	// const isJoined = joinedgroups.includes(job._id);
 	// console.log(isJoined);

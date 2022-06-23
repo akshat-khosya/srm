@@ -52,7 +52,7 @@ const AddUsers = ({ jobId, close, axiosInstancee }) => {
 				</div>
 				<div className="groups-add-users-body">
 					<form
-						onSubmit={handleSubmit}
+						onSubmit={joinToGroup}
 						className="groups-add-users-form"
 					>
 						<label>
@@ -65,7 +65,7 @@ const AddUsers = ({ jobId, close, axiosInstancee }) => {
 							autoFocus
 						/>
 						<button type="submit">
-							<span className="material-icons">☻</span>
+							<span className="material-icons">add</span>
 						</button>
 					</form>
 					<div className="groups-add-users-people">
