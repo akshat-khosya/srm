@@ -43,8 +43,12 @@ const Chat = () => {
 		},
 	]);
 	const [message, setMessage] = useState("");
+	const [file, setFile] = useState(null);
 	const handleChange = (e) => {
 		setMessage(e.target.value);
+	};
+	const handleFile = (e) => {
+		setFile(e.target.files[0]);
 	};
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -102,12 +106,25 @@ const Chat = () => {
 				</div>
 				<div className="chat-foot">
 					<form onSubmit={handleSubmit}>
+						<label htmlFor="file">
+							<input
+								type="file"
+								name="file"
+								id="file"
+								value={file}
+								onChange={handleFile}
+							/>
+							<span className="material-icons icon">
+								attach_file
+							</span>
+						</label>
 						<input
 							type="text"
 							name="message"
 							value={message}
 							onChange={handleChange}
 							placeholder="Your Message Here"
+							autoFocus
 						/>
 						<button type="submit" className="icon">
 							<span className="material-icons">send</span>
@@ -120,38 +137,3 @@ const Chat = () => {
 };
 
 export default Chat;
-
-/* 
-{
-    "_id": "61f55f3e21bf1cad717a4b5f",
-    "name": "Akshat Mittal",
-    "email": "akshatmittal2506@gmail.com",
-    "phone": 9456849466,
-    "username": "akshatmittal61",
-    "verifcation": true,
-    "createdAt": "2022-01-29T15:37:34.099Z",
-    "updatedAt": "2022-06-11T11:43:36.441Z",
-    "__v": 0,
-    "batch": "2020",
-    "bio": "MERN Stack developer",
-    "currentoriginaztion": "MERN",
-    "desgination": "Developer",
-    "dob": "2002-06-25",
-    "fname": "M",
-    "gender": "Male",
-    "mname": "C",
-    "photo": "akshatmittal2506@gmail.com",
-    "program": "B.Tech",
-    "pyear": "2024",
-    "following": [
-        "akshatkhosya@itsforyou.live",
-        "20106@iiitu.ac.in",
-        "akshatdps12@gmail.com",
-        "jronak922@gmail.com",
-        "ihardikrastogi12@gmail.com",
-        "ihardikrastogi@gmail.com",
-        "ihardikrastogi1234@gmail.com",
-        "mannsinha1902@gmail.com"
-    ],
-    "verifyStatus": true
-} */

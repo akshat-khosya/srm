@@ -26,8 +26,7 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  background-color: var(--blue);
-  color: var(--bgcolor);
+  background-color: var(--back-shadow);
 }
 .chat-head-back {
   width: 2.5rem;
@@ -63,6 +62,7 @@
   flex-flow: column;
   justify-content: flex-end;
   align-items: flex-start;
+  overflow: hidden;
 }
 .chat-foot {
   width: 100%;
@@ -70,7 +70,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--blue);
+  background-color: var(--back-shadow);
 }
 .chat-foot form {
   width: 100%;
@@ -79,12 +79,18 @@
   justify-content: space-evenly;
   align-items: center;
 }
+.chat-foot form label input {
+  display: none;
+}
 .chat-foot form input {
   border: none;
   outline: none;
   border-radius: 500px;
   padding: 0.75rem 1rem;
   width: 90%;
+}
+.chat-foot form .icon {
+  margin: 0 0.75rem;
 }
 .chat-message {
   padding: 0.25rem 1rem;
