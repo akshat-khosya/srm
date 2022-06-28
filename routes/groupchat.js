@@ -10,7 +10,7 @@ router.post("/chatpost",async (req,res) => {
             groupID: req.body.groupid,
             content: req.body.content,
             links: req.body.links,
-            file: req.body.file,
+            file: req.body.filename,
             sender: req.body.userid
         });
 

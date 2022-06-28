@@ -26,34 +26,64 @@ const Chat = ({axiosInstance}) => {
 	const [file, setFile] = useState(null);
 
 	const handleChange = (e) => {
-		setMessage(e.target.value);
+		setMessage(e.target.value.trim());
 	};
 
 	const handleFile = (e) => {
 		setFile(e.target.files[0]);
+		console.log(file);
 	};
 
+	// SUBMIT THE SINGLE cHAT POOOOOOSSssstTTTTTTTTTT
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		await axiosInstance.post("/api/chat/chatpost",{groupid: param.groupName,content: message, userid: user._id});
-		setMessages((prev) => {
-			return [
-				...prev,
-				{
-					user: user.email,
-					name: user.name,
-					message: message,
-				},
-			];
-		});
-		setMessage("");
-		const isread = await axiosInstance.post("/api/group/readmsg",{"groupid":param.groupName,"userid":user._id});
-		console.log(isread);
+
+		if(file !== null || message !== ""){
+
+			if(file!==null){
+				const image = new FormData();
+				const filename = Date.now()+file.name;
+				image.append("name", filename);
+				image.append("file", file);
+				if(file.type.split("/")[1] !== "pdf"){
+					let imgPost = await axiosInstance.post("/api/upload", image);
+					console.log(imgPost);
+				}
+				else{
+					let pdfPost = await axiosInstance.post("/api/upload/pdf", image);
+					console.log(pdfPost);
+				}
+			}
+			
+			await axiosInstance.post("/api/chat/chatpost",{groupid: param.groupName,content: message,"filename":(file !== null)?Date.now()+file?.name:null, userid: user._id});
+			setMessages((prev) => {
+				return [
+					...prev,
+					{
+						user: user.email,
+						name: user.name,
+						message: message,
+						file: (file !== null)?Date.now()+file?.name:null
+					},
+				];
+			});
+			setMessage("");
+			setFile(null);
+			const isread = await axiosInstance.post("/api/group/readmsg",{"groupid":param.groupName,"userid":user._id});
+			console.log(isread);
+		}
+		else{
+			console.log("file or message required!");
+		}
+
+		
 	};
 
+	// GET ALL CHAT GET ALL CHAT GET ALL CHAT GET ALL CHAT GET ALL CHAT
 	async function chatGet(){
+
 		const all_group_chat = await axiosInstance.post("/api/chat/chatget",{id:param.groupName});
-		console.log(all_group_chat.data?.[0].group_chat?.[0].sender.email);
+		console.log(all_group_chat.data?.[0].group_chat?.[0]?.sender?.email);
 		console.log(all_group_chat.data);
 
 		setMessages(
@@ -61,7 +91,8 @@ const Chat = ({axiosInstance}) => {
 					return{
 						user: el.sender.email,
 						name: el.sender.name,
-						message: el.content
+						message: el.content,
+						file:el.file
 					}
 				})
 		);
@@ -74,9 +105,20 @@ const Chat = ({axiosInstance}) => {
 	}
 
 	useEffect(()=>{
+		console.log(file);
+		const image = new FormData();
+		const filename = group.group_image;
+		image.append("name", filename);
+		image.append("file", file);
+
+		console.log(image)
+	},[file]);
+
+	useEffect(()=>{
 		if(user.group_joined.includes(param.groupName) === false){
 			navigate('/groups');
 		}
+		
 		chatGet();
 		addRead();
 	},[])
@@ -92,7 +134,7 @@ const Chat = ({axiosInstance}) => {
 					</div>
 					<div className="chat-head-icon">
 						<img
-							src={groupIcon}
+							src={(chatdata?.group_image !== "")?`${axiosInstance.defaults.baseURL}images/${chatdata?.group_image}`:groupIcon}
 							alt={chatdata.group_name}
 							onError={() => {
 								setGroupIcon(groupFallbackIcon);
@@ -117,6 +159,20 @@ const Chat = ({axiosInstance}) => {
 							<span className="chat-message-msg">
 								{msg.message}
 							</span>
+							{
+								(msg.file !== null )?
+								<>
+								{(msg.message !== "")?
+								<br/>
+								:
+								<></>}
+								<b>File here:</b>
+								{/* .+\.(js|css|etc)[?]? */}
+								<a target="_blank" rel="noreferrer" href={`${axiosInstance.defaults.baseURL}pdf/${msg.file}`}>{`${axiosInstance.defaults.baseURL}pdf/${msg.file}`}</a>
+								</>
+								:
+								<></>
+							}
 						</div>
 					))}
 				</div>
@@ -127,7 +183,6 @@ const Chat = ({axiosInstance}) => {
 								type="file"
 								name="file"
 								id="file"
-								value={file}
 								onChange={handleFile}
 							/>
 							<span className="material-icons icon">
@@ -139,7 +194,7 @@ const Chat = ({axiosInstance}) => {
 							name="message"
 							value={message}
 							onChange={handleChange}
-							placeholder="Your Message Here"
+							placeholder={(file !== null)?`File Attached: ${file.name}`:"Your Message Here"}
 							autoFocus
 						/>
 						<button type="submit" className="icon">
