@@ -45,7 +45,6 @@ function Home({ axiosInstance }) {
 							/>
 						))}
 					</div>
-					<div className="events"></div>
 				</div>
 			</div>
 		</div>
