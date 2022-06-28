@@ -16,6 +16,7 @@ const scholarship = require("./routes/scholarships");
 const resource = require("./routes/resource");
 const Group = require("./routes/group");
 const groupchat = require("./routes/groupchat");
+require('./routes/userRegister');
 dotenv.config();
 
 const corsOptions = {

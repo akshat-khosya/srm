@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { Context } from "../../context/Context";
 import {v1} from "uuid";
 
-const AddGroup = ({ close, save, axiosInstance }) => {
+const AddGroup = ({ close, save, axiosInstance, setrefetch, refetch }) => {
 	const { user } = useContext(Context);
 	// console.log(user);
 	const [group, setGroup] = useState({
@@ -49,6 +49,7 @@ const AddGroup = ({ close, save, axiosInstance }) => {
 				image.append("file", file);
 			if (res.data.status) {
 				let imgPost = await axiosInstance.post("/api/upload", image);
+				setrefetch(!refetch);
 				console.log(imgPost);
 			}
 		}catch (err) {

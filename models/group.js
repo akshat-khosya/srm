@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const userData = require('./userData');
-const groupchat = require('./groupchat');
+require('./userData');
+require('./groupchat');
 
 const groupSchema = new mongoose.Schema({
     group_name:{
@@ -22,7 +22,7 @@ const groupSchema = new mongoose.Schema({
     },
     group_owner:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'userData',
+        ref: 'UserData',
     },
 
     members: [{

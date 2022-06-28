@@ -1,8 +1,8 @@
 const router = require("express").Router();
 const mongoose = require("mongoose");
-const group = require("../models/group");
 const Group = require("../models/group");
 const userData = require("../models/userData");
+const read = require("../models/readunread");
 
 // CREATE GROUP -=-=-=-=-=-=-=-==--==-=-=--=-=-=--=--=-
 router.post("/creategroup", async (req, res) => {
@@ -32,6 +32,23 @@ router.post("/creategroup", async (req, res) => {
                     }
                 });
 
+                // const allChat = await Group.find({_id: req.body.groupid},"group_chat");
+
+                const update_msg = {
+                    group_id:mongoose.Types.ObjectId(savedGroup._id),
+                    msg_read:savedGroup.group_chat.length
+                }
+
+                // WHEN MEMBER ADDED TO GROUP CALLED THIS FUNCTION TO ADD OBJECT FOR READ MSG
+                await read.find({'user_id':{ $in: req.body.group_owner}}).where('read.group_id').ne(savedGroup._id)
+                .updateMany({user_id:{ $in: req.body.group_owner}},
+                    {
+                        $push:{
+                            "read":update_msg
+                        }
+                    }
+                );
+
                 // [.] pushes group joined to user added initially to the group
                 // req.body.members.map(async(memberid)=>{
                 //     await userData.find({_id:memberid}).update({
@@ -59,10 +76,38 @@ router.post("/creategroup", async (req, res) => {
 
 
 // [.] GET all public groups
-router.get("/publicgroups", async(req, res) => {
+router.post("/publicgroups", async(req, res) => {
     try{
-        const allpublic = await Group.find({group_status: 'public'}, "_id group_name group_description group_tags group_image");
-        res.send(allpublic);
+        const allpublic = await Group.find({group_status: 'public'}, "_id group_name group_description group_tags group_image members group_owner");
+        const allpublic_ids = await Group.aggregate([
+                {
+                  "$project": {
+                    "totalrealChat": {
+                      "$size": "$group_chat"
+                    }
+                  }
+                }
+              ]);
+        // console.log(allpublic_ids);
+
+        // const allChat = await Group.find({_id: req.body.groupid},"group_chat");
+
+        const ok = await read.find({user_id:req.body.userid},"read.group_id read.msg_read")
+        // .then(res1 => {
+        //     return res1[0].read.map(item => {
+        //         return item
+        //     })
+        // })
+
+        
+        
+        // .where({"read.group_id":req.body.groupid})
+        // .select({ read: {$elemMatch: {group_id: req.body.groupid}}});
+        res.send({
+            allpublic,
+            "total_real":allpublic_ids,
+            "joined_read":ok
+        });
     }
     catch(err){
         console.log(err,'/n',"error occured in publicgroups");
@@ -73,17 +118,45 @@ router.get("/publicgroups", async(req, res) => {
 // [.] GET all joined groups
 router.post("/joined", async(req, res) => {
     try{
-        const joinedgroups = await userData.find({_id: req.body.id}, "group_joined").populate('group_joined',{_id:1});
-        let arrId = [];
-        joinedgroups[0].group_joined.map((element) => {
-          arrId.push(element._id);
-        });
-        console.log(arrId);
-        res.send(arrId);
+        const joinedgroups = await userData.find({_id: req.body.userid}, "group_joined").populate('group_joined',{_id:1})
+        .then(res1 => res1[0].group_joined.map((element) => {
+            return element._id;
+        }))
+        // .then(res2 => {
+        //     return Group.find({"_id":{$in:{res2}}},"group_chat")
+        // });
+        // let arrId = [];
+        // joinedgroups[0].group_joined.map((element) => {
+        //   arrId.push(element._id);
+        // });
+        // console.log(arrId);
+        res.send(joinedgroups);
     }
     catch(err){
         console.log(err);
     }
+})
+
+router.post("/singlejoin", async(req, res)=>{
+    await userData.find({'_id':{ $in: req.body.id}}).where('group_joined').ne(req.body.groupid)
+        .updateMany({_id:{ $in: req.body.id}},
+            {
+                $push:{
+                    group_joined: mongoose.Types.ObjectId(req.body.groupid)
+                }
+            }
+        );
+
+        await group.find({_id: req.body.groupid}).update({
+            $push:{
+                members: req.body.id
+            }
+        });
+    
+        res.send({
+            "status":true,
+            "msg":"Added!"
+        })
 })
 
 
@@ -96,7 +169,7 @@ router.post("/addmember", async(req, res) => {
 
 
         // POST add to member in group (worked)
-        await group.find({_id: req.body.groupid}).update({
+        await Group.find({_id: req.body.groupid}).update({
             $set:{
                 members: req.body.userData
             }
@@ -122,6 +195,7 @@ router.post("/addmember", async(req, res) => {
             );
         });
 
+
         // const exist = await userData.find({'_id':{ $in: req.body.userData}}).where('group_joined').ne(req.body.groupid)
         // .updateMany({_id:{ $in: req.body.userData}},
         //     {
@@ -138,6 +212,47 @@ router.post("/addmember", async(req, res) => {
             {
                 $push:{
                     group_joined: mongoose.Types.ObjectId(req.body.groupid)
+                }
+            }
+        );
+
+        // Remove that user from group which is not included in add member array
+        await read.find({},"user_id").where('read').where({'group_id':req.body.groupid})
+        .then( res1 => res1.map(function(item){
+            return item.user_id.toString().replace(/ObjectId\("(.*)"\)/, "$1");
+        }))// returns user having group_id
+        .then(res2 => res2.filter((item)=>{
+            console.log(!req.body.userData.includes(item));
+            return !req.body.userData.includes(item);
+        })) // returns user not selected by owner while updating members of group
+        .then(res3 => {
+            return read.find({'user_id':{ $in: res3}}).where({'read.group_id':req.body.groupid})
+            .updateMany({user_id:{ $in: res3}},
+                {
+                    "$pull": {
+                        "read":{
+                            group_id:mongoose.Types.ObjectId(req.body.groupid)
+                        }
+                    }
+                },
+                { safe: true, multi:true }
+            );
+        });
+
+        // NO. OF TOTAL MSG WHILE ADDING MEMBER TO GROUP
+        const allChat = await Group.find({_id: req.body.groupid},"group_chat");
+
+        const update_msg = {
+            group_id:mongoose.Types.ObjectId(req.body.groupid),
+            msg_read:allChat[0].group_chat.length
+        }
+
+        // WHEN MEMBER ADDED TO GROUP CALLED THIS FUNCTION TO ADD OBJECT FOR READ MSG
+        await read.find({'user_id':{ $in: req.body.userData}}).where('read.group_id').ne(req.body.groupid)
+        .updateMany({user_id:{ $in: req.body.userData}},
+            {
+                $push:{
+                    "read":update_msg
                 }
             }
         );
@@ -173,12 +288,60 @@ router.post("/addmember", async(req, res) => {
     }
 });
 
+router.post("/readmsg", async(req,res) =>{
+
+    // .updateMany({user_id:{ $in: res3}},{'read.group_id':req.body.groupid},
+    //                 {$pull:{
+    //                     'read.$[outer].group_id': mongoose.Types.ObjectId(req.body.groupid)
+    //                 }},
+    //                 { 
+    //                     "arrayFilters": [{ "outer.group_id": req.body.groupid }]
+    //                 }
+    //         );
+
+    try{
+
+        // post request on each chat
+
+        const allChat = await Group.find({_id: req.body.groupid},"group_chat");
+
+        
+        await read.updateOne({"user_id":req.body.userid,"read.group_id":req.body.groupid},{$set : {"read.$.msg_read" : allChat[0].group_chat.length}})
+
+        res.send({
+            "allRead":true
+        })
+
+    }
+    catch(err){
+        console.log(err);
+    }
+});
+
+router.get("/alreadyread", async (req,res) => {
+
+    const allChat = await Group.find({_id: req.body.groupid},"group_chat");
+
+    const ok = await read.find({user_id:req.body.userid})
+    .where({"read.group_id":req.body.groupid})
+    // .select({ read: {$elemMatch: {group_id: req.body.groupid}}});
+    // const ok = await read.find({'user_id':{ $in: req.body.userid}}).where({'read.group_id':req.body.groupid})
+    // console.log(ok[0].read[0].msg_read);
+    console.log(ok)
+    res.send({
+        "tillmsg":ok[0].read[0].msg_read,
+        "livemsg":allChat[0].group_chat.length,
+        "unreadmsg":allChat[0].group_chat.length-ok[0].read[0].msg_read,
+        ok
+    })
+})
+
 
 // [.] Invite request to both group model and user model
 router.patch("/invite", async(req, res) => {
     try{
 
-        await group.find({_id: req.body.groupid}).update({
+        await Group.find({_id: req.body.groupid}).update({
             $push:{
                 invites: req.body.id
             }
@@ -217,7 +380,7 @@ router.patch("/acceptinvite", async (req, res) => {
             }
         });
 
-        await group.find({_id: req.body.groupid}).update({
+        await Group.find({_id: req.body.groupid}).update({
             $push:{
                 members: req.body.id
             }
@@ -226,7 +389,7 @@ router.patch("/acceptinvite", async (req, res) => {
 
         // GROUP INVITE DELETED
 
-        await group.find({_id: req.body.groupid}).update({
+        await Group.find({_id: req.body.groupid}).update({
             $pull:{
                 invites: req.body.id
             }
@@ -248,6 +411,8 @@ router.patch("/acceptinvite", async (req, res) => {
         console.log(err);
     }
 });
+
+
 
 
 // ADD member to group

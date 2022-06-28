@@ -10,6 +10,8 @@ router.post("/chatpost",async (req,res) => {
             groupID: req.body.groupid,
             content: req.body.content,
             links: req.body.links,
+            file: req.body.file,
+            sender: req.body.userid
         });
 
         let pk;
@@ -38,7 +40,7 @@ router.post("/chatpost",async (req,res) => {
                 
                     
                 res.send({
-                    status: "true",
+                    status: true,
                     msg: "Chat post added"
                 });
 
@@ -55,10 +57,23 @@ router.post("/chatpost",async (req,res) => {
 
 // GET Chat Post to opened group
 
-router.get("/chatget", async(req, res) => {
+router.post("/chatget", async(req, res) => {
     try{
         // let ok = await Group.find({_id: "6256936c2e7e68d0e2601a44"});
-        const allChat = await group.find({_id: req.body.id},"group_chat").populate('group_chat').sort({"createdAt":-1});
+        const allChat = await group.find({_id: req.body.id},"group_name group_image group_tags group_owner group_description group_chat members")
+        .populate({
+            path:     'group_chat',			
+            populate: { path:  'sender',
+                    model: 'UserData',
+                    select: '_id name email'
+            }
+          })
+          .populate({
+            path:     'group_owner',			
+            model:'UserData',
+            select:'_id name'
+          })
+        .sort({"createdAt":-1});
 
         console.log(allChat);
         res.send(allChat);

@@ -52,7 +52,7 @@ const AddUsers = ({ jobId, close, axiosInstancee }) => {
 				</div>
 				<div className="groups-add-users-body">
 					<form
-						onSubmit={joinToGroup}
+						onSubmit={handleSubmit}
 						className="groups-add-users-form"
 					>
 						<label>

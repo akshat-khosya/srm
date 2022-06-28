@@ -90,7 +90,7 @@ function App() {
 				component = <Groups axiosInstance={axiosInstance} />;
 				break;
 			case "/group":
-				component = <Chat />;
+				component = <Chat axiosInstance={axiosInstance}/>;
 				break;
 			default:
 				component = <Fake axiosInstance={axiosInstance} />;

@@ -5,7 +5,7 @@ import favicon from "../../Images/logo.png";
 import AddUsers from "./AddUsers";
 import _ from "lodash";
 
-const Group = ({ job, axiosInstance, load, groups }) => {
+const Group = ({joined_read, total_real, job, axiosInstance, load, groups }) => {
 
 
 // const Group = ({ group, axiosInstance, load }) => {
@@ -15,7 +15,7 @@ const Group = ({ job, axiosInstance, load, groups }) => {
 	const { user } = useContext(Context);
 	// console.log(job);
 	const [groupIcon, setGroupIcon] = useState(
-		`https://tegniescorporation.tech/images/${group.icon}`
+		`https://tegniescorporation.tech/images/${job.icon}`
 	);
 
 	// const isJoined = joinedgroups.includes(job._id);
@@ -23,6 +23,8 @@ const Group = ({ job, axiosInstance, load, groups }) => {
 	console.log(user);
 	console.log(user.group_joined.includes(job._id));
 	console.log(user.groupOwns.includes(job._id));
+	console.log(joined_read);
+	console.log(total_real);
 
 	// useEffect(()=>{
 	// 	setsource(`${axiosInstance.defaults.baseURL}images/${job.group_image}`);
@@ -36,7 +38,7 @@ const Group = ({ job, axiosInstance, load, groups }) => {
 
 	const joinGroup = async () => {
 
-		const res = await axiosInstance.post("/api/group/addmember",joinParam);
+		const res = await axiosInstance.post("/api/group/singlejoin",joinParam);
 		console.log(res);
 
 	}
@@ -60,6 +62,15 @@ const Group = ({ job, axiosInstance, load, groups }) => {
 					<span className="groups-group-head-content-field">
 						{job.group_tags}
 					</span>
+					{
+						(job.members?.includes(user._id))?
+					(total_real?.totalrealChat-joined_read?.msg_read)?
+					<span className="groups-group-head-content-field">{total_real?.totalrealChat-joined_read?.msg_read}&nbsp;unread messages</span>
+					:
+					<></>
+					:
+					<></>
+					}
 				</div>
 				{/* <div className="groups-group-head-add">
 					
@@ -116,14 +127,16 @@ const Group = ({ job, axiosInstance, load, groups }) => {
 					{job.group_description}
 				</div>
 				{
-					user.group_joined.includes(job._id)
+					// user.group_joined.includes(job._id)
+					job.members?.includes(user._id)
 					? 
 					<div className="groups-group-body-actions">
-						<button className="opportunity-btn opportunity-btn-outline">
+						<button onClick={()=>navigate(`/group/${job._id}`)} className="opportunity-btn opportunity-btn-outline">
 							Open
 						</button>
 						{
-							user.groupOwns.includes(job._id)
+							// user.groupOwns.includes(job._id)
+							job.group_owner === user._id
 							?
 							<button className="opportunity-btn" onClick={() => setOpenAddUsers(true)}>
 								Add Member

@@ -2,15 +2,15 @@ import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../context/Context";
 import AddGroup from "./AddGroup";
 import Group from "./Group";
-import allGroups from "./all-groups.js";
 import "./groups.css";
 
 // 180 to rishi
 
 const Groups = ({ axiosInstance, load }) => {
 	const {user} = useContext(Context);
-	const [groups, setGroups] = useState([]);
-	console.log(groups);
+	const [groups, setGroups] = useState({});
+	const [refetch,setRefetch] = useState(false);
+	// console.log(groups.allpublic);
 	console.log(user._id);
 	const groupjoined = {
 		id: user._id
@@ -18,15 +18,17 @@ const Groups = ({ axiosInstance, load }) => {
 	console.log(groupjoined.id);
 
 	async function fetchGroups(){
-		const res = await axiosInstance.get("/api/group/publicgroups");
+		const res = await axiosInstance.post("/api/group/publicgroups",{"userid":user._id});
 		console.log(res);
 		setGroups(res.data);
+		// console.log(groups);
 		return res
 	}
 	
 	useEffect(() => {
 		fetchGroups();
-	},[]);
+		console.log(groups);
+	},[refetch]);
 
 	const handlegroups = async(item) => {
 		setGroups([...groups, item]);
@@ -52,7 +54,7 @@ const Groups = ({ axiosInstance, load }) => {
 				</div>
 				<div className="groups-body">
 					<div className="Row">
-						{groups.map((group, index) => (
+					{groups?.allpublic?.map((group, index) => (
 							<div
 								className="Col-lg-50 Col-md-100 Col-sm-100"
 								key={index}
@@ -60,6 +62,8 @@ const Groups = ({ axiosInstance, load }) => {
 								<Group
 									job={group}
 									axiosInstance={axiosInstance}
+									joined_read={groups?.joined_read[0]?.read?.find(o=>o.group_id === group._id)}
+									total_real={groups?.total_real?.find(o=>o._id === group._id)}
 								/>
 							</div>
 						))}
@@ -71,6 +75,8 @@ const Groups = ({ axiosInstance, load }) => {
 					close={() => setShowAddGroupBox(false)}
 					save={handlegroups}
 					axiosInstance = {axiosInstance}
+					setrefetch = {setRefetch}
+					refetch = {refetch}
 				/>
 			)}
 		</div>

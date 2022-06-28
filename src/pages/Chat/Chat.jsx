@@ -1,12 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "../../context/Context";
 import groupFallbackIcon from "../../Images/group_icon.svg";
 import "./chat.css";
 
-const Chat = () => {
-	const { groupName } = useParams();
+const Chat = ({axiosInstance}) => {
 	const { user } = useContext(Context);
+	const param = useParams();
 	const navigate = useNavigate();
 	const [group, setGroup] = useState({
 		title: "Developers",
@@ -20,34 +20,15 @@ const Chat = () => {
 	const [groupIcon, setGroupIcon] = useState(
 		`https://tegniescorporation.tech/images/${group.icon}`
 	);
-	const [messages, setMessages] = useState([
-		{
-			user: "akshatmittal2506@gmail.com",
-			name: "Akshat Mittal",
-			message: "Test message 1",
-		},
-		{
-			user: "akshatdps12@gmail.com",
-			name: "Akshat Khosya",
-			message: "Test 2",
-		},
-		{
-			user: "20107@iiitu.ac.in",
-			name: "Akshat Mittal",
-			message: "This is a test message 3",
-		},
-		{
-			user: "20106@iiitu.ac.in",
-			name: "Akshat",
-			message: "This message 4",
-		},
-	]);
+	const [messages, setMessages] = useState([]);
 	const [message, setMessage] = useState("");
+	const [chatdata, setchatdata] = useState([]);
 	const handleChange = (e) => {
 		setMessage(e.target.value);
 	};
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
+		await axiosInstance.post("/api/chat/chatpost",{groupid: param.groupName,content: message, userid: user._id});
 		setMessages((prev) => {
 			return [
 				...prev,
@@ -59,7 +40,39 @@ const Chat = () => {
 			];
 		});
 		setMessage("");
+		const isread = await axiosInstance.post("/api/group/readmsg",{"groupid":param.groupName,"userid":user._id});
+		console.log(isread);
 	};
+
+	async function chatGet(){
+		const all_group_chat = await axiosInstance.post("/api/chat/chatget",{id:param.groupName});
+		console.log(all_group_chat.data?.[0].group_chat?.[0].sender.email);
+		console.log(all_group_chat.data);
+
+		setMessages(
+				all_group_chat.data?.[0].group_chat.map((el)=>{
+					return{
+						user: el.sender.email,
+						name: el.sender.name,
+						message: el.content
+					}
+				})
+		);
+		setchatdata(all_group_chat.data[0]);
+	}
+
+	async function addRead(){
+		const isread = await axiosInstance.post("/api/group/readmsg",{"groupid":param.groupName,"userid":user._id});
+		console.log(isread);
+	}
+
+	useEffect(()=>{
+		if(user.group_joined.includes(param.groupName) === false){
+			navigate('/groups');
+		}
+		chatGet();
+		addRead();
+	},[])
 
 	return (
 		<section className="chat-container">
@@ -73,21 +86,21 @@ const Chat = () => {
 					<div className="chat-head-icon">
 						<img
 							src={groupIcon}
-							alt={group.title}
+							alt={chatdata.group_name}
 							onError={() => {
 								setGroupIcon(groupFallbackIcon);
 							}}
 						/>
 					</div>
 					<div className="chat-head-name">
-						<span>{group.title}</span>
+						<span>{chatdata.group_name}</span>
 					</div>
 				</div>
 				<div className="chat-body">
 					{messages.map((msg, index) => (
-						<div className="chat-message" key={index}>
+						<div className="chat-message" key={msg.index}>
 							<a
-								href={`mailto:${msg.user}`}
+								href={`mailto:${msg.email}`}
 								target="_blank"
 								rel="noreferrer"
 								className="chat-message-user"
@@ -100,20 +113,21 @@ const Chat = () => {
 						</div>
 					))}
 				</div>
-				<div className="chat-foot">
-					<form onSubmit={handleSubmit}>
-						<input
-							type="text"
-							name="message"
-							value={message}
-							onChange={handleChange}
-							placeholder="Your Message Here"
-						/>
-						<button type="submit" className="icon">
-							<span className="material-icons">send</span>
-						</button>
-					</form>
-				</div>
+					<div className="chat-foot">
+						<form onSubmit={handleSubmit}>
+							<input
+								type="text"
+								name="message"
+								value={message}
+								onChange={handleChange}
+								placeholder="Your Message Here"
+							/>
+							<button type="submit" className="icon">
+								<span className="material-icons">send</span>
+							</button>
+						</form>
+					</div>
+					
 			</div>
 		</section>
 	);

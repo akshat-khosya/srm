@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 const userData = require("../models/userData");
+const read = require("../models/readunread");
 
 // Get all users
 router.get("/allusers", async (req, res) => {
@@ -34,14 +35,20 @@ router.post("/newregister", async (req, res) => {
 
         verifcation: false,
       });
-      await newUser.save((err, savedUser) => {
+      await newUser.save(async (err, savedUser) => {
         if (err) {
           res.json({ status: false, message: "err", err: err.keyValue });
         } else {
           console.log(savedUser);
-          const { password, ...others } = savedUser._doc;
+          const { password, ...others } = await savedUser._doc;
           console.log(others);
           const token = jwt.sign(savedUser.email, process.env.JWT_SECRET);
+          const readinfo = await read({
+            user_id: savedUser._id,
+            read:[]
+          })
+
+          await readinfo.save();
           res.json({
             status: true,
             message: "registred",

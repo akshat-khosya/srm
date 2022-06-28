@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 require('./group');
-// s
+require('./groupchat');
 
 const UserDataSchema = new mongoose.Schema(
   {
