@@ -24,7 +24,6 @@ const Scholarship = ({ scholarship,axiosInstance ,load}) => {
 		console.log("Edit the Scholarship");
 		setContextMenu(false);
 	};
-	console.log("ok:"+axiosInstance.defaults.baseURL);
 	return (
 		<div className="scholarships-scholarship">
 			<div className="scholarships-scholarship-head">

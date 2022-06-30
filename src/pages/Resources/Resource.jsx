@@ -1,26 +1,24 @@
-
 import React, { useContext, useState } from "react";
 import { Context } from "../../context/Context";
 
-const Resource = ({ resource,axiosInstance,load }) => {
-	const {user}=useContext(Context);
+const Resource = ({ resource, axiosInstance, load }) => {
+	const { user } = useContext(Context);
 	const [contextMenu, setContextMenu] = useState(false);
 	const editResource = () => {
 		console.log("Edit the Scholarship");
 		setContextMenu(false);
 	};
-	const delResource = async() => {
+	const delResource = async () => {
 		try {
-			const res=await axiosInstance.delete("/api/resource/",{data:{id:resource._id}});
+			const res = await axiosInstance.delete("/api/resource/", {
+				data: { id: resource._id },
+			});
 			console.log(res);
-			if(res.data.status===true){
+			if (res.data.status === true) {
 				load();
 				setContextMenu(false);
 			}
-		} catch (err) {
-			
-		}
-		
+		} catch (err) {}
 	};
 	const getIcon = (a) => {
 		if (a === "pdf") return "picture_as_pdf";
@@ -47,6 +45,7 @@ const Resource = ({ resource,axiosInstance,load }) => {
 		else if (a === "doc" || a === "docx") return "article";
 		else return "attachment";
 	};
+	console.log(resource);
 	return (
 		<div className="resources-resource">
 			<div className="resources-resource-box">
@@ -59,7 +58,7 @@ const Resource = ({ resource,axiosInstance,load }) => {
 						<div className="more-context">
 							<button
 								className="icon more-icon"
-								onClick={() => setContextMenu(!contextMenu)}
+								onClick={() => setContextMenu((p) => !p)}
 							>
 								<span className="material-icons">
 									more_horiz
@@ -71,49 +70,39 @@ const Resource = ({ resource,axiosInstance,load }) => {
 								name="openContextMenu"
 								onChange={() => console.log("Changed")}
 							/>
-							<div className="more-popup">
-								<ul className="more-list">
-									<li className="more-item">
-										<a
-											target="_blank"
-											href={`${axiosInstance.defaults.baseURL}pdf/${resource.file}`}
-											rel="noreferrer"
-										>
-											<span className="material-icons">
-												visibility
-											</span>
-											<span className="more-item-label">
-												View Details
-											</span>
-										</a>
-									</li>
-									{/* <li
-										className="more-item"
-										onClick={() => editResource()}
-									>
-										<span className="material-icons">
-											edit
-										</span>
-										<span className="more-item-label">
-											Edit Resource
-										</span>
-									</li> */}
-									{user.email===resource.email && (
-										<li
-										className="more-item"
-										onClick={() => delResource()}
-									>
-										<span className="material-icons">
-											delete
-										</span>
-										<span className="more-item-label">
-											Delete Resource
-										</span>
-									</li>
-									)}
-									
-								</ul>
-							</div>
+							{contextMenu && (
+								<div className="more-popup">
+									<ul className="more-list">
+										<li className="more-item">
+											<a
+												target="_blank"
+												href={`${axiosInstance.defaults.baseURL}pdf/${resource.file}`}
+												rel="noreferrer"
+											>
+												<span className="material-icons">
+													visibility
+												</span>
+												<span className="more-item-label">
+													View Details
+												</span>
+											</a>
+										</li>
+										{user.email === resource.email && (
+											<li
+												className="more-item"
+												onClick={() => delResource()}
+											>
+												<span className="material-icons">
+													delete
+												</span>
+												<span className="more-item-label">
+													Delete Resource
+												</span>
+											</li>
+										)}
+									</ul>
+								</div>
+							)}
 						</div>
 					</div>
 				</div>
@@ -141,7 +130,7 @@ const Resource = ({ resource,axiosInstance,load }) => {
 					<div className="resources-resource-body-file">
 						<i>Attached File: </i>
 						<a
-							href={resource.fileLink}
+							href={`${axiosInstance.defaults.baseURL}pdf/${resource.file}`}
 							target="_blank"
 							rel="noreferrer"
 						>

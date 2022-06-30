@@ -56,13 +56,20 @@
 }
 .chat-body {
   width: 100%;
-  height: calc(100% - 8rem);
+  height: calc(90vh - 8rem);
   background-image: url("https://www.transparenttextures.com/patterns/food.png");
   display: flex;
-  flex-flow: column;
-  justify-content: flex-end;
-  align-items: flex-start;
+  justify-content: flex-start;
+  align-items: flex-end;
   overflow: hidden;
+  overflow-y: auto;
+}
+.chat-body-container {
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  max-height: 100%;
+  overflow-y: auto;
 }
 .chat-foot {
   width: 100%;
@@ -93,6 +100,7 @@
   margin: 0 0.75rem;
 }
 .chat-message {
+  width: fit-content;
   padding: 0.25rem 1rem;
   margin: 0.75rem 0.25rem 0.75rem 1.25rem;
   display: inline-flex;

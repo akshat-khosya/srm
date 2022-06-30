@@ -40,9 +40,9 @@ const Resources = ({ axiosInstance }) => {
 					</button>
 				</div>
 				<div className="resources-body">
-					<div className="masonry">
+					<div className="Row">
 						{resources.map((resource, index) => (
-							<div className="masonry-content" key={index}>
+							<div className="Col-lg-33 Col-md-50 Col-sm-100" key={index}>
 								<Resource load={loadData} resource={resource} axiosInstance={axiosInstance} />
 							</div>
 						))}

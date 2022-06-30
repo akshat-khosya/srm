@@ -1,8 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "../../context/Context";
 import groupFallbackIcon from "../../Images/group_icon.svg";
 import "./chat.css";
+
+const onlySpaces = (str) => str.trim().length === 0;
 
 const Chat = () => {
 	const { groupName } = useParams();
@@ -52,18 +54,24 @@ const Chat = () => {
 	};
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		setMessages((prev) => {
-			return [
-				...prev,
-				{
-					user: user.email,
-					name: user.name,
-					message: message,
-				},
-			];
-		});
-		setMessage("");
+		if (message !== "" && !onlySpaces(message)) {
+			setMessages((prev) => {
+				return [
+					...prev,
+					{
+						user: user.email,
+						name: user.name,
+						message: message,
+					},
+				];
+			});
+			setMessage("");
+		}
 	};
+	useEffect(() => {
+		const chatBotContainer = document.querySelector(".chat-body-container");
+		chatBotContainer.scrollTop = chatBotContainer.scrollHeight;
+	}, [messages]);
 
 	return (
 		<section className="chat-container">
@@ -88,21 +96,23 @@ const Chat = () => {
 					</div>
 				</div>
 				<div className="chat-body">
-					{messages.map((msg, index) => (
-						<div className="chat-message" key={index}>
-							<a
-								href={`mailto:${msg.user}`}
-								target="_blank"
-								rel="noreferrer"
-								className="chat-message-user"
-							>
-								{msg.name}
-							</a>
-							<span className="chat-message-msg">
-								{msg.message}
-							</span>
-						</div>
-					))}
+					<div className="chat-body-container">
+						{messages.map((msg, index) => (
+							<div className="chat-message" key={index}>
+								<a
+									href={`mailto:${msg.user}`}
+									target="_blank"
+									rel="noreferrer"
+									className="chat-message-user"
+								>
+									{msg.name}
+								</a>
+								<span className="chat-message-msg">
+									{msg.message}
+								</span>
+							</div>
+						))}
+					</div>
 				</div>
 				<div className="chat-foot">
 					<form onSubmit={handleSubmit}>

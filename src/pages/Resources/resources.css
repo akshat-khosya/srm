@@ -34,7 +34,6 @@
   background-color: var(--bgcolor);
   border-radius: 8px;
   padding: 0.75rem;
-  overflow: hidden;
   margin: 1rem auto;
   display: flex;
   justify-content: center;
@@ -44,6 +43,9 @@
 }
 .resources-resource:hover {
   box-shadow: 0 0 1px rgba(0, 20, 32, 0.4), 0 2px 6px rgba(3, 25, 38, 0.2);
+}
+.resources-resource .more-popup {
+  right: 0;
 }
 .resources-resource-box {
   width: 100%;
@@ -129,7 +131,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 10;
+  z-index: 5;
   background-color: rgba(0, 0, 0, 0.75);
   display: flex;
   justify-content: center;

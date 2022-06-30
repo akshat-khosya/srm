@@ -31,8 +31,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "sass": "sass -w src/pages/Groups/groups.scss:src/pages/Groups/groups.css src/pages/Chat/chat.scss:src/pages/Chat/chat.css",
-    "Sass": "sass -w src/components/ProfilePopup/profile-popup.scss src/components/ProfilePopup/profile-popup.css",
+    "sass": "sass -w src/pages/Groups/groups.scss:src/pages/Groups/groups.css src/pages/Chat/chat.scss:src/pages/Chat/chat.css src/pages/Resources/resources.scss:src/pages/Resources/resources.css",
     "server": "nodemon server.js"
   },
   "eslintConfig": {
