@@ -97,6 +97,8 @@
   justify-content: space-evenly;
   align-items: center;
   transition: all 0.25s ease-in-out;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .resources-resource-body > * a .material-icons {
   font-size: 1.1rem;
@@ -104,6 +106,9 @@
 }
 .resources-resource-body > * a:hover {
   border: 1px solid rgba(0, 0, 0, 0.5);
+}
+.resources-resource-body > * i {
+  white-space: nowrap;
 }
 .resources-btn {
   background-color: #0f6fff;
