@@ -5,7 +5,7 @@ import favicon from "../../Images/logo.png";
 import AddUsers from "./AddUsers";
 import _ from "lodash";
 
-const Group = ({joined_read, total_real, job, axiosInstance, load, groups }) => {
+const Group = ({totalunread, job, axiosInstance, load, groups }) => {
 
 
 // const Group = ({ group, axiosInstance, load }) => {
@@ -23,8 +23,7 @@ const Group = ({joined_read, total_real, job, axiosInstance, load, groups }) => 
 	console.log(user);
 	console.log(user.group_joined.includes(job._id));
 	console.log(user.groupOwns.includes(job._id));
-	console.log(joined_read);
-	console.log(total_real);
+	console.log(totalunread);
 
 	// useEffect(()=>{
 	// 	setsource(`${axiosInstance.defaults.baseURL}images/${job.group_image}`);
@@ -64,8 +63,8 @@ const Group = ({joined_read, total_real, job, axiosInstance, load, groups }) => 
 					</span>
 					{
 						(job.members?.includes(user._id))?
-					(total_real?.totalrealChat-joined_read?.msg_read)?
-					<span className="groups-group-head-content-field">{total_real?.totalrealChat-joined_read?.msg_read}&nbsp;unread messages</span>
+					(totalunread.newarray>0)?
+					<span className="groups-group-head-content-field">{totalunread.newarray}&nbsp;unread messages</span>
 					:
 					<></>
 					:

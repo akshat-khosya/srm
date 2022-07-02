@@ -75,6 +75,8 @@ const AddMentor = ({ close, save ,axiosInstance,load}) => {
 			try {
 				const res = await axiosInstance.post("/api/mentoring/", mentorData);
 				console.log(res);
+				const readallmentor = await axiosInstance.post("/api/mentoring/readmentoring",{"userid":user._id});
+      			console.log(readallmentor);
 				if(res.data.status){
 					alert(res.data.message);
 				}

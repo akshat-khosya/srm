@@ -19,7 +19,7 @@ const Groups = ({ axiosInstance, load }) => {
 
 	async function fetchGroups(){
 		const res = await axiosInstance.post("/api/group/publicgroups",{"userid":user._id});
-		console.log(res);
+		console.log(res,"ok");
 		setGroups(res.data);
 		// console.log(groups);
 		return res
@@ -62,8 +62,7 @@ const Groups = ({ axiosInstance, load }) => {
 								<Group
 									job={group}
 									axiosInstance={axiosInstance}
-									joined_read={groups?.joined_read[0]?.read?.find(o=>o.group_id === group._id)}
-									total_real={groups?.total_real?.find(o=>o._id === group._id)}
+									totalunread={groups.totalunread.find(o=>o.group_id === group._id)}
 								/>
 							</div>
 						))}

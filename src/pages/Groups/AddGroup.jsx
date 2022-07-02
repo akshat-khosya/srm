@@ -50,11 +50,15 @@ const AddGroup = ({ close, save, axiosInstance, setrefetch, refetch }) => {
 			if (res.data.status) {
 				let imgPost = await axiosInstance.post("/api/upload", image);
 				setrefetch(!refetch);
+				
 				console.log(imgPost);
 			}
+			
 		}catch (err) {
 			console.log(err);
 		}
+
+		await close();
 
 	};
 	return (

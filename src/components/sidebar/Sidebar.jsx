@@ -10,6 +10,8 @@ function Sidebar({ axiosInstance }) {
 	const [icon, setIcon] = useState("fas fa-caret-down");
 	const [dropdown, setDropdown] = useState(true);
 	const location = useLocation();
+	const [noti, setnoti] = useState();
+	const [refetch,setrefetch] = useState(false);
 	const handleIcon = () => {
 		if (icon === "fas fa-caret-down") {
 			setIcon("fas fa-caret-up");
@@ -19,9 +21,51 @@ function Sidebar({ axiosInstance }) {
 			setDropdown(true);
 		}
 	};
+
+	async function getnotification(){
+		const getNoti = await axiosInstance.post("/api/noti/getnoticount",{"userid":user._id});
+		setnoti(getNoti);
+		console.log(getNoti);
+		console.log(noti);
+	}
+
+	async function readEventNotification(){
+		const readallevent = await axiosInstance.post("/api/event/readevent",{"userid":user._id});
+		setrefetch(!refetch);
+		console.log(readallevent);
+	}
+
+	async function readMentoringNotification(){
+		const readallmentor = await axiosInstance.post("/api/mentoring/readmentoring",{"userid":user._id});
+		setrefetch(!refetch);
+		console.log(readallmentor);
+	}
+
+	async function readOpportunityNotification(){
+		const readallopportunity = await axiosInstance.post("/api/oppo/readopportunity",{"userid":user._id});
+		setrefetch(!refetch);
+		console.log(readallopportunity);
+	}
+
+	async function readResourceNotification(){
+		const readallresource = await axiosInstance.post("/api/resource/readresource",{"userid":user._id});
+		setrefetch(!refetch);
+		console.log(readallresource);
+	}
+
+	async function readScholarshipNotification(){
+		const readallscholarship = await axiosInstance.post("/api/scholarship/readscholarship",{"userid":user._id});
+		setrefetch(!refetch);
+		console.log(readallscholarship);
+	}
+
 	useEffect(() => {
 		setDropdown(true);
 	}, [location.pathname]);
+
+	useEffect(()=>{
+		getnotification();
+	},[refetch]);
 
 	return (
 		<div className="Sidebar">
@@ -165,66 +209,66 @@ function Sidebar({ axiosInstance }) {
 							</div>
 						</li>
 					</Link>
-					<Link className="link" to="/mentoring">
+					<Link onClick={()=>readMentoringNotification()} className="link" to="/mentoring">
 						<li className="Sidebar-li ">
 							<div className="profile-group Row">
 								<div className="Sidebar-profile Col-lg-20">
 									<i className="fas fa-people-arrows"></i>
 								</div>
 								<div className="Sidebar-profile-content Col-lg-70">
-									Mentoring
+								{`${(noti?.data.differencementor === 0)? "Mentors": `Mentors ${noti?.data.differencementor}` }`}
 								</div>
 								<div className="Sidebar-icon Col-lg-10"></div>
 							</div>
 						</li>
 					</Link>
-					<Link className="link" to="/opportunity">
+					<Link onClick={()=>readOpportunityNotification()} className="link" to="/opportunity">
 						<li className="Sidebar-li ">
 							<div className="profile-group Row">
 								<div className="Sidebar-profile Col-lg-20">
 									<i className="fas fa-building"></i>
 								</div>
 								<div className="Sidebar-profile-content Col-lg-70">
-									Opportunity
+								{`${(noti?.data.differenceopportunity === 0)? "Opportunity": `Opportunity ${noti?.data.differenceopportunity}` }`}
 								</div>
 								<div className="Sidebar-icon Col-lg-10"></div>
 							</div>
 						</li>
 					</Link>
-					<Link className="link" to="/resource">
+					<Link onClick={()=>readResourceNotification()} className="link" to="/resource">
 						<li className="Sidebar-li ">
 							<div className="profile-group Row">
 								<div className="Sidebar-profile Col-lg-20">
 									<i className="far fa-sticky-note"></i>
 								</div>
 								<div className="Sidebar-profile-content Col-lg-70">
-									Resources
+								{`${(noti?.data.differenceresource === 0)? "Resources": `Resources ${noti?.data.differenceresource}` }`}
 								</div>
 								<div className="Sidebar-icon Col-lg-10"></div>
 							</div>
 						</li>
 					</Link>
-					<Link className="link" to="/scholarships">
+					<Link onClick={()=>readScholarshipNotification()} className="link" to="/scholarships">
 						<li className="Sidebar-li ">
 							<div className="profile-group Row">
 								<div className="Sidebar-profile Col-lg-20">
 									<i className="fas fa-graduation-cap"></i>
 								</div>
 								<div className="Sidebar-profile-content Col-lg-70">
-									Scholarships
+								{`${(noti?.data.differencescholarship === 0)? "Scholarship": `Scholarship ${noti?.data.differencescholarship}` }`}
 								</div>
 								<div className="Sidebar-icon Col-lg-10"></div>
 							</div>
 						</li>
 					</Link>
-					<Link className="link" to="/events">
+					<Link onClick={()=>readEventNotification()} className="link" to="/events">
 						<li className="Sidebar-li ">
 							<div className="profile-group Row">
 								<div className="Sidebar-profile Col-lg-20">
 									<i className="fas fa-calendar-week"></i>
 								</div>
 								<div className="Sidebar-profile-content Col-lg-70">
-									Events
+									{`${(noti?.data.differenceevent === 0)? "Events": `Events ${noti?.data.differenceevent}` }`}
 								</div>
 								<div className="Sidebar-icon Col-lg-10"></div>
 							</div>

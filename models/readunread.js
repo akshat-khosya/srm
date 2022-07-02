@@ -6,6 +6,11 @@ const GroupInfoSchema = new mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId,
         ref: 'UserData'
       },
+      totalchat:[
+        {
+          type:String
+        }
+      ],
       msg_read: {
         type: Number
       }

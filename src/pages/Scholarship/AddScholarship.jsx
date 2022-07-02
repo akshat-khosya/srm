@@ -43,7 +43,9 @@ const AddScholarship = ({ close, axiosInstance,load }) => {
 					const respond = await axiosInstance.post(
 						"/api/scholarship/",
 						sendData
-					  );
+					  )
+					  const readscholar = await axiosInstance.post("/api/scholarship/readscholarship",{"userid":user._id});
+					  console.log(readscholar);
 					  console.log(respond);
 					  if(respond.data.status){
 						  alert("Added");

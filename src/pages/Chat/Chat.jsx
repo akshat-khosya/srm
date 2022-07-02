@@ -26,7 +26,7 @@ const Chat = ({axiosInstance}) => {
 	const [file, setFile] = useState(null);
 
 	const handleChange = (e) => {
-		setMessage(e.target.value.trim());
+		setMessage(e.target.value);
 	};
 
 	const handleFile = (e) => {
@@ -38,7 +38,7 @@ const Chat = ({axiosInstance}) => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		if(file !== null || message !== ""){
+		if(file !== null || message.trim() !== ""){
 
 			if(file!==null){
 				const image = new FormData();
@@ -55,7 +55,7 @@ const Chat = ({axiosInstance}) => {
 				}
 			}
 			
-			await axiosInstance.post("/api/chat/chatpost",{groupid: param.groupName,content: message,"filename":(file !== null)?Date.now()+file?.name:null, userid: user._id});
+			await axiosInstance.post("/api/chat/chatpost",{groupid: param.groupName,content: message.trim(),"filename":(file !== null)?Date.now()+file?.name:null, userid: user._id});
 			setMessages((prev) => {
 				return [
 					...prev,
@@ -69,8 +69,7 @@ const Chat = ({axiosInstance}) => {
 			});
 			setMessage("");
 			setFile(null);
-			const isread = await axiosInstance.post("/api/group/readmsg",{"groupid":param.groupName,"userid":user._id});
-			console.log(isread);
+			addRead();
 		}
 		else{
 			console.log("file or message required!");
@@ -104,6 +103,21 @@ const Chat = ({axiosInstance}) => {
 		console.log(isread);
 	}
 
+	function urlify(text) {
+		const urlRegex = /(https?:\/\/[^\s]+)/g;
+		return text.split(urlRegex)
+		   .map(part => {
+			  if(part.match(urlRegex)) {
+				 return <a target="_blank" href={part}>{part}</a>;
+			  }
+			  return part;
+		   });
+	  }
+	
+	//   const headingAvailable = (
+	// 	<span className="home_post_text">{urlify(postData.heading)}</span>
+	//   );
+
 	useEffect(()=>{
 		console.log(file);
 		const image = new FormData();
@@ -115,7 +129,7 @@ const Chat = ({axiosInstance}) => {
 	},[file]);
 
 	useEffect(()=>{
-		if(user.group_joined.includes(param.groupName) === false){
+		if(chatdata.members?.includes(user._id) === false){
 			navigate('/groups');
 		}
 		
@@ -157,7 +171,7 @@ const Chat = ({axiosInstance}) => {
 								{msg.name}
 							</a>
 							<span className="chat-message-msg">
-								{msg.message}
+								{urlify(msg.message)}
 							</span>
 							{
 								(msg.file !== null )?

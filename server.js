@@ -16,6 +16,7 @@ const scholarship = require("./routes/scholarships");
 const resource = require("./routes/resource");
 const Group = require("./routes/group");
 const groupchat = require("./routes/groupchat");
+const notify = require("./routes/notify");
 require('./routes/userRegister');
 dotenv.config();
 
@@ -79,6 +80,7 @@ app.use("/api/scholarship/", scholarship);
 app.use("/api/resource/", resource);
 app.use("/api/group/", Group);
 app.use("/api/chat/", groupchat);
+app.use("/api/noti/", notify);
 
 // app.use("/api/users",userRoute);
 // app.use("/api/posts",postRoute);

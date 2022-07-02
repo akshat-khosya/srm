@@ -63,6 +63,8 @@ const AddJob = ({ close, save, load, axiosInstance }) => {
 		}
 		try {
 			const res = await axiosInstance.post("/api/oppo/", userData);
+			const readallopportunity = await axiosInstance.post("/api/oppo/readopportunity",{"userid":user._id});
+			console.log(readallopportunity);
 			if (res.data.status) {
 				load();
 				alert(res.data.message);

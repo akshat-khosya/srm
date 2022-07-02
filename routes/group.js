@@ -4,6 +4,10 @@ const Group = require("../models/group");
 const userData = require("../models/userData");
 const read = require("../models/readunread");
 
+
+// joined_read={groups?.joined_read[0]?.read?.find(o=>o.group_id === group._id)}
+// 									total_real={groups?.total_real?.find(o=>o._id === group._id)}
+
 // CREATE GROUP -=-=-=-=-=-=-=-==--==-=-=--=-=-=--=--=-
 router.post("/creategroup", async (req, res) => {
     try{
@@ -79,34 +83,45 @@ router.post("/creategroup", async (req, res) => {
 router.post("/publicgroups", async(req, res) => {
     try{
         const allpublic = await Group.find({group_status: 'public'}, "_id group_name group_description group_tags group_image members group_owner");
-        const allpublic_ids = await Group.aggregate([
-                {
-                  "$project": {
-                    "totalrealChat": {
-                      "$size": "$group_chat"
-                    }
-                  }
+        // const allpublic_ids = await Group.aggregate([
+        //         {
+        //           "$project": {
+        //             "totalrealChat": {
+        //               "$size": "$group_chat"
+        //             }
+        //           }
+        //         }
+        //       ]);
+        
+
+        // const ok = await read.find({user_id:req.body.userid},"read.group_id read.msg_read")
+
+        const allchatread = await read.find({"user_id":req.body.userid});
+        // console.log(allchatread);
+
+        const totalunread = await Group.find({},"group_chat")
+        .then(async (res)=>{ 
+            return await Promise.all(res.map(async (el)=>{
+                const obj = await allchatread[0].read.find(o => o.group_id.toString().replace(/ObjectId\("(.*)"\)/, "$1") === el._id.toString().replace(/ObjectId\("(.*)"\)/, "$1"));
+                console.log(obj);
+                return {
+                    "group_id":el._id,
+                    "newarray":el.group_chat.filter( x => !obj.totalchat.includes(x)).length
                 }
-              ]);
-        // console.log(allpublic_ids);
+                // newchatobj.newarray =
+                // await el.group_chat.filter( x => !obj.totalchat.includes(x)).length
 
-        // const allChat = await Group.find({_id: req.body.groupid},"group_chat");
+                // console.log(newchatobj,"118");
 
-        const ok = await read.find({user_id:req.body.userid},"read.group_id read.msg_read")
-        // .then(res1 => {
-        //     return res1[0].read.map(item => {
-        //         return item
-        //     })
-        // })
+                // return newchatobj;
 
-        
-        
-        // .where({"read.group_id":req.body.groupid})
-        // .select({ read: {$elemMatch: {group_id: req.body.groupid}}});
+            }))}
+        )
+        console.log(totalunread,"plpl");
+
         res.send({
             allpublic,
-            "total_real":allpublic_ids,
-            "joined_read":ok
+            totalunread
         });
     }
     catch(err){
@@ -147,7 +162,7 @@ router.post("/singlejoin", async(req, res)=>{
             }
         );
 
-        await group.find({_id: req.body.groupid}).update({
+        await Group.find({_id: req.body.groupid}).update({
             $push:{
                 members: req.body.id
             }
@@ -240,22 +255,37 @@ router.post("/addmember", async(req, res) => {
         });
 
         // NO. OF TOTAL MSG WHILE ADDING MEMBER TO GROUP
-        const allChat = await Group.find({_id: req.body.groupid},"group_chat");
+        // const allChat = await Group.find({_id: req.body.groupid},"group_chat");
 
+        // const update_msg = {
+        //     group_id:mongoose.Types.ObjectId(req.body.groupid),
+        //     msg_read:allChat[0].group_chat.length
+        // }
+
+        // // WHEN MEMBER ADDED TO GROUP CALLED THIS FUNCTION TO ADD OBJECT FOR READ MSG
+        // await read.find({'user_id':{ $in: req.body.userData}}).where('read.group_id').ne(req.body.groupid)
+        // .updateMany({user_id:{ $in: req.body.userData}},
+            // {
+            //     $push:{
+            //         "read":update_msg
+            //     }
+            // }
+        // );
+
+        const totalupdate = await Group.find({_id:req.body.groupid},"group_chat");
+        
         const update_msg = {
             group_id:mongoose.Types.ObjectId(req.body.groupid),
-            msg_read:allChat[0].group_chat.length
+            totalchat:totalupdate[0].group_chat
         }
-
-        // WHEN MEMBER ADDED TO GROUP CALLED THIS FUNCTION TO ADD OBJECT FOR READ MSG
         await read.find({'user_id':{ $in: req.body.userData}}).where('read.group_id').ne(req.body.groupid)
-        .updateMany({user_id:{ $in: req.body.userData}},
+        .updateOne({"user_id":{ $in: req.body.userData}},
             {
                 $push:{
                     "read":update_msg
                 }
             }
-        );
+        )
 
         // this fuckin query doesnt make sense as we have to pass whole data
         
@@ -299,20 +329,78 @@ router.post("/readmsg", async(req,res) =>{
     //                 }
     //         );
 
+    // currentMentorRead: 
+    //         [{type: String}],
+
     try{
 
         // post request on each chat
 
-        const allChat = await Group.find({_id: req.body.groupid},"group_chat");
+        // const allChat = await Group.find({_id: req.body.groupid},"group_chat");
 
         
-        await read.updateOne({"user_id":req.body.userid,"read.group_id":req.body.groupid},{$set : {"read.$.msg_read" : allChat[0].group_chat.length}})
+        // await read.updateOne({"user_id":req.body.userid,"read.group_id":req.body.groupid},
+        // {$set : {"read.$.msg_read" : allChat[0].group_chat.length}})
+
+
+// ----------------------------------------------------------------------------------------------------------------------
+        // const allchatread = await read.find({"user_id":req.body.userid});
+        // // console.log(allchatread);
+
+        // const totalevent = await Group.find({_id:{$in:req.body.groupid}},"group_chat")
+        // .then((res)=>{
+        //     return res.map((el)=>{
+        //         // const obj = allchatread[0].read.find(o => o.group_id.toString().replace(/ObjectId\("(.*)"\)/, "$1") == el._id.toString().replace(/ObjectId\("(.*)"\)/, "$1"));
+        //         // return obj;
+        //         const newchatobj = {
+        //             "group_id":el._id,
+        //             "newarray":[]
+        //         }
+        //         newchatobj.newarray =
+        //         el.group_chat.filter(x => {
+        //             const obj = allchatread[0].read.find(o => o.group_id.toString().replace(/ObjectId\("(.*)"\)/, "$1") == el._id.toString().replace(/ObjectId\("(.*)"\)/, "$1"));
+        //             return !obj.totalchat.includes(x);
+        //         })
+
+        //         console.log(newchatobj);
+
+        //         return newchatobj;
+
+        //     })
+        // })
+        // console.log(totalevent);
+
+        const allchatread = await read.find({"user_id":req.body.userid});
+        
+        const totalevent = await Group.find({_id:req.body.groupid},"group_chat")
+        .then((res)=>{
+            return Promise.all(res.map((el)=>{
+
+                return el.group_chat.filter(x => {
+                    const obj = allchatread[0].read.find(o => o.group_id.toString().replace(/ObjectId\("(.*)"\)/, "$1") === el._id.toString().replace(/ObjectId\("(.*)"\)/, "$1"));
+                    return !obj?.totalchat?.includes(x);
+                })
+
+            }))
+        })
+        console.log(totalevent[0].length);
+
+        const totalupdate = await Group.find({_id:req.body.groupid},"group_chat");
+        
+        if(totalevent[0].length>0){
+            await read.updateOne({"user_id":req.body.userid,"read.group_id":req.body.groupid},
+                {
+                    $set : {"read.$.totalchat" : totalupdate[0].group_chat}
+                }
+            )
+        }
 
         res.send({
-            "allRead":true
-        })
-
-    }
+            "allRead":true,
+            "ok":totalevent,
+            "ok2":allchatread
+        });
+}
     catch(err){
         console.log(err);
     }

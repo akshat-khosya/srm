@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 const userData = require("../models/userData");
 const read = require("../models/readunread");
+const newcount = require("../models/newcount");
 
 // Get all users
 router.get("/allusers", async (req, res) => {
@@ -48,7 +49,12 @@ router.post("/newregister", async (req, res) => {
             read:[]
           })
 
+          const readnotification = await newcount({
+            user_id: savedUser._id
+          })
+
           await readinfo.save();
+          await readnotification.save();
           res.json({
             status: true,
             message: "registred",

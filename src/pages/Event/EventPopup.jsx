@@ -61,6 +61,8 @@ const EventPopup = ({ close, submitEvent,load,axiosInstance }) => {
         "/api/event/",
         eventData
       );
+      const readallevent = await axiosInstance.post("/api/event/readevent",{"userid":user._id});
+			console.log(readallevent);
       console.log(res);
       if (res.data.status) {
         load();

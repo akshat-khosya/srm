@@ -26,6 +26,7 @@ function Event({axiosInstance}) {
 			console.log(err);
 		}
 	};
+	
 	useEffect(() => {
 		loadData();
 	}, []);

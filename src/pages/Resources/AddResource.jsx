@@ -47,6 +47,8 @@ const AddResource = ({ close,axiosInstance,load}) => {
 			if(res.data.status){
 				try {
 					const respond=await axiosInstance.post("/api/resource/",sendData);
+					const readresource = await axiosInstance.post("/api/resource/readresource",{"userid":user._id});
+					console.log(readresource);
 					console.log(respond);
 					if(respond.data.status){
 						alert("Added");
