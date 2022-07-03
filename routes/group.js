@@ -106,7 +106,7 @@ router.post("/publicgroups", async(req, res) => {
                 console.log(obj);
                 return {
                     "group_id":el._id,
-                    "newarray":el.group_chat.filter( x => !obj.totalchat.includes(x)).length
+                    "newarray":el.group_chat.filter( x => !obj?.totalchat?.includes(x)).length
                 }
                 // newchatobj.newarray =
                 // await el.group_chat.filter( x => !obj.totalchat.includes(x)).length
@@ -167,6 +167,21 @@ router.post("/singlejoin", async(req, res)=>{
                 members: req.body.id
             }
         });
+
+        const totalupdate = await Group.find({_id:req.body.groupid},"group_chat");
+        
+        const update_msg = {
+            group_id:mongoose.Types.ObjectId(req.body.groupid),
+            totalchat:totalupdate[0].group_chat
+        }
+        await read.find({'user_id':{ $in: req.body.id}}).where('read.group_id').ne(req.body.groupid)
+        .updateOne({"user_id":{ $in: req.body.id}},
+            {
+                $push:{
+                    "read":update_msg
+                }
+            }
+        )
     
         res.send({
             "status":true,

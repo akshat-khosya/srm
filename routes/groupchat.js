@@ -83,4 +83,21 @@ router.post("/chatget", async(req, res) => {
     }
 })
 
+// chat delete
+router.post("/chatdelete", async (req,res)=>{
+    await GroupChat.deleteOne({"_id":req.body.id});
+    await group.updateOne({"_id":req.body.groupid},
+    
+        {
+            $pull:{
+                "group_chat":req.body.id
+            }
+        }
+
+    )
+    res.send({
+        "isdelete":true
+    })
+})
+
 module.exports = router;

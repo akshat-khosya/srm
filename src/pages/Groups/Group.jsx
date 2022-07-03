@@ -39,6 +39,7 @@ const Group = ({totalunread, job, axiosInstance, load, groups }) => {
 
 		const res = await axiosInstance.post("/api/group/singlejoin",joinParam);
 		console.log(res);
+		// setrefetch(!refetch);
 
 	}
 
