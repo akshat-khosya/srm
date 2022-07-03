@@ -78,6 +78,33 @@ router.post("/creategroup", async (req, res) => {
     }
 });
 
+router.post("/getallnoti", async(req, res)=>{
+    const allchatread = await read.find({"user_id":req.body.userid});
+        // console.log(allchatread);
+
+        const totalunread = await Group.find({},"group_chat")
+        .then(async (res)=>{ 
+            return await Promise.all(res.map(async (el)=>{
+                const obj = await allchatread[0].read.find(o => o.group_id.toString().replace(/ObjectId\("(.*)"\)/, "$1") === el._id.toString().replace(/ObjectId\("(.*)"\)/, "$1"));
+                console.log(obj);
+                return {
+                    "group_id":el._id,
+                    "newarray":el.group_chat.filter( x => !obj?.totalchat?.includes(x)).length
+                }
+                // newchatobj.newarray =
+                // await el.group_chat.filter( x => !obj.totalchat.includes(x)).length
+
+                // console.log(newchatobj,"118");
+
+                // return newchatobj;
+
+            }))}
+        )
+
+        res.send({
+            totalunread
+        })
+})
 
 // [.] GET all public groups
 router.post("/publicgroups", async(req, res) => {

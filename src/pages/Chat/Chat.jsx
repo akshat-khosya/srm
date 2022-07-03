@@ -91,7 +91,8 @@ const Chat = ({axiosInstance}) => {
 						user: el.sender.email,
 						name: el.sender.name,
 						message: el.content,
-						file:el.file
+						file:el.file,
+						sender:el.sender._id
 					}
 				})
 		);
@@ -112,6 +113,11 @@ const Chat = ({axiosInstance}) => {
 			  }
 			  return part;
 		   });
+	  }
+
+	  async function deletechat(sender){	
+		const isDelete = await axiosInstance.post("/api/chat/chatdelete",{"groupid":param.groupName,"_id":sender});
+		console.log(isDelete);
 	  }
 	
 	//   const headingAvailable = (

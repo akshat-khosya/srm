@@ -11,6 +11,7 @@ function Sidebar({ axiosInstance }) {
 	const [dropdown, setDropdown] = useState(true);
 	const location = useLocation();
 	const [noti, setnoti] = useState();
+	const [totalchat, settotalchat] = useState(0);
 	const [refetch,setrefetch] = useState(false);
 	const handleIcon = () => {
 		if (icon === "fas fa-caret-down") {
@@ -21,6 +22,22 @@ function Sidebar({ axiosInstance }) {
 			setDropdown(true);
 		}
 	};
+
+	async function allchatNoti(){
+		const allchatNoti = await axiosInstance.post("/api/group/getallnoti",{"userid":user._id});
+		let totalno = 0;
+		// const totalchat = allchatNoti.data.totalunread.map((el)=>{
+			// let totalno = 0;
+			// totalno += el.newarray 
+		// })
+
+		for(let i=0; i<allchatNoti.data.totalunread.length; i++){
+			totalno += allchatNoti.data.totalunread[i].newarray;
+		}
+		console.log(totalno);
+		settotalchat(totalno);
+		console.log(allchatNoti);
+	}
 
 	async function getnotification(){
 		const getNoti = await axiosInstance.post("/api/noti/getnoticount",{"userid":user._id});
@@ -65,6 +82,7 @@ function Sidebar({ axiosInstance }) {
 
 	useEffect(()=>{
 		getnotification();
+		allchatNoti();
 	},[refetch]);
 
 	return (
@@ -203,7 +221,7 @@ function Sidebar({ axiosInstance }) {
 									<i className="fas fa-users"></i>
 								</div>
 								<div className="Sidebar-profile-content Col-lg-70">
-									All Groups
+									{(totalchat>0)?`All Groups ${totalchat}`: "All Groups"}
 								</div>
 								<div className="Sidebar-icon Col-lg-10"></div>
 							</div>
