@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../../context/Context";
+import userFallBack from "../../Images/user.svg";
 
 const PostComment = ({ id, comment, axiosInstance, load, snackOnDel }) => {
 	const { user } = useContext(Context);
@@ -20,12 +21,18 @@ const PostComment = ({ id, comment, axiosInstance, load, snackOnDel }) => {
 		}
 	};
 	const [readMore, setReadMore] = useState(false);
+	const [userImage, setUserImage] = useState(
+		`${axiosInstance.defaults.baseURL}images/${comment.email}`
+	);
 	return (
 		<div className="post-comment-popup-comment">
 			<div className="post-comment-popup-comment-photo">
 				<img
-					src={`${axiosInstance.defaults.baseURL}images/${comment.email}`}
+					src={userImage}
 					alt={comment.name}
+					onError={() => {
+						setUserImage(userFallBack);
+					}}
 				/>
 			</div>
 			<div className="post-comment-popup-comment-content">

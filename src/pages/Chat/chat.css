@@ -130,5 +130,11 @@
   box-shadow: 0 0 1px rgba(0, 12, 32, 0.04), 0 2px 6px rgba(3, 17, 38, 0.107135);
   clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 100% 100%);
 }
+.chat-message-msg a {
+  color: var(--blue);
+}
+.chat-message-msg a:hover {
+  text-decoration: underline;
+}
 
 /*# sourceMappingURL=chat.css.map */

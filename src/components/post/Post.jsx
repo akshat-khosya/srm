@@ -48,13 +48,10 @@ function Post({ posts, keys, axiosInstance, load }) {
 		} catch (err) {}
 	};
 	useEffect(() => {
-		console.log(`${axiosInstance.defaults.baseURL}images/${post.email}`);
 		loadData();
 	}, []);
 	const delPost = async () => {
 		try {
-			console.log(post._id);
-
 			const res = await axiosInstance.delete("/api/post/", {
 				data: { id: post._id },
 			});
@@ -66,7 +63,6 @@ function Post({ posts, keys, axiosInstance, load }) {
 					err: "",
 					color: "var(--green)",
 				});
-
 				setContextMenu(false);
 				load();
 				setTimeout(() => {

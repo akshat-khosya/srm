@@ -10,6 +10,9 @@ function Sidebar({ axiosInstance }) {
 	const [icon, setIcon] = useState("fas fa-caret-down");
 	const [dropdown, setDropdown] = useState(true);
 	const location = useLocation();
+	const [noti, setnoti] = useState();
+	const [totalchat, settotalchat] = useState(0);
+	const [refetch, setrefetch] = useState(false);
 	const handleIcon = () => {
 		if (icon === "fas fa-caret-down") {
 			setIcon("fas fa-caret-up");
@@ -19,9 +22,86 @@ function Sidebar({ axiosInstance }) {
 			setDropdown(true);
 		}
 	};
+
+	async function allchatNoti() {
+		const allchatNoti = await axiosInstance.post("/api/group/getallnoti", {
+			userid: user._id,
+		});
+		let totalno = 0;
+		// const totalchat = allchatNoti.data.totalunread.map((el)=>{
+		// let totalno = 0;
+		// totalno += el.newarray
+		// })
+
+		for (let i = 0; i < allchatNoti.data.totalunread.length; i++) {
+			totalno += allchatNoti.data.totalunread[i].newarray;
+		}
+		console.log(totalno);
+		settotalchat(totalno);
+		console.log(allchatNoti);
+	}
+
+	async function getnotification() {
+		const getNoti = await axiosInstance.post("/api/noti/getnoticount", {
+			userid: user._id,
+		});
+		setnoti(getNoti);
+		console.log(getNoti);
+		console.log(noti);
+	}
+
+	async function readEventNotification() {
+		const readallevent = await axiosInstance.post("/api/event/readevent", {
+			userid: user._id,
+		});
+		setrefetch(!refetch);
+		console.log(readallevent);
+	}
+
+	async function readMentoringNotification() {
+		const readallmentor = await axiosInstance.post(
+			"/api/mentoring/readmentoring",
+			{ userid: user._id }
+		);
+		setrefetch(!refetch);
+		console.log(readallmentor);
+	}
+
+	async function readOpportunityNotification() {
+		const readallopportunity = await axiosInstance.post(
+			"/api/oppo/readopportunity",
+			{ userid: user._id }
+		);
+		setrefetch(!refetch);
+		console.log(readallopportunity);
+	}
+
+	async function readResourceNotification() {
+		const readallresource = await axiosInstance.post(
+			"/api/resource/readresource",
+			{ userid: user._id }
+		);
+		setrefetch(!refetch);
+		console.log(readallresource);
+	}
+
+	async function readScholarshipNotification() {
+		const readallscholarship = await axiosInstance.post(
+			"/api/scholarship/readscholarship",
+			{ userid: user._id }
+		);
+		setrefetch(!refetch);
+		console.log(readallscholarship);
+	}
+
 	useEffect(() => {
 		setDropdown(true);
 	}, [location.pathname]);
+
+	useEffect(() => {
+		getnotification();
+		allchatNoti();
+	}, [refetch]);
 
 	return (
 		<div className="Sidebar">
@@ -159,72 +239,134 @@ function Sidebar({ axiosInstance }) {
 									<i className="fas fa-users"></i>
 								</div>
 								<div className="Sidebar-profile-content Col-lg-70">
-									All Groups
+									<span className="Sidebar-profile-content__text">
+										All Groups
+									</span>
+									{totalchat > 0 && (
+										<span className="Sidebar-profile-content__noticon">
+											totalchat
+										</span>
+									)}
 								</div>
 								<div className="Sidebar-icon Col-lg-10"></div>
 							</div>
 						</li>
 					</Link>
-					<Link className="link" to="/mentoring">
+					<Link
+						onClick={() => readMentoringNotification()}
+						className="link"
+						to="/mentoring"
+					>
 						<li className="Sidebar-li ">
 							<div className="profile-group Row">
 								<div className="Sidebar-profile Col-lg-20">
 									<i className="fas fa-people-arrows"></i>
 								</div>
 								<div className="Sidebar-profile-content Col-lg-70">
-									Mentoring
+									<span className="Sidebar-profile-content__text">
+										Mentors
+									</span>
+									{noti?.data.differencementor > 0 && (
+										<span className="Sidebar-profile-content__noticon">
+											noti?.data.differencementor
+										</span>
+									)}
 								</div>
 								<div className="Sidebar-icon Col-lg-10"></div>
 							</div>
 						</li>
 					</Link>
-					<Link className="link" to="/opportunity">
+					<Link
+						onClick={() => readOpportunityNotification()}
+						className="link"
+						to="/opportunity"
+					>
 						<li className="Sidebar-li ">
 							<div className="profile-group Row">
 								<div className="Sidebar-profile Col-lg-20">
 									<i className="fas fa-building"></i>
 								</div>
 								<div className="Sidebar-profile-content Col-lg-70">
-									Opportunity
+									<span className="Sidebar-profile-content__text">
+										Opportunity
+									</span>
+									{noti?.data.differenceopportunity > 0 && (
+										<span className="Sidebar-profile-content__noticon">
+											noti?.data.differenceopportunity
+										</span>
+									)}
 								</div>
 								<div className="Sidebar-icon Col-lg-10"></div>
 							</div>
 						</li>
 					</Link>
-					<Link className="link" to="/resource">
+					<Link
+						onClick={() => readResourceNotification()}
+						className="link"
+						to="/resource"
+					>
 						<li className="Sidebar-li ">
 							<div className="profile-group Row">
 								<div className="Sidebar-profile Col-lg-20">
 									<i className="far fa-sticky-note"></i>
 								</div>
 								<div className="Sidebar-profile-content Col-lg-70">
-									Resources
+									<span className="Sidebar-profile-content__text">
+										Resources
+									</span>
+									{noti?.data.differenceresource > 0 && (
+										<span className="Sidebar-profile-content__noticon">
+											noti?.data.differenceresource
+										</span>
+									)}
 								</div>
 								<div className="Sidebar-icon Col-lg-10"></div>
 							</div>
 						</li>
 					</Link>
-					<Link className="link" to="/scholarships">
+					<Link
+						onClick={() => readScholarshipNotification()}
+						className="link"
+						to="/scholarships"
+					>
 						<li className="Sidebar-li ">
 							<div className="profile-group Row">
 								<div className="Sidebar-profile Col-lg-20">
 									<i className="fas fa-graduation-cap"></i>
 								</div>
 								<div className="Sidebar-profile-content Col-lg-70">
-									Scholarships
+									<span className="Sidebar-profile-content__text">
+										Scholarship
+									</span>
+									{noti?.data.differencescholarship > 0 && (
+										<span className="Sidebar-profile-content__noticon">
+											noti?.data.differencescholarship
+										</span>
+									)}
 								</div>
 								<div className="Sidebar-icon Col-lg-10"></div>
 							</div>
 						</li>
 					</Link>
-					<Link className="link" to="/events">
+					<Link
+						onClick={() => readEventNotification()}
+						className="link"
+						to="/events"
+					>
 						<li className="Sidebar-li ">
 							<div className="profile-group Row">
 								<div className="Sidebar-profile Col-lg-20">
 									<i className="fas fa-calendar-week"></i>
 								</div>
 								<div className="Sidebar-profile-content Col-lg-70">
-									Events
+									<span className="Sidebar-profile-content__text">
+										Events
+									</span>
+									{noti?.data.differenceevent > 0 && (
+										<span className="Sidebar-profile-content__noticon">
+											noti?.data.differenceevent
+										</span>
+									)}
 								</div>
 								<div className="Sidebar-icon Col-lg-10"></div>
 							</div>

@@ -1,53 +1,57 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../../context/Context";
 import SnackBar from "../../components/Snackbar";
-const Mentor = ({ mentor, axiosInstance,load }) => {
-	const {user}=useContext(Context);
+import userFallback from "../../Images/user.svg";
+
+const Mentor = ({ mentor, axiosInstance, load }) => {
+	const { user } = useContext(Context);
 	const [contextMenu, setContextMenu] = useState(false);
-	const [open,setOpen]=useState(false);
-	const [err,setErr]=useState({
-		text:"",
-		err:"",
-		color:"var(--red)"
+	const [open, setOpen] = useState(false);
+	const [userImage, setUserImage] = useState(
+		`${axiosInstance.defaults.baseURL}images/${mentor.email}`
+	);
+	const [err, setErr] = useState({
+		text: "",
+		err: "",
+		color: "var(--red)",
 	});
 	const editMentor = () => {
 		console.log("Edit the Mentor");
 		setContextMenu(false);
 	};
-	const delMentor =async () => {
+	const delMentor = async () => {
 		try {
-			
-			
-
-			const res=await axiosInstance.delete("/api/mentoring/",{data:{id:mentor._id}});
+			const res = await axiosInstance.delete("/api/mentoring/", {
+				data: { id: mentor._id },
+			});
 			console.log(res);
-			if(res.data.status===true){
+			if (res.data.status === true) {
 				setOpen(true);
 				setErr({
-					text:res.data.message,
-					err:"",
-					color:"var(--green)"
-				})
+					text: res.data.message,
+					err: "",
+					color: "var(--green)",
+				});
 				load();
 				setContextMenu(false);
-				
+
 				setTimeout(() => {
 					setOpen(false);
 				}, 2000);
-				
 			}
-		} catch (err) {
-			
-		}
-	}
+		} catch (err) {}
+	};
 	return (
 		<div className="mentoring-mentor">
 			<div className="mentoring-mentor-head">
 				<div className="mentoring-mentor-head-icon">
 					<img
-						src={`${axiosInstance.defaults.baseURL}images/${mentor.email}`}
+						src={userImage}
 						className="mentoring-mentor-head-icon__img"
 						alt={mentor.name}
+						onError={() => {
+							setUserImage(userFallback);
+						}}
 					/>
 				</div>
 				<div className="mentoring-mentor-head-content">
@@ -62,22 +66,25 @@ const Mentor = ({ mentor, axiosInstance,load }) => {
 					</a>
 				</div>
 				<div className="mentoring-mentor-head-context">
-					{user.email===mentor.email&& <div className="more-context">
-						<button
-							className="icon more-icon"
-							onClick={() => setContextMenu(!contextMenu)}
-						>
-							<span className="material-icons">more_horiz</span>
-						</button>
-						<input
-							type="checkbox"
-							checked={contextMenu}
-							name="openContextMenu"
-							onChange={() => console.log("Changed")}
-						/>
-						<div className="more-popup">
-							<ul className="more-list">
-								{/* <li
+					{user.email === mentor.email && (
+						<div className="more-context">
+							<button
+								className="icon more-icon"
+								onClick={() => setContextMenu(!contextMenu)}
+							>
+								<span className="material-icons">
+									more_horiz
+								</span>
+							</button>
+							<input
+								type="checkbox"
+								checked={contextMenu}
+								name="openContextMenu"
+								onChange={() => console.log("Changed")}
+							/>
+							<div className="more-popup">
+								<ul className="more-list">
+									{/* <li
 									className="more-item"
 									onClick={() => editMentor()}
 								>
@@ -86,21 +93,21 @@ const Mentor = ({ mentor, axiosInstance,load }) => {
 										Edit Mentor
 									</span>
 								</li> */}
-								<li
-									className="more-item"
-									onClick={() => delMentor()}
-								>
-									<span className="material-icons">
-										delete
-									</span>
-									<span className="more-item-label">
-										Delete Mentor
-									</span>
-								</li>
-							</ul>
+									<li
+										className="more-item"
+										onClick={() => delMentor()}
+									>
+										<span className="material-icons">
+											delete
+										</span>
+										<span className="more-item-label">
+											Delete Mentor
+										</span>
+									</li>
+								</ul>
+							</div>
 						</div>
-					</div>}
-					
+					)}
 				</div>
 			</div>
 			<div className="mentoring-mentor-body">
@@ -124,7 +131,7 @@ const Mentor = ({ mentor, axiosInstance,load }) => {
 					onClick={() => setContextMenu(false)}
 				></div>
 			)}
-			{open && <SnackBar text={err.text}color={err.color} />}
+			{open && <SnackBar text={err.text} color={err.color} />}
 		</div>
 	);
 };

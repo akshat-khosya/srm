@@ -73,6 +73,20 @@ const Chat = () => {
 		chatBotContainer.scrollTop = chatBotContainer.scrollHeight;
 	}, [messages]);
 
+	function urlify(text) {
+		const urlRegex = /(https?:\/\/[^\s]+)/g;
+		return text.split(urlRegex).map((part) => {
+			if (part.match(urlRegex)) {
+				return (
+					<a target="_blank" href={part}>
+						{part}
+					</a>
+				);
+			}
+			return part;
+		});
+	}
+
 	return (
 		<section className="chat-container">
 			<div className="chat-box">
@@ -108,7 +122,8 @@ const Chat = () => {
 									{msg.name}
 								</a>
 								<span className="chat-message-msg">
-									{msg.message}
+									{/* {msg.message} */}
+									{urlify(msg.message)}
 								</span>
 							</div>
 						))}

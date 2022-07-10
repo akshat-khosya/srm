@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../../context/Context";
 import SnackBar from "../../components/Snackbar";
+import fallBackImage from '../../Images/image-placeholder.jpg'
 
 
 const DispEvent = ({ e, axiosInstance, openEvent,load }) => {
@@ -44,13 +45,17 @@ const DispEvent = ({ e, axiosInstance, openEvent,load }) => {
 			
 		}
 	};
+	const [eventImage, setEventImage] = useState(`${axiosInstance.defaults.baseURL}images/${e.photo}`)
 	return (
 		<div className="post">
 			{e.photo && (
 				<img
-					src={`${axiosInstance.defaults.baseURL}images/${e.photo}`}
+					src={eventImage}
 					alt={user.email}
 					className="postImg"
+					onError={()=>{
+						setEventImage(fallBackImage)
+					}}
 				/>
 			)}
 
