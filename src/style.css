@@ -126,3 +126,7 @@ ol {
 	left: 0;
 	background: transparent;
 }
+.dispn {
+	display: none !important;
+}
+@import url(./responsive.css);
