@@ -1,11 +1,10 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Context } from "../../context/Context";
-
 import "./profile.css";
 
-import SnackBar from "../../components/Snackbar";
 function Profile({ axiosInstance }) {
 	const [edit, setEdit] = useState(false);
+	const [showSaveBtn, setShowSaveBtn] = useState(false);
 	const { user, dispatch } = useContext(Context);
 	const [err, setErr] = useState({
 		status: false,
@@ -43,6 +42,7 @@ function Profile({ axiosInstance }) {
 		}
 	};
 	const handleChange = (e) => {
+		if (!showSaveBtn) setShowSaveBtn((p) => !p);
 		const { name, value } = e.target;
 		console.log(name, value);
 		setPersonal((prevValue) => {
@@ -52,9 +52,9 @@ function Profile({ axiosInstance }) {
 			};
 		});
 	};
-	const handelSubmit = async (e) => {
-		e.preventDefault();
-
+	const handleSubmit = async (e) => {
+		e?.preventDefault();
+		setShowSaveBtn(() => false);
 		const allPersonal = {
 			email: user.email,
 			...personal,
@@ -101,22 +101,36 @@ function Profile({ axiosInstance }) {
 			console.log(err);
 		}
 	};
+	useEffect(() => {
+		if (!edit) setShowSaveBtn(false);
+	}, [edit]);
+
 	return (
 		<>
 			<div className="profile-container">
 				<div className="profile-box">
 					<div className="profile-head">
 						<span>My Profile</span>
-						<button
-							className="profile-head-btn icon"
-							onClick={() => setEdit((p) => !p)}
-						>
-							<span className="material-icons">
-								{edit ? "close" : "edit"}
-							</span>
-						</button>
+						<div className="profile-head-btns">
+							<button
+								className="profile-head-btn icon"
+								onClick={() => setEdit((p) => !p)}
+							>
+								<span className="material-icons">
+									{edit ? "close" : "edit"}
+								</span>
+							</button>
+							{showSaveBtn && (
+								<button
+									className="profile-head-btn save-btn"
+									onClick={handleSubmit}
+								>
+									Save Profile
+								</button>
+							)}
+						</div>
 					</div>
-					<div className="profile-body">
+					<div className="profile-body" onSubmit={handleSubmit}>
 						<form className="profile-form">
 							<div className="Row">
 								<div className="Col-lg-40 Col-md-40 Col-sm-100">
@@ -130,6 +144,11 @@ function Profile({ axiosInstance }) {
 										<input
 											disabled={!edit}
 											required
+											onChange={(e) => {
+												setFile(e.target.files[0]);
+												if (!showSaveBtn)
+													setShowSaveBtn((p) => !p);
+											}}
 											className="profile-input profile-input-img dispn"
 											type="file"
 											id="file"
@@ -160,7 +179,7 @@ function Profile({ axiosInstance }) {
 										<input
 											placeholder="Name"
 											value={personal.name}
-											disabled
+											disabled={!edit}
 											required
 											type="text"
 											id="name"
@@ -184,7 +203,7 @@ function Profile({ axiosInstance }) {
 											<input
 												placeholder="Email"
 												value={user.email}
-												disabled={!edit}
+												disabled
 												required
 												type="email"
 												id="email"
@@ -201,6 +220,21 @@ function Profile({ axiosInstance }) {
 												<label htmlFor="phone">
 													<span className="material-icons">
 														phone
+													</span>
+													<span
+														style={{
+															fontSize: "1rem",
+															position:
+																"absolute",
+															top: 0,
+															right: 0,
+															transform:
+																"translate(0.5rem,-0.5rem)",
+														}}
+														className="material-icons"
+														title="Your phone number is public. To keep it private, leave the field empty"
+													>
+														tips_and_updates
 													</span>
 												</label>
 												<input
@@ -243,7 +277,7 @@ function Profile({ axiosInstance }) {
 										>
 											<label htmlFor="username">
 												<span className="material-icons">
-													account_circle
+													lightbulb
 												</span>
 											</label>
 											<input
@@ -275,7 +309,7 @@ function Profile({ axiosInstance }) {
 											value={personal.dob}
 											disabled={!edit}
 											required
-											type="text"
+											type="date"
 											id="dob"
 											name="dob"
 											onChange={handleChange}
@@ -289,21 +323,31 @@ function Profile({ axiosInstance }) {
 									>
 										<label htmlFor="gender">
 											<span className="material-icons">
-												{user.gender === "Male"
+												{personal.gender === "Male"
 													? "man"
-													: "woman"}
+													: personal.gender ===
+													  "Female"
+													? "woman"
+													: "man_4"}
 											</span>
 										</label>
-										<input
+										<select
 											placeholder="Gender"
-											value={personal.gender}
+											name="gender"
+											id="gender"
 											disabled={!edit}
 											required
-											type="text"
-											id="gender"
-											name="gender"
+											value={personal.gender}
 											onChange={handleChange}
-										/>
+										>
+											<option value="Male">Male</option>
+											<option value="Female">
+												Female
+											</option>
+											<option value="Rather Not Say">
+												Rather Not Say
+											</option>
+										</select>
 									</div>
 								</div>
 								<div className="Col-lg-33 Col-md-50 Col-sm-100">
@@ -467,582 +511,6 @@ function Profile({ axiosInstance }) {
 			</div>
 		</>
 	);
-	/* return (
-		<div className="home">
-			<div className="home-main">
-				<div className="profile">
-					{edit ? (
-						<div className="regisWrapper">
-							<h1 className="regisprimary">Profile</h1>
-
-							<div className="regis-inputgroup regis-inputgroup-profile">
-								<label className="Imglabel" htmlFor="file">
-									<img
-										className="regisImg"
-										src={`${axiosInstance.defaults.baseURL}images/${user.photo}`}
-										alt={user.email}
-									/>
-								</label>
-								<input
-									disabled
-									required
-									className="Imgupload"
-									type="file"
-									id="file"
-								/>
-							</div>
-							<div className="regiscontainer Row">
-								<div className="regis-inputgroup regis-inputgroup-profile Col-lg-33 Col-md-50 Col-sm-100">
-									<label htmlFor="name">
-										Name
-										<span className="requiredLabel">*</span>
-									</label>
-									<input
-										disabled
-										value={user.name}
-										required
-										type="name"
-										id="name"
-										name="name"
-									/>
-								</div>
-								<div className="regis-inputgroup regis-inputgroup-profile Col-lg-33 Col-md-50 Col-sm-100">
-									<label htmlFor="email">
-										Email
-										<span className="requiredLabel">*</span>
-									</label>
-									<input
-										disabled
-										value={user.email}
-										required
-										type="email"
-										id="email"
-										name="email"
-									/>
-								</div>
-								<div className="regis-inputgroup regis-inputgroup-profile Col-lg-33 Col-md-50 Col-sm-100">
-									<label htmlFor="phone">
-										Phone Number{" "}
-										<span className="requiredLabel">*</span>{" "}
-										<span
-											style={{
-												opacity: 1,
-												fontSize: "1rem",
-												display: "inline",
-											}}
-											className="material-icons"
-											title="Your phone number is public. To keep it private, leave the field empty"
-										>
-											info_outline
-										</span>{" "}
-									</label>
-									<input
-										disabled
-										value={user.phone}
-										required
-										type="text"
-										id="phone"
-										name="phone"
-									/>
-								</div>
-								<div className="regis-inputgroup regis-inputgroup-profile Col-lg-33 Col-md-50 Col-sm-100">
-									<label htmlFor="name">
-										Username
-										<span className="requiredLabel">*</span>
-									</label>
-									<input
-										disabled
-										value={user.username}
-										required
-										type="text"
-										id="phone"
-										name="phone"
-									/>
-								</div>
-								<div className="regis-inputgroup regis-inputgroup-profile Col-lg-33 Col-md-50 Col-sm-100">
-									<label htmlFor="dob">
-										Date of Birth
-										<span className="requiredLabel">*</span>
-									</label>
-									<input
-										disabled
-										value={user.dob}
-										required
-										type="text"
-										id="dob"
-										name="dob"
-									/>
-								</div>
-								<div className="regis-inputgroup regis-inputgroup-profile Col-lg-33 Col-md-50 Col-sm-100">
-									<label htmlFor="gender">
-										Gender
-										<span className="requiredLabel">*</span>
-									</label>
-									<input
-										disabled
-										value={user.gender}
-										required
-										name="gender"
-										id="gender"
-									/>
-								</div>
-								<div className="regis-inputgroup regis-inputgroup-profile Col-lg-33 Col-md-50 Col-sm-100">
-									<label htmlFor="fname">
-										Father's Name
-										<span className="requiredLabel">*</span>
-									</label>
-									<input
-										disabled
-										value={user.fname}
-										required
-										type="text"
-										id="fname"
-										name="fname"
-									/>
-								</div>
-								<div className="regis-inputgroup regis-inputgroup-profile Col-lg-33 Col-md-50 Col-sm-100">
-									<label htmlFor="mname">Mother's Name</label>
-									<input
-										disabled
-										value={user.mname}
-										type="text"
-										id="mname"
-										name="mname"
-									/>
-								</div>
-
-								<div className="regis-inputgroup regis-inputgroup-profile Col-lg-33 Col-md-50 Col-sm-100">
-									<label htmlFor="currently">
-										Current Orginzation
-										<span className="requiredLabel">*</span>
-									</label>
-									<input
-										disabled
-										value={user.currentoriginaztion}
-										required
-										type="text"
-										id="currently"
-										name="currently"
-									/>
-								</div>
-								<div className="regis-inputgroup regis-inputgroup-profile Col-lg-33 Col-md-50 Col-sm-100">
-									<label htmlFor="work">
-										Desgination
-										<span className="requiredLabel">*</span>
-									</label>
-									<input
-										disabled
-										value={user.desgination}
-										required
-										type="text"
-										id="work"
-										name="work"
-									/>
-								</div>
-								<div className="regis-inputgroup regis-inputgroup-profile Col-lg-33 Col-md-50 Col-sm-100">
-									<label htmlFor="name">
-										Batch
-										<span className="requiredLabel">*</span>
-									</label>
-									<input
-										disabled
-										value={user.batch}
-										required
-										name="batch"
-										id="batch"
-									/>
-								</div>
-								<div className="regis-inputgroup regis-inputgroup-profile Col-lg-33 Col-md-50 Col-sm-100">
-									<label htmlFor="course">
-										Program
-										<span className="requiredLabel">*</span>
-									</label>
-									<input
-										disabled
-										value={user.program}
-										required
-										name="course"
-										id="course"
-									/>
-								</div>
-								<div className="regis-inputgroup regis-inputgroup-profile Col-lg-33 Col-md-50 Col-sm-100">
-									<label htmlFor="course">
-										Passing Year
-										<span className="requiredLabel">*</span>
-									</label>
-									<input
-										disabled
-										value={user.pyear}
-										required
-										name="course"
-										id="course"
-									/>
-								</div>
-								<div className="regis-inputgroup regis-inputgroup-profile Col-lg-100 Col-md-100 Col-sm-100">
-									<label htmlFor="bio">
-										Short Bio
-										<span className="requiredLabel">*</span>
-									</label>
-									<textarea
-										disabled
-										value={user.bio}
-										required
-										rows="5"
-										type="text"
-										id="bio"
-										name="bio"
-									/>
-								</div>
-							</div>
-
-							<div className="Buttongroup">
-								<button
-									onClick={changeProfile}
-									className="aavesh-btn"
-								>
-									<span className="aavesh-btn-text">
-										Edit
-									</span>
-								</button>
-							</div>
-						</div>
-					) : (
-						<div className="regisWrapper">
-							<h1 className="regisprimary">
-								Personal Information
-							</h1>
-							<form onSubmit={handelSubmit}>
-								<div className="regis-inputgroup">
-									<label className="Imglabel" htmlFor="file">
-										<i className="fas fa-pen"></i>
-										<img
-											className="regisImg"
-											src={
-												file
-													? URL.createObjectURL(file)
-													: `${axiosInstance.defaults.baseURL}images/${user.photo}`
-											}
-											alt={user.email}
-										/>
-									</label>
-									<input
-										onChange={(e) => {
-											setFile(e.target.files[0]);
-										}}
-										className="Imgupload"
-										type="file"
-										id="file"
-									/>
-								</div>
-								<div className="regiscontainer Row">
-									<div className="regis-inputgroup Col-lg-33 Col-md-50 Col-sm-100">
-										<label htmlFor="name">
-											Name
-											<span className="requiredLabel">
-												*
-											</span>
-										</label>
-										<input
-											onChange={handelChange}
-											required
-											value={personal.name}
-											type="name"
-											id="name"
-											name="name"
-										/>
-									</div>
-									<div className="regis-inputgroup Col-lg-33 Col-md-50 Col-sm-100">
-										<label htmlFor="email">
-											Email
-											<span className="requiredLabel">
-												*
-											</span>
-										</label>
-										<input
-											disabled
-											onChange={handelChange}
-											value={user.email}
-											type="email"
-											id="email"
-											name="email"
-										/>
-									</div>
-									<div className="regis-inputgroup Col-lg-33 Col-md-50 Col-sm-100">
-										<label htmlFor="name">
-											Phone Number
-											<span
-												style={{
-													opacity: 1,
-													fontSize: "1rem",
-													display: "inline",
-												}}
-												className="material-icons"
-												title="Your phone number is public. To keep it private, leave the field empty"
-											>
-												info_outline
-											</span>{" "}
-										</label>
-										<input
-											onChange={handelChange}
-											value={personal.phone}
-											type="text"
-											id="phone"
-											name="phone"
-										/>
-									</div>
-									<div className="regis-inputgroup Col-lg-33 Col-md-50 Col-sm-100">
-										<label htmlFor="username">
-											Username
-											<span className="requiredLabel">
-												*
-											</span>
-										</label>
-										<input
-											required
-											onChange={handelChange}
-											value={personal.username}
-											type="text"
-											id="username"
-											name="username"
-										/>
-									</div>
-									<div className="regis-inputgroup Col-lg-33 Col-md-50 Col-sm-100">
-										<label htmlFor="dob">
-											Date of Birth
-											<span className="requiredLabel">
-												*
-											</span>
-										</label>
-										<input
-											onChange={handelChange}
-											value={personal.dob}
-											required
-											type="date"
-											id="dob"
-											name="dob"
-										/>
-									</div>
-									<div className="regis-inputgroup Col-lg-33 Col-md-50 Col-sm-100">
-										<label htmlFor="gender">
-											Gender
-											<span className="requiredLabel">
-												*
-											</span>
-										</label>
-										<select
-											onChange={handelChange}
-											value={personal.gender}
-											required
-											name="gender"
-											id="gender"
-										>
-											<option name="course" value="">
-												Select..
-											</option>
-											<option name="course" value="Male">
-												Male
-											</option>
-											<option
-												name="course"
-												value="Female"
-											>
-												Female
-											</option>
-										</select>
-									</div>
-									<div className="regis-inputgroup Col-lg-33 Col-md-50 Col-sm-100">
-										<label htmlFor="fname">
-											Father's Name
-											<span className="requiredLabel">
-												*
-											</span>
-										</label>
-										<input
-											onChange={handelChange}
-											value={personal.fname}
-											required
-											type="text"
-											id="fname"
-											name="fname"
-										/>
-									</div>
-									<div className="regis-inputgroup Col-lg-33 Col-md-50 Col-sm-100">
-										<label htmlFor="mname">
-											Mother's Name
-										</label>
-										<input
-											onChange={handelChange}
-											value={personal.mname}
-											type="text"
-											id="mname"
-											name="mname"
-										/>
-									</div>
-
-									<div className="regis-inputgroup Col-lg-33 Col-md-50 Col-sm-100">
-										<label htmlFor="currentoriginaztion">
-											Current Originzation
-											<span className="requiredLabel">
-												*
-											</span>
-										</label>
-										<input
-											onChange={handelChange}
-											value={personal.currentoriginaztion}
-											required
-											type="text"
-											id="currentoriginaztion"
-											name="currentoriginaztion"
-										/>
-									</div>
-
-									<div className="regis-inputgroup Col-lg-33 Col-md-50 Col-sm-100">
-										<label htmlFor="desgination">
-											Desgination
-											<span className="requiredLabel">
-												*
-											</span>
-										</label>
-										<input
-											onChange={handelChange}
-											required
-											value={personal.desgination}
-											name="desgination"
-											id="desgination"
-										/>
-									</div>
-									<div className="regis-inputgroup Col-lg-33 Col-md-50 Col-sm-100">
-										<label htmlFor="program">
-											Program
-											<span className="requiredLabel">
-												*
-											</span>
-										</label>
-										<select
-											onChange={handelChange}
-											value={personal.program}
-											required
-											name="program"
-											id="program"
-										>
-											<option name="program" value="">
-												select..
-											</option>
-											<option name="program" value="MBA">
-												MBA
-											</option>
-											<option name="program" value=" MCA">
-												MCA
-											</option>
-											<option
-												name="program"
-												value="M.Tech"
-											>
-												M.Tech
-											</option>
-											<option
-												name="program"
-												value="B.Tech"
-											>
-												B.Tech
-											</option>
-											<option name="program" value="BBA">
-												BBA
-											</option>
-											<option name="program" value="BCA">
-												BCA
-											</option>
-											<option
-												name="program"
-												value="B.Pharm"
-											>
-												B.Pharma
-											</option>
-											<option name="program" value="BHM">
-												BHM
-											</option>
-											<option
-												name="program"
-												value="others"
-											>
-												Others
-											</option>
-										</select>
-									</div>
-									<div className="regis-inputgroup Col-lg-33 Col-md-50 Col-sm-100">
-										<label htmlFor="batch">
-											Batch
-											<span className="requiredLabel">
-												*
-											</span>
-										</label>
-										<input
-											onChange={handelChange}
-											value={personal.batch}
-											required
-											name="batch"
-											id="batch"
-										/>
-									</div>
-									<div className="regis-inputgroup Col-lg-33 Col-md-50 Col-sm-100">
-										<label htmlFor="pyear">
-											Passing Year
-											<span className="requiredLabel">
-												*
-											</span>
-										</label>
-										<input
-											required
-											className="myInput IP"
-											type="number"
-											name="pyear"
-											id="pyear"
-											min="1997"
-											max="2050"
-											step="1"
-											onChange={handelChange}
-											value={personal.pyear}
-											placeholder="Passing Year"
-										/>
-									</div>
-
-									<div className="regis-inputgroup Col-lg-100 Col-md-100 Col-sm-100">
-										<label htmlFor="bio">
-											Short Bio
-											<span className="requiredLabel">
-												*
-											</span>
-										</label>
-										<textarea
-											onChange={handelChange}
-											value={personal.bio}
-											required
-											rows="5"
-											type="text"
-											id="bio"
-											name="bio"
-										/>
-									</div>
-								</div>
-
-								<div className="Buttongroup">
-									<button
-										type="submit"
-										className="aavesh-btn"
-									>
-										<span className="aavesh-btn-text">
-											Save
-										</span>
-									</button>
-								</div>
-							</form>
-						</div>
-					)}
-					{err.status && <SnackBar text={err.message} />}
-				</div>
-			</div>
-		</div>
-	); */
 }
 
 export default Profile;
