@@ -213,22 +213,14 @@ const ProfilePopup = ({ axiosInstance, close, userEmail }) => {
 													: "man_4"}
 											</span>
 										</label>
-										<select
+										<input
 											placeholder="Gender"
 											name="gender"
 											id="gender"
 											disabled
 											required
 											value={user.gender}
-										>
-											<option value="Male">Male</option>
-											<option value="Female">
-												Female
-											</option>
-											<option value="Rather Not Say">
-												Rather Not Say
-											</option>
-										</select>
+										/>
 									</div>
 								</div>
 								<div className="Col-lg-33 Col-md-50 Col-sm-100">

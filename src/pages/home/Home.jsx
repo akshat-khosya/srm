@@ -17,17 +17,6 @@ function Home({ axiosInstance }) {
 	useEffect(() => {
 		loadPost();
 	}, []);
-
-	const [navbar, setNavbar] = useState("Navbar");
-	const changeClass = () => {
-		console.log(window.scrollY);
-		if (window.scrollY > 1) {
-			setNavbar("Navbaractive Navbar");
-		} else {
-			setNavbar("Navbaractive");
-		}
-	};
-	window.addEventListener("scroll", changeClass);
 	return (
 		<div className="home">
 			<div className="home-main">
