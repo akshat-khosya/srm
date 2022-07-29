@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+require('./group');
+require('./groupchat');
 
 const UserDataSchema = new mongoose.Schema(
   {
@@ -38,6 +40,21 @@ const UserDataSchema = new mongoose.Schema(
       required: true,
       default: false,
     },
+    groupOwns:{
+      type: [String],
+    },
+    group_joined:[
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Group'
+      }
+    ],
+    invite_requests:[
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Group'
+      }
+    ],
     batch: {
       type: String,
     },

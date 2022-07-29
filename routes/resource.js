@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const newcount = require("../models/newcount");
 const Resource = require("../models/resource");
 router.post("/", async (req, res) => {
     try {
@@ -36,4 +37,30 @@ router.delete("/", async(req,res)=>{
     console.log(err);
   }
 })
+
+router.post("/readresource",async(req,res)=>{
+  const totalevent = await Resource.find({},"_id")
+  .then(res1 => 
+    res1.map(function(el){
+      return el._id.toString().replace(/ObjectId\("(.*)"\)/, "$1");
+    })
+  );
+  // console.log(totalevent);
+  const new_event = await newcount.find({"user_id":req.body.userid},"currentResource");
+  const difference = totalevent.filter(x => !new_event[0].currentResource.includes(x));
+
+  if(difference.length > 0){
+    await newcount.updateOne({"user_id":req.body.userid},{
+      $set:{
+        currentResource: totalevent
+      }
+    })
+  }
+
+  res.send({
+    "status":true
+  })
+
+})
+
 module.exports = router;

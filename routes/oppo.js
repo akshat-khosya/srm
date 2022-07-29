@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const newcount = require("../models/newcount");
 const Oppo = require("../models/oppo");
 router.post("/", async (req, res) => {
    try {
@@ -55,6 +56,31 @@ router.post("/", async (req, res) => {
     } catch (err) {
       console.log(err);
     }
+  })
+
+  router.post("/readopportunity",async(req,res)=>{
+    const totalevent = await Oppo.find({},"_id")
+    .then(res1 => 
+      res1.map(function(el){
+        return el._id.toString().replace(/ObjectId\("(.*)"\)/, "$1");
+      })
+    );
+    // console.log(totalevent);
+    const new_event = await newcount.find({"user_id":req.body.userid},"currentOpportunity");
+    const difference = totalevent.filter(x => !new_event[0].currentOpportunity.includes(x));
+
+    if(difference.length > 0){
+      await newcount.updateOne({"user_id":req.body.userid},{
+        $set:{
+          currentOpportunity: totalevent
+        }
+      })
+    }
+
+    res.send({
+      "status":true
+    })
+
   })
 
 module.exports = router;

@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Mentoring = require("../models/mentoring");
+const newcount = require("../models/newcount");
 router.post("/", async (req, res) => {
   
    try {
@@ -60,5 +61,32 @@ router.post("/", async (req, res) => {
     }
   })
 
+  
+
+
+  router.post("/readmentoring",async(req,res)=>{
+    const totalevent = await Mentoring.find({},"_id")
+    .then(res1 => 
+      res1.map(function(el){
+        return el._id.toString().replace(/ObjectId\("(.*)"\)/, "$1");
+      })
+    );
+    // console.log(totalevent);
+    const new_event = await newcount.find({"user_id":req.body.userid},"currentMentorRead");
+    const difference = totalevent.filter(x => !new_event[0].currentMentorRead.includes(x));
+
+    if(difference.length > 0){
+      await newcount.updateOne({"user_id":req.body.userid},{
+        $set:{
+          currentMentorRead: totalevent
+        }
+      })
+    }
+
+    res.send({
+      "status":true
+    })
+
+  })
 
 module.exports = router;

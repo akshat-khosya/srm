@@ -14,6 +14,10 @@ const oppo = require("./routes/oppo");
 const mentoring = require("./routes/mentoring");
 const scholarship = require("./routes/scholarships");
 const resource = require("./routes/resource");
+const Group = require("./routes/group");
+const groupchat = require("./routes/groupchat");
+const notify = require("./routes/notify");
+require('./routes/userRegister');
 dotenv.config();
 
 const corsOptions = {
@@ -21,26 +25,27 @@ const corsOptions = {
   credentials: true, //access-control-allow-credentials:true
   optionSuccessStatus: 200,
 };
+
 app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use("/images", express.static(path.join(__dirname, "/images")));
 app.use("/pdf", express.static(path.join(__dirname, "/pdf")));
-mongoose.connect(
-  process.env.MONGO_URL,
-  { useNewUrlParser: true, useUnifiedTopology: true },
-  function (err) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("Connected");
-    }
-  }
-);
-//   mongoose.connect('mongodb://localhost:27017/srm',{ useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
-//   () => {
-//     console.log('Connected to MongoDB');
-//   });
+// mongoose.connect(
+//   process.env.MONGO_URL,
+//   { useNewUrlParser: true, useUnifiedTopology: true },
+//   function (err) {
+//     if (err) {
+//       console.log(err);
+//     } else {
+//       console.log("Connected");groupchat
+//     }
+//   }
+// );
+  mongoose.connect('mongodb://localhost:27017/standalone',{ useNewUrlParser: true, useUnifiedTopology: true },
+  () => {
+    console.log('Connected to MongoDB');
+  });
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "images");
@@ -72,7 +77,11 @@ app.use("/api/event/", event);
 app.use("/api/oppo/", oppo);
 app.use("/api/mentoring/", mentoring);
 app.use("/api/scholarship/", scholarship);
-app.use("/api/resource", resource);
+app.use("/api/resource/", resource);
+app.use("/api/group/", Group);
+app.use("/api/chat/", groupchat);
+app.use("/api/noti/", notify);
+
 // app.use("/api/users",userRoute);
 // app.use("/api/posts",postRoute);
 // app.use("/api/categories",categoryRoute);

@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Event = require("../models/event");
+const newcount = require("../models/newcount");
 router.post("/", async (req, res) => {
    try {
        const newEvent=new Event(req.body);
@@ -55,6 +56,31 @@ router.post("/", async (req, res) => {
     } catch (err) {
       console.log(err);
     }
+  })
+
+  router.post("/readevent",async(req,res)=>{
+    const totalevent = await Event.find({},"_id")
+    .then(res1 => 
+      res1.map(function(el){
+        return el._id.toString().replace(/ObjectId\("(.*)"\)/, "$1");
+      })
+    );
+    // console.log(totalevent);
+    const new_event = await newcount.find({"user_id":req.body.userid},"currentEvent");
+    const difference = totalevent.filter(x => !new_event[0].currentEvent.includes(x));
+
+    if(difference.length > 0){
+      await newcount.updateOne({"user_id":req.body.userid},{
+        $set:{
+          currentEvent: totalevent
+        }
+      })
+    }
+
+    res.send({
+      "status":true
+    })
+
   })
 
 module.exports = router;

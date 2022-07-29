@@ -4,6 +4,20 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 const userData = require("../models/userData");
+const read = require("../models/readunread");
+const newcount = require("../models/newcount");
+
+// Get all users
+router.get("/allusers", async (req, res) => {
+  try{
+    let all_users = await userData.find({},"_id name username photo group_joined");
+    res.send(all_users);
+  }
+  catch(err){
+    console.log(err);
+  }
+});
+
 router.post("/newregister", async (req, res) => {
   try {
     const user = await UserData.findOne({ email: req.body.email });
@@ -22,14 +36,25 @@ router.post("/newregister", async (req, res) => {
 
         verifcation: false,
       });
-      await newUser.save((err, savedUser) => {
+      await newUser.save(async (err, savedUser) => {
         if (err) {
           res.json({ status: false, message: "err", err: err.keyValue });
         } else {
           console.log(savedUser);
-          const { password, ...others } = savedUser._doc;
+          const { password, ...others } = await savedUser._doc;
           console.log(others);
           const token = jwt.sign(savedUser.email, process.env.JWT_SECRET);
+          const readinfo = await read({
+            user_id: savedUser._id,
+            read:[]
+          })
+
+          const readnotification = await newcount({
+            user_id: savedUser._id
+          })
+
+          await readinfo.save();
+          await readnotification.save();
           res.json({
             status: true,
             message: "registred",
@@ -118,7 +143,7 @@ router.patch("/profile", async (req, res) => {
   try {
     const { email, ...rest } = req.body;
 
-    await UserData.findOneAndUpdate(
+    await UserData.updateOne(
       { email: email },
       {
         $set: rest,
@@ -151,20 +176,24 @@ router.get("/verifytoken", (req, res) => {
           if (err) {
             console.log(err);
           } else {
-            if (founduser.verifcation === true) {
-              if (founduser.verifyStatus === true) {
-                const { password, ...others } = founduser._doc;
-                res.json({ auth: true, user: others });
-              } else {
-                res.json({
-                  status: false,
-                  message: "Wait for verifaction by admin",
-                });
-              }
-            } else {
-              const { password, ...others } = founduser._doc;
-              res.json({ auth: true, user: others });
-            }
+            console.log(founduser);
+            console.log("100");
+            // if (founduser.verifcation === true) {
+            //   if (founduser.verifyStatus === true) {
+            //     console.log("verified");
+            //     const { password, ...others } = founduser._doc;
+            //     res.json({ auth: true, user: others });
+            //   } else {
+            //     console.log("not verifiedd")
+            //     res.json({
+            //       status: false,
+            //       message: "Wait for verifaction by admin",
+            //     });
+            //   }
+            // } else {
+            //   const { password, ...others } = founduser._doc;
+            //   res.json({ auth: true, user: others });
+            // }
           }
         });
       }
@@ -381,7 +410,7 @@ router.get("/userstatus", async(req,res)=>{
 router.post("/verifystatus",async(req,res)=>{
 	try {
 		console.log(req.body);
-		const resp=await userData.findOneAndUpdate({email:req.body.email},{verifyStatus:req.body.status});
+		await userData.findOneAndUpdate({email:req.body.email},{verifyStatus:req.body.status});
 		res.send({status: true})
 	} catch (err) {
 		console.log(err);
