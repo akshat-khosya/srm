@@ -268,7 +268,7 @@ function Sidebar({ axiosInstance }) {
 									</span>
 									{noti?.data.differencementor > 0 && (
 										<span className="Sidebar-profile-content__noticon">
-											noti?.data.differencementor
+											{noti?.data.differencementor}
 										</span>
 									)}
 								</div>
@@ -292,7 +292,7 @@ function Sidebar({ axiosInstance }) {
 									</span>
 									{noti?.data.differenceopportunity > 0 && (
 										<span className="Sidebar-profile-content__noticon">
-											noti?.data.differenceopportunity
+											{noti?.data.differenceopportunity}
 										</span>
 									)}
 								</div>
@@ -316,7 +316,7 @@ function Sidebar({ axiosInstance }) {
 									</span>
 									{noti?.data.differenceresource > 0 && (
 										<span className="Sidebar-profile-content__noticon">
-											noti?.data.differenceresource
+											{noti?.data.differenceresource}
 										</span>
 									)}
 								</div>
@@ -340,7 +340,7 @@ function Sidebar({ axiosInstance }) {
 									</span>
 									{noti?.data.differencescholarship > 0 && (
 										<span className="Sidebar-profile-content__noticon">
-											noti?.data.differencescholarship
+											{noti?.data.differencescholarship}
 										</span>
 									)}
 								</div>
@@ -364,7 +364,7 @@ function Sidebar({ axiosInstance }) {
 									</span>
 									{noti?.data.differenceevent > 0 && (
 										<span className="Sidebar-profile-content__noticon">
-											noti?.data.differenceevent
+											{noti?.data.differenceevent}
 										</span>
 									)}
 								</div>
